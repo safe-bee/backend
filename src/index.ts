@@ -1,4 +1,4 @@
-import apolloServer from "./apollo-server";
+/*import apolloServer from "./apollo-server";
 
 // eslint-disable-next-line import/prefer-default-export
 export const graphqlHandler = (event, context, callback) => {
@@ -14,4 +14,4 @@ export const graphqlHandler = (event, context, callback) => {
   const handler = apolloServer.createHandler(config);
 
   return handler(event, context, callback);
-};
+};*/

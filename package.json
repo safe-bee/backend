@@ -1,10 +1,13 @@
 {
-  "name": "ez-trainer-backend",
+  "name": "beesafe-backend",
   "version": "0.1.0",
   "description": "A TypeScript starter for Serverless Framework",
-  "main": "handler.js",
+  "main": "src/apollo-server.js",
+  "type": "module",
   "scripts": {
     "test": "serverless-bundle test",
+    "compile": "tsc",
+    "start": "./node_modules/.bin/nodemon --exec ts-node src/apollo-server.ts",
     "prettier": "prettier 'src/**/*.ts'",
     "prettier:fix": "prettier --write 'src/**/*.ts'",
     "eslint": "eslint 'src/**/*.ts'",
@@ -15,6 +18,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@apollo/server": "4.7.5",
     "@types/aws-lambda": "^8.10.64",
     "@types/jest": "^26.0.14",
     "@types/node": "^15.12.2",
@@ -25,20 +29,21 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "3.4.0",
+    "nodemon": "^2.0.22",
     "prettier": "2.3.1",
-    "serverless-bundle": "3.2.1",
-    "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-offline": "^6.8.0"
+    "serverless-bundle": "6.0.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^12.0.4"
   },
   "dependencies": {
-    "apollo-datasource": "^0.9.0",
-    "apollo-server-lambda": "^2.25.0",
-    "aws-sdk": "^2.924.0",
-    "datasource-sql": "^1.4.1",
-    "graphql": "^15.5.0",
+    "amazon-cognito-identity-js": "^6.3.1",
+    "aws-sdk": "^2.1406.0",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "knex": "^0.95.6",
     "lodash": "^4.17.21",
     "pg": "^8.6.0",
+    "ts-node": "^10.9.1",
     "uuid": "^8.3.2"
   }
 }

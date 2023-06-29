@@ -1,22 +1,26 @@
-import { ApolloServer } from "apollo-server-lambda";
-import models from "./model/index";
-import schema from "./schema/index";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from '@apollo/server/standalone';
+// import models from "./model/index";
+import schema from "./schema/index.js";
 
-const apolloServer = new ApolloServer({
-  schema,
-  playground: {
-    endpoint: "/dev/graphql",
-  },
-  context: ({ event, context }) => ({
-    headers: event.headers,
-    functionName: context.functionName,
-    event,
-    context,
-    models,
-  }),
-  formatResponse: (response) => {
-    return response;
-  },
-});
 
-export default apolloServer;
+interface MyContext {
+  token?: String;
+}
+
+const server = new ApolloServer<MyContext>(schema);
+
+const { url } = await startStandaloneServer(
+  server, 
+  {
+    context: async ({ res, req }) => ({
+      token: req.headers.token,
+    }),
+    listen: { port: 4000 },
+  }
+);
+
+
+console.log(`🚀  Server ready at ${url}`);
+
+// export default apolloServer;
