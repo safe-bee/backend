@@ -6,10 +6,12 @@ import gql from 'graphql-tag';
 // import userResolvers from "./resolvers/user";
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import authResolvers from "./resolvers/auth";
+import apiariosResolvers from "./resolvers/apiarios";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
 import Common from "./typeDefs/common";
+import Apiarios from "./typeDefs/apiarios";
 
 const Query = gql`
   type Query {
@@ -24,11 +26,11 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common];
+const types =  [Query, Auth, Common, Apiarios];
 
 const typeDefs = mergeTypeDefs(types);
 
-const resolvers = lodash.merge(authResolvers);
+const resolvers = lodash.merge(authResolvers, apiariosResolvers);
 
 const schema = {
   typeDefs,

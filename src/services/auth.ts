@@ -54,7 +54,7 @@ const processCognitoAttributes = async (email, password, fields): Promise<any> =
 const signUpToCognito = async (user: any): Promise<any> => {
   let cognitoRes: CognitoRes;
   let res: any;
-  const cognitoFields: object = {
+  const cognitoFields = {
     phone_number: user.phoneNumber,
     firstName: user.firstName,
     lastName: user.lastName,
@@ -188,7 +188,7 @@ const processCognitoConfirmPassword = async (user: any): Promise<any> => {
   });
 };
 
-const confirmPasswordToCognito = async (user: object): Promise<any> => {
+const confirmPasswordToCognito = async (user: any): Promise<any> => {
   let cognitoRes: ConfirmPassword;
   try {
     await processCognitoConfirmPassword(user);

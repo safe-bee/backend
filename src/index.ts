@@ -1,17 +1,26 @@
-/*import apolloServer from "./apollo-server";
+import { ApolloServer } from "@apollo/server";
+import { PrismaClient } from '@prisma/client'
+import { startStandaloneServer } from '@apollo/server/standalone';
+import schema from "./schema/index.js";
 
-// eslint-disable-next-line import/prefer-default-export
-export const graphqlHandler = (event, context, callback) => {
-  const config = {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type", "Origin", "Accept"],
-      // credentials: true,
-    },
-  };
 
-  const handler = apolloServer.createHandler(config);
+interface MyContext {
+  prisma: PrismaClient
+}
 
-  return handler(event, context, callback);
-};*/
+const server = new ApolloServer<MyContext>(schema);
+
+
+const { url } = await startStandaloneServer(
+  server, 
+  {
+    context: async ({ res, req }) => ({
+      prisma: new PrismaClient()
+    }),
+    listen: { port: 4000 },
+  }
+);
+
+
+console.log(`🚀  Server ready at ${url}`);
+

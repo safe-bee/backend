@@ -120,7 +120,6 @@ const authResolvers = {
       let payload: ConfirmNewPasswordPayload;
 
       const cognitoRes: any = await confirmPasswordToCognito(user);
-      console.log(cognitoRes);
       if (cognitoRes.error) {
         if (cognitoRes.error.name === CognitoErrors.EXPIRTED_CODE_EXCEPTION) {
           payload = {

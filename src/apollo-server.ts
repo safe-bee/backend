@@ -1,26 +1,18 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from '@apollo/server/standalone';
-// import models from "./model/index";
-import schema from "./schema/index.js";
+import { PrismaClient } from '@prisma/client'
+import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
 
+import schema from "./schema/index";
 
-interface MyContext {
-  token?: String;
-}
+const server = new ApolloServer(schema);
 
-const server = new ApolloServer<MyContext>(schema);
+const primsaClient = new PrismaClient();
 
-const { url } = await startStandaloneServer(
+export const graphqlHandler = startServerAndCreateLambdaHandler(
   server, 
+  handlers.createAPIGatewayProxyEventV2RequestHandler(), 
   {
-    context: async ({ res, req }) => ({
-      token: req.headers.token,
-    }),
-    listen: { port: 4000 },
-  }
-);
-
-
-console.log(`🚀  Server ready at ${url}`);
-
-// export default apolloServer;
+  context: async ({ event, context }) => ({
+    prisma: primsaClient
+  }),
+});

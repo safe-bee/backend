@@ -15,7 +15,7 @@ type CognitoErrorObj = {
 };
 
 type CognitoRes = {
-  user: object;
+  user: any;
   error: CognitoErrorObj;
 };
 

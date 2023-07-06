@@ -4,11 +4,18 @@ service: beesafe-backend
 # Create an optimized package for our functions
 package:
   individually: true
+  patterns:
+    - '!node_modules/.prisma/client/libquery_engine-*'
+    - 'node_modules/.prisma/client/libquery_engine-linux-arm64-*'
+    - '!node_modules/prisma/libquery_engine-*'
+    - '!node_modules/@prisma/engines/**'
+    - 'prisma/**'
 
 plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
+  - serverless-webpack-prisma
 
 disabledDeprecations:
   - "*" # To disable all deprecation messages
@@ -19,23 +26,10 @@ provider:
   stage: dev
   region: us-east-1
   profile: default
-  # To load environment variables externally
-  # rename env.example to .env and uncomment
-  # the following line. Also, make sure to not
-  # commit your .env.
-  #
-  #
-  environment:
-    PG_HOST: ${env:PG_HOST}
-    PG_DB_NAME: ${env:PG_DB_NAME}
-    PG_USER: ${env:PG_USER}
-    PG_PASSWORD: ${env:PG_PASSWORD}
-    PG_PORT: ${env:PG_PORT}
-    tableName: notes
-
+  
 functions:
   graphql:
-    handler: src/index.graphqlHandler
+    handler: src/apollo-server.graphqlHandler
     events:
       - http:
           path: graphql
