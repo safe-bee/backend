@@ -11,7 +11,7 @@ import apiariosResolvers from "./resolvers/apiario";
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
 import Common from "./typeDefs/common";
-import Apiarios from "./typeDefs/apiario";
+import Apiario from "./typeDefs/apiario";
 
 const Query = gql`
   type Query {
@@ -26,7 +26,7 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common, Apiarios];
+const types =  [Query, Auth, Common, Apiario];
 
 const typeDefs = mergeTypeDefs(types);
 
