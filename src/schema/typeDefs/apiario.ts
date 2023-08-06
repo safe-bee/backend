@@ -7,14 +7,14 @@ const apiarioDef = gql`
   }
 
   extend type Query {
-    apiarios: [Apiario]!
+    apiarios: [Apiario!]!
+    apiario(id: Int!): Apiario
   }
 
   type Mutation {
-    addApiario (
-      name: String!
-    ): Apiario
-    
+    createApiario(name: String!): Apiario!
+    updateApiario(id: Int!, name: String): Apiario!
+    deleteApiario(id: Int!): Apiario!
   }
 `;
 

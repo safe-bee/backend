@@ -1,18 +1,28 @@
 const apiarioResolvers = {
   Query: {
     apiarios: async (parent, args, { prisma }, info) => {
-      const apiarios = await prisma.apiarios.findMany();
-      return apiarios;
+      return await prisma.apiario.findMany();
     },
+    apiario: async (parent, args, { prisma }, info) => {
+      const { id } = args
+      return await prisma.apiario.findUnique({ where: { id }});
+    },
+      
   },
   Mutation: {
-    addApiario: (root, args) => {
-      const apiario = {...args}
-      // Agregarlo a la base de datos
-      return apiario
-    }
+    createApiario: async (parent, args, { prisma }, info) => {
+      const { name } = args
+      return await prisma.apiario.create({ data: { name } });
+    },
+    updateApiario: async (parent, args, { prisma }, info) => {
+      const { id, name } = args
+      return await prisma.apiario.update({ where: { id }, data: { name } });
+    },
+    deleteApiario: async (parent, args, { prisma }, info) => {
+      const { id } = args
+      return await prisma.apiario.delete({ where: { id } });
+    },
   },
 };
 
 export default apiarioResolvers;
-  
