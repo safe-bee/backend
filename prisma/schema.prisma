@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -7,7 +7,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 
 model User {
   id      Int      @id @default(autoincrement())
@@ -23,8 +22,15 @@ model Profile {
   userId Int     @unique
 }
 
+model Apiario {
+  id       Int       @id @default(autoincrement())
+  name     String
+  colmenas Colmena[]
+}
 
-model Apiarios {
-  id      Int      @id @default(autoincrement())
-  name    String   
+model Colmena {
+  id        Int     @id @default(autoincrement())
+  name      String
+  apiario   Apiario @relation(fields: [apiarioId], references: [id])
+  apiarioId Int
 }

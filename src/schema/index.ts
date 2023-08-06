@@ -6,12 +6,12 @@ import gql from 'graphql-tag';
 // import userResolvers from "./resolvers/user";
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import authResolvers from "./resolvers/auth";
-import apiariosResolvers from "./resolvers/apiarios";
+import apiariosResolvers from "./resolvers/apiario";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
 import Common from "./typeDefs/common";
-import Apiarios from "./typeDefs/apiarios";
+import Apiarios from "./typeDefs/apiario";
 
 const Query = gql`
   type Query {
