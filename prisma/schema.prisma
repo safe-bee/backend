@@ -1,3 +1,6 @@
+// Comando para formatear este documento:
+// npx prisma format
+
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
@@ -23,9 +26,31 @@ model Profile {
 }
 
 model Apiario {
-  id       Int       @id @default(autoincrement())
-  name     String
-  colmenas Colmena[]
+  id             Int          @id @default(autoincrement())
+  nombre         String
+  fecha_creacion DateTime     @default(now())
+  latitud        Float
+  longitud       Float
+  direccion      String
+  tipo_terreno   TipoTerreno
+  tipo_ambiente  TipoAmbiente
+  colmenas       Colmena[]
+}
+
+enum TipoTerreno {
+  BOSQUE
+  MONTANA
+  CAMPO
+  COSTA
+  DESIERTO
+  LLANURA
+  OTRO
+}
+
+enum TipoAmbiente {
+  RURAL
+  SUBURBANO
+  URBANO
 }
 
 model Colmena {
