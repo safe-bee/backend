@@ -11,8 +11,8 @@ const apiarioResolvers = {
   },
   Mutation: {
     createApiario: async (parent, args, { prisma }, info) => {
-      const { name } = args
-      return await prisma.apiario.create({ data: { name } });
+      const { nombre, latitud, longitud, direccion, tipo_terreno, tipo_ambiente } = args
+      return await prisma.apiario.create({ data: { nombre, latitud, longitud, direccion, tipo_terreno, tipo_ambiente } });
     },
     updateApiario: async (parent, args, { prisma }, info) => {
       const { id, name } = args
