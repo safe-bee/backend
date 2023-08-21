@@ -1,5 +1,35 @@
 # Backend
 
+## (esta parte de propia)
+
+### Setup para que ande este proyecto
+- Duplicar el archivo `.env.example` y renombrarlo `.env`
+- Modificar el `DATABASE_URL` con tu usuario y contraseña de postgres 
+- Comando para tirar los seeders: `npx prisma db seed`
+
+
+### Comandos de nuestra api de GraphQl
+
+Apiarios:
+```
+query Apiarios {
+  apiarios {
+    id,
+    nombre,
+    latitud,
+    longitud,
+    direccion,
+    tipo_terreno,
+    tipo_ambiente
+  }
+}
+```
+
+
+---
+
+(esta parte vino con el readme ↓)
+
 ### Requirements
 
 - [Configure your AWS CLI](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
@@ -81,4 +111,3 @@ To add environment variables to your project
 2. Uncomment `environment:` block in the `serverless.yml` and reference the environment variable as `${env:MY_ENV_VAR}`. Where `MY_ENV_VAR` is added to your `.env` file.
 3. Make sure to not commit your `.env`.
 
-hola
