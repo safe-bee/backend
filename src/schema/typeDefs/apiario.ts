@@ -35,27 +35,9 @@ const apiarioDef = gql`
   }
 
   extend type Mutation {
-    createApiario(data: CreateApiarioInput!): Apiario!
-    updateApiario(id: Int!, data: UpdateApiarioInput!): Apiario!
+    createApiario( nombre: String!  latitud: Float!  longitud: Float!  direccion: String!  tipo_terreno: TipoTerreno!  tipo_ambiente: TipoAmbiente!): Apiario!
+    updateApiario(id: Int!, nombre: String!  latitud: Float!  longitud: Float!  direccion: String!  tipo_terreno: TipoTerreno!  tipo_ambiente: TipoAmbiente!): Apiario!
     deleteApiario(id: Int!): Apiario!
-  }
-
-  input CreateApiarioInput {
-    nombre: String!
-    latitud: Float!
-    longitud: Float!
-    direccion: String!
-    tipo_terreno: TipoTerreno!
-    tipo_ambiente: TipoAmbiente!
-  }
-
-  input UpdateApiarioInput {
-    nombre: String
-    latitud: Float
-    longitud: Float
-    direccion: String
-    tipo_terreno: TipoTerreno
-    tipo_ambiente: TipoAmbiente
   }
 `;
 

@@ -15,8 +15,8 @@ const apiarioResolvers = {
       return await prisma.apiario.create({ data: { nombre, latitud, longitud, direccion, tipo_terreno, tipo_ambiente } });
     },
     updateApiario: async (parent, args, { prisma }, info) => {
-      const { id, name } = args
-      return await prisma.apiario.update({ where: { id }, data: { name } });
+      const { id, nombre, latitud, longitud, direccion, tipo_terreno, tipo_ambiente } = args
+      return await prisma.apiario.update({ where: { id }, data: { nombre, latitud, longitud, direccion, tipo_terreno, tipo_ambiente } });
     },
     deleteApiario: async (parent, args, { prisma }, info) => {
       const { id } = args

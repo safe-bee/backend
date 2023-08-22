@@ -1,17 +1,16 @@
 # Backend
 
-## (esta parte de propia)
-
-### Setup para que ande este proyecto
+## Setup para que ande este proyecto
 - Duplicar el archivo `.env.example` y renombrarlo `.env`
 - Modificar el `DATABASE_URL` con tu usuario y contraseña de postgres 
 - Comando para tirar los seeders: `npx prisma db seed`
 
 
-### Comandos de nuestra api de GraphQl
+## Comandos de nuestra api de GraphQl
 
-Apiarios:
-```
+### Apiarios:
+
+```graphql
 query Apiarios {
   apiarios {
     id,
@@ -20,6 +19,77 @@ query Apiarios {
     longitud,
     direccion,
     tipo_terreno,
+    tipo_ambiente
+  }
+}
+```
+
+```graphql
+query Apiario{
+  apiario(id: 1) {
+    id,
+    nombre,
+    latitud,
+    longitud,
+    direccion,
+    tipo_terreno,
+    tipo_ambiente,
+  }
+}
+```
+
+```graphql
+mutation {
+  createApiario(
+    nombre: "Apiario Nuevo",
+    latitud: 42.3601,
+    longitud: -71.0589,
+    direccion: "456 Calle Principal",
+    tipo_terreno: CAMPO,
+    tipo_ambiente: RURAL
+  ) {
+    id
+    nombre
+    latitud
+    longitud
+    direccion
+    tipo_terreno
+    tipo_ambiente
+  }
+}
+```
+
+```graphql
+mutation {
+  updateApiario(
+    id: 3, 
+    nombre: "Apiario Editadoo",
+    latitud: 69,
+    longitud: -4.20,
+    direccion: "Calle falsa 123",
+    tipo_terreno: OTRO,
+    tipo_ambiente: URBANO
+  ) {
+    id
+    nombre
+    latitud
+    longitud
+    direccion
+    tipo_terreno
+    tipo_ambiente
+  }
+}
+```
+
+```graphql
+mutation {
+  deleteApiario(id: 3) {
+    id
+    nombre
+    latitud
+    longitud
+    direccion
+    tipo_terreno
     tipo_ambiente
   }
 }
