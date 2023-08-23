@@ -54,8 +54,49 @@ enum TipoAmbiente {
 }
 
 model Colmena {
-  id        Int     @id @default(autoincrement())
-  name      String
-  apiario   Apiario @relation(fields: [apiarioId], references: [id])
-  apiarioId Int
+  id                          Int           @id @default(autoincrement())
+  nombre                      String
+  apiario                     Apiario       @relation(fields: [apiarioId], references: [id])
+  apiarioId                   Int
+  tipo                        TipoColmena
+  datos_numero_deeps          String?
+  datos_numero_supers         String?
+  datos_total_cuadros         String?
+  datos_color                 String?
+  datos_origen                OrigenColmena?
+  datos_fecha_establecimiento DateTime?
+  reina_tipo                  TipoReina?
+  reina_color                 String?
+  reina_fecha_aceptacion      DateTime?
+  reina_notas                 String?        @db.VarChar(200)
+  foto1                       String?
+  foto2                       String?
+  foto3                       String?
+}
+
+enum TipoColmena {
+  HORIZONTAL
+  LANGSTROTH
+  NUCLEO
+  TOPBAR
+  TRADICIONAL
+  TRANSICIONAL
+  WARRE
+}
+
+enum OrigenColmena {
+  ENJAMBRE
+  NUCLEO
+  SPLIT
+  OBTENIDO
+}
+
+enum TipoReina {
+  LOCAL
+  ITALIANA
+  RUSA
+  CARNIOLA
+  CAUCASICA
+  BUCKFAST
+  ARPATIANA
 }

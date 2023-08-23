@@ -1,9 +1,12 @@
 # Backend
 
-## Setup para que ande este proyecto
-- Duplicar el archivo `.env.example` y renombrarlo `.env`
-- Modificar el `DATABASE_URL` con tu usuario y contraseña de postgres 
-- Comando para tirar los seeders: `npx prisma db seed`
+## Setup para correr el proyecto localmente
+1. Duplicar el archivo `.env.example` y renombrarlo `.env`
+2. Crear una base de datos Postgres con address:port = localhost:5432
+3. Modificar la variable `DATABASE_URL` con tu USER, PASSWORD y DBNAME de Postgres
+4. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
+5. Levantar los seeders: `npx prisma db seed`
+
 
 
 ## Comandos de nuestra api de GraphQl
@@ -91,6 +94,31 @@ mutation {
     direccion
     tipo_terreno
     tipo_ambiente
+  }
+}
+```
+
+```graphql
+query Colmenas {
+    colmenas {
+    id
+    nombre
+    apiarioId
+    tipo
+  }
+}
+```
+
+```graphql
+mutation {
+  createColmena(
+      nombre: "Colmena A",
+      apiarioId: 1,
+      tipo: LANGSTROTH,
+      datos_numero_deeps: "2",
+      datos_numero_supers: "3"
+  ) {
+    id nombre tipo
   }
 }
 ```

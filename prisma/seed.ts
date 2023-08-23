@@ -11,9 +11,6 @@ async function main() {
       direccion: "123 Calle Principal",
       tipo_terreno: "CAMPO",
       tipo_ambiente: "RURAL",
-      colmenas: {
-        create: [{ name: "Colmena 1" }, { name: "Colmena 2" }],
-      },
     },
   });
 
@@ -25,9 +22,41 @@ async function main() {
       direccion: "789 Calle Terciaria",
       tipo_terreno: "COSTA",
       tipo_ambiente: "URBANO",
-      colmenas: {
-        create: [{ name: "Colmena A" }, { name: "Colmena B" }],
-      },
+    },
+  });
+
+  const colmena1 = await prisma.colmena.create({
+    data: {
+      nombre: "Colmena 1",
+      apiarioId: apiario1.id,
+      tipo: "LANGSTROTH",
+    },
+  });
+  
+  const colmena2 = await prisma.colmena.create({
+    data: {
+      nombre: "Colmena 2",
+      apiarioId: apiario1.id,
+      tipo: "HORIZONTAL",
+    },
+  });
+
+  const colmena3 = await prisma.colmena.create({
+    data: {
+      nombre: "Colmena 3",
+      apiarioId: apiario2.id,
+      tipo: "TRADICIONAL",
+      datos_numero_deeps: "2",
+      datos_numero_supers: "3",
+      datos_total_cuadros: "20",
+      datos_color: "Amarillo",
+      datos_origen: "NUCLEO",
+      datos_fecha_establecimiento: new Date(),
+      reina_tipo: "ITALIANA",
+      reina_color: "Verde",
+      reina_fecha_aceptacion: new Date(),
+      reina_notas: "Good save the Queen",
+      foto1:"https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg"
     },
   });
 
