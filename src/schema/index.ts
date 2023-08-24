@@ -2,6 +2,8 @@
 /* eslint-disable no-plusplus */
 import lodash from "lodash";
 import gql from 'graphql-tag';
+import { typeDefs as scalarTypeDefs } from 'graphql-scalars';
+import { resolvers as scalarResolvers } from 'graphql-scalars';
 
 // import userResolvers from "./resolvers/user";
 import { mergeTypeDefs } from '@graphql-tools/merge'
@@ -28,11 +30,11 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common, Apiario, Colmena];
+const types =  [Query, Auth, Common, ...scalarTypeDefs, Apiario, Colmena];
 
 const typeDefs = mergeTypeDefs(types);
 
-const resolvers = lodash.merge(authResolvers, apiariosResolvers, colmenaResolvers);
+const resolvers = lodash.merge(scalarResolvers, authResolvers, apiariosResolvers, colmenaResolvers);
 
 const schema = {
   typeDefs,

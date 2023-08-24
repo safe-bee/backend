@@ -5,12 +5,12 @@ const apiarioDef = gql`
   type Apiario {
     id: Int!
     nombre: String!
-    fecha_creacion: String!
+    fecha_creacion: DateTime!
     latitud: Float!
     longitud: Float!
     direccion: String!
     tipo_terreno: TipoTerreno!
-    tipo_ambiente: TipoAmbiente!    
+    tipo_ambiente: TipoAmbiente!
   }
 
   enum TipoTerreno {
@@ -35,8 +35,27 @@ const apiarioDef = gql`
   }
 
   extend type Mutation {
-    createApiario( nombre: String!  latitud: Float!  longitud: Float!  direccion: String!  tipo_terreno: TipoTerreno!  tipo_ambiente: TipoAmbiente!): Apiario!
-    updateApiario(id: Int!, nombre: String!  latitud: Float!  longitud: Float!  direccion: String!  tipo_terreno: TipoTerreno!  tipo_ambiente: TipoAmbiente!): Apiario!
+    createApiario(
+      nombre: String!
+      latitud: Float!
+      longitud: Float!
+      direccion: String!
+      tipo_terreno: TipoTerreno!
+      tipo_ambiente: TipoAmbiente!
+      fecha_creacion: DateTime
+    ): Apiario!
+
+    updateApiario(
+      id: Int!
+      nombre: String!
+      latitud: Float!
+      longitud: Float!
+      direccion: String!
+      tipo_terreno: TipoTerreno!
+      tipo_ambiente: TipoAmbiente!
+      fecha_creacion: DateTime
+    ): Apiario!
+
     deleteApiario(id: Int!): Apiario!
   }
 `;

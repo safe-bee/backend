@@ -11,6 +11,40 @@
 
 ## Comandos de nuestra api de GraphQl
 
+Ejemplo de query y respuesta:
+
+```graphql
+query Apiario{
+  apiario(id: 1) {
+    id,
+    nombre,
+    latitud,
+    longitud,
+    direccion,
+    tipo_terreno,
+    tipo_ambiente,
+    fecha_creacion
+  }
+}
+```
+```json
+{
+  "data": {
+    "apiario": {
+      "id": 1,
+      "nombre": "Apiario 1",
+      "latitud": 40.7128,
+      "longitud": -74.006,
+      "direccion": "123 Calle Principal",
+      "tipo_terreno": "CAMPO",
+      "tipo_ambiente": "RURAL",
+      "fecha_creacion": "2023-08-21T20:05:58.829Z"
+    }
+  }
+}
+```
+
+
 ### Apiarios:
 
 ```graphql
@@ -22,7 +56,8 @@ query Apiarios {
     longitud,
     direccion,
     tipo_terreno,
-    tipo_ambiente
+    tipo_ambiente,
+    fecha_creacion
   }
 }
 ```
@@ -37,6 +72,7 @@ query Apiario{
     direccion,
     tipo_terreno,
     tipo_ambiente,
+    fecha_creacion
   }
 }
 ```
@@ -49,7 +85,8 @@ mutation {
     longitud: -71.0589,
     direccion: "456 Calle Principal",
     tipo_terreno: CAMPO,
-    tipo_ambiente: RURAL
+    tipo_ambiente: RURAL,
+    fecha_creacion: "2023-04-20T03:14:24.405Z"
   ) {
     id
     nombre
@@ -97,6 +134,8 @@ mutation {
   }
 }
 ```
+
+### Colmenas:
 
 ```graphql
 query Colmenas {
