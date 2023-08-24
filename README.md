@@ -57,7 +57,12 @@ query Apiarios {
     direccion,
     tipo_terreno,
     tipo_ambiente,
-    fecha_creacion
+    fecha_creacion,
+    colmenas {
+      id,
+      nombre, 
+      foto1
+    }
   }
 }
 ```

@@ -55,7 +55,7 @@ async function main() {
       reina_tipo: "ITALIANA",
       reina_color: "Verde",
       reina_fecha_aceptacion: new Date(),
-      reina_notas: "Good save the Queen",
+      reina_notas: "God save the Queen",
       foto1:"https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg"
     },
   });

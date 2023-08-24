@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-// Falta: colmenas: [Colmena!]!
 const apiarioDef = gql`
   type Apiario {
     id: Int!
@@ -11,6 +10,7 @@ const apiarioDef = gql`
     direccion: String!
     tipo_terreno: TipoTerreno!
     tipo_ambiente: TipoAmbiente!
+    colmenas: [Colmena!]!
   }
 
   enum TipoTerreno {

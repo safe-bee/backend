@@ -1,11 +1,11 @@
 const apiarioResolvers = {
   Query: {
     apiarios: async (parent, args, { prisma }, info) => {
-      return await prisma.apiario.findMany();
+      return await prisma.apiario.findMany({ include: { colmenas:{} } });
     },
     apiario: async (parent, args, { prisma }, info) => {
       const { id } = args
-      return await prisma.apiario.findUnique({ where: { id }});
+      return await prisma.apiario.findUnique({ where: { id }, include: { colmenas:{} }});
     },
       
   },
