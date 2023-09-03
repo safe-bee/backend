@@ -144,11 +144,48 @@ mutation {
 
 ```graphql
 query Colmenas {
-    colmenas {
+  colmenas {
     id
     nombre
     apiarioId
     tipo
+    datos_numero_deeps
+    datos_numero_supers
+    datos_total_cuadros
+    datos_color
+    datos_origen
+    datos_fecha_establecimiento
+    reina_tipo
+    reina_color
+    reina_fecha_aceptacion
+    reina_notas
+    foto1
+    foto2
+    foto3
+  }
+}
+```
+
+```graphql
+query Colmena{
+  colmena(id: 1) {
+    id
+    nombre
+    apiarioId
+    tipo
+    datos_numero_deeps
+    datos_numero_supers
+    datos_total_cuadros
+    datos_color
+    datos_origen
+    datos_fecha_establecimiento
+    reina_tipo
+    reina_color
+    reina_fecha_aceptacion
+    reina_notas
+    foto1
+    foto2
+    foto3
   }
 }
 ```
@@ -156,13 +193,106 @@ query Colmenas {
 ```graphql
 mutation {
   createColmena(
-      nombre: "Colmena A",
-      apiarioId: 1,
-      tipo: LANGSTROTH,
-      datos_numero_deeps: "2",
-      datos_numero_supers: "3"
+    nombre: "Nueva Colmena"
+    apiarioId: 2
+    tipo: TOPBAR
+    datos_numero_deeps: "2"
+    datos_numero_supers: "3"
+    datos_total_cuadros: "20"
+    datos_color: "Amarillo"
+    datos_origen: ENJAMBRE
+    datos_fecha_establecimiento: "2023-08-30T12:00:00Z"
+    reina_tipo: ITALIANA
+    reina_color: "Dorada"
+    reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
+    reina_notas: "Reina saludable y activa"
+    foto1: "URL de la foto 1"
+    foto2: "URL de la foto 2"
+    foto3: "URL de la foto 3"
   ) {
-    id nombre tipo
+    id
+    nombre
+    apiarioId
+    tipo
+    datos_numero_deeps
+    datos_numero_supers
+    datos_total_cuadros
+    datos_color
+    datos_origen
+    datos_fecha_establecimiento
+    reina_tipo
+    reina_color
+    reina_fecha_aceptacion
+    reina_notas
+    foto1
+    foto2
+    foto3
+  }
+}
+```
+
+```graphql
+mutation {
+  updateColmena(
+    id: 1
+    nombre: "Colmena Editada"
+    apiarioId: 2
+    tipo: TOPBAR
+    datos_numero_deeps: "2"
+    datos_numero_supers: "3"
+    datos_total_cuadros: "20"
+    datos_color: "Amarillo"
+    datos_origen: ENJAMBRE
+    datos_fecha_establecimiento: "2023-08-30T12:00:00Z"
+    reina_tipo: ITALIANA
+    reina_color: "Dorada"
+    reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
+    reina_notas: "Reina saludable y activa"
+    foto1: "URL de la foto 1"
+    foto2: "URL de la foto 2"
+    foto3: "URL de la foto 3"
+  ) {
+    id
+    nombre
+    apiarioId
+    tipo
+    datos_numero_deeps
+    datos_numero_supers
+    datos_total_cuadros
+    datos_color
+    datos_origen
+    datos_fecha_establecimiento
+    reina_tipo
+    reina_color
+    reina_fecha_aceptacion
+    reina_notas
+    foto1
+    foto2
+    foto3
+  }
+}
+```
+
+```graphql
+mutation {
+  deleteColmena(id: 1) {
+    id
+    nombre
+    apiarioId
+    tipo
+    datos_numero_deeps
+    datos_numero_supers
+    datos_total_cuadros
+    datos_color
+    datos_origen
+    datos_fecha_establecimiento
+    reina_tipo
+    reina_color
+    reina_fecha_aceptacion
+    reina_notas
+    foto1
+    foto2
+    foto3
   }
 }
 ```
