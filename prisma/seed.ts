@@ -9,7 +9,6 @@ async function main() {
       latitud: 40.7128,
       longitud: -74.006,
       direccion: "123 Calle Principal",
-      tipo_terreno: "CAMPO",
       tipo_ambiente: "RURAL",
     },
   });
@@ -20,7 +19,6 @@ async function main() {
       latitud: 51.5074,
       longitud: -0.1278,
       direccion: "789 Calle Terciaria",
-      tipo_terreno: "COSTA",
       tipo_ambiente: "URBANO",
     },
   });

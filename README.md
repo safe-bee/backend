@@ -7,6 +7,8 @@
 4. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
 5. Levantar los seeders: `npx prisma db seed`
 
+(Comando útil) Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`
+
 
 
 ## Comandos de nuestra api de GraphQl
@@ -21,7 +23,6 @@ query Apiario{
     latitud,
     longitud,
     direccion,
-    tipo_terreno,
     tipo_ambiente,
     fecha_creacion
   }
@@ -36,7 +37,6 @@ query Apiario{
       "latitud": 40.7128,
       "longitud": -74.006,
       "direccion": "123 Calle Principal",
-      "tipo_terreno": "CAMPO",
       "tipo_ambiente": "RURAL",
       "fecha_creacion": "2023-08-21T20:05:58.829Z"
     }
@@ -55,7 +55,6 @@ query Apiarios {
     latitud,
     longitud,
     direccion,
-    tipo_terreno,
     tipo_ambiente,
     fecha_creacion,
     colmenas {
@@ -75,7 +74,6 @@ query Apiario{
     latitud,
     longitud,
     direccion,
-    tipo_terreno,
     tipo_ambiente,
     fecha_creacion
   }
@@ -89,7 +87,6 @@ mutation {
     latitud: 42.3601,
     longitud: -71.0589,
     direccion: "456 Calle Principal",
-    tipo_terreno: CAMPO,
     tipo_ambiente: RURAL,
     fecha_creacion: "2023-04-20T03:14:24.405Z"
   ) {
@@ -98,7 +95,6 @@ mutation {
     latitud
     longitud
     direccion
-    tipo_terreno
     tipo_ambiente
   }
 }
@@ -112,7 +108,6 @@ mutation {
     latitud: 69,
     longitud: -4.20,
     direccion: "Calle falsa 123",
-    tipo_terreno: OTRO,
     tipo_ambiente: URBANO
   ) {
     id
@@ -120,7 +115,6 @@ mutation {
     latitud
     longitud
     direccion
-    tipo_terreno
     tipo_ambiente
   }
 }
@@ -134,7 +128,6 @@ mutation {
     latitud
     longitud
     direccion
-    tipo_terreno
     tipo_ambiente
   }
 }

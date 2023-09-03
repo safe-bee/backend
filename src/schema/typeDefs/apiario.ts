@@ -8,19 +8,8 @@ const apiarioDef = gql`
     latitud: Float!
     longitud: Float!
     direccion: String!
-    tipo_terreno: TipoTerreno!
     tipo_ambiente: TipoAmbiente!
     colmenas: [Colmena!]!
-  }
-
-  enum TipoTerreno {
-    BOSQUE
-    MONTANA
-    CAMPO
-    COSTA
-    DESIERTO
-    LLANURA
-    OTRO
   }
 
   enum TipoAmbiente {
@@ -40,7 +29,6 @@ const apiarioDef = gql`
       latitud: Float!
       longitud: Float!
       direccion: String!
-      tipo_terreno: TipoTerreno!
       tipo_ambiente: TipoAmbiente!
       fecha_creacion: DateTime
     ): Apiario!
@@ -51,7 +39,6 @@ const apiarioDef = gql`
       latitud: Float!
       longitud: Float!
       direccion: String!
-      tipo_terreno: TipoTerreno!
       tipo_ambiente: TipoAmbiente!
       fecha_creacion: DateTime
     ): Apiario!

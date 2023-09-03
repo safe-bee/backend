@@ -32,19 +32,8 @@ model Apiario {
   latitud        Float
   longitud       Float
   direccion      String
-  tipo_terreno   TipoTerreno
   tipo_ambiente  TipoAmbiente
   colmenas       Colmena[]
-}
-
-enum TipoTerreno {
-  BOSQUE
-  MONTANA
-  CAMPO
-  COSTA
-  DESIERTO
-  LLANURA
-  OTRO
 }
 
 enum TipoAmbiente {
