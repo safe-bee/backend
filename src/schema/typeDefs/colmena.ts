@@ -11,10 +11,10 @@ const colmenaDef = gql`
     datos_total_cuadros: String
     datos_color: String
     datos_origen: OrigenColmena
-    datos_fecha_establecimiento: String
+    datos_fecha_establecimiento: DateTime
     reina_tipo: TipoReina
     reina_color: String
-    reina_fecha_aceptacion: String
+    reina_fecha_aceptacion: DateTime
     reina_notas: String
     foto1: String
     foto2: String
@@ -63,10 +63,10 @@ const colmenaDef = gql`
       datos_total_cuadros: String
       datos_color: String
       datos_origen: OrigenColmena
-      datos_fecha_establecimiento: String
+      datos_fecha_establecimiento: DateTime
       reina_tipo: TipoReina
       reina_color: String
-      reina_fecha_aceptacion: String
+      reina_fecha_aceptacion: DateTime
       reina_notas: String
       foto1: String
       foto2: String
@@ -83,10 +83,10 @@ const colmenaDef = gql`
       datos_total_cuadros: String
       datos_color: String
       datos_origen: OrigenColmena
-      datos_fecha_establecimiento: String
+      datos_fecha_establecimiento: DateTime
       reina_tipo: TipoReina
       reina_color: String
-      reina_fecha_aceptacion: String
+      reina_fecha_aceptacion: DateTime
       reina_notas: String
       foto1: String
       foto2: String

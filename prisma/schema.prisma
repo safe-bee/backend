@@ -54,9 +54,9 @@ enum TipoAmbiente {
 }
 
 model Colmena {
-  id                          Int           @id @default(autoincrement())
+  id                          Int            @id @default(autoincrement())
   nombre                      String
-  apiario                     Apiario       @relation(fields: [apiarioId], references: [id])
+  apiario                     Apiario        @relation(fields: [apiarioId], references: [id])
   apiarioId                   Int
   tipo                        TipoColmena
   datos_numero_deeps          String?
@@ -64,7 +64,7 @@ model Colmena {
   datos_total_cuadros         String?
   datos_color                 String?
   datos_origen                OrigenColmena?
-  datos_fecha_establecimiento DateTime?
+  datos_fecha_establecimiento DateTime?      @default(now())
   reina_tipo                  TipoReina?
   reina_color                 String?
   reina_fecha_aceptacion      DateTime?
