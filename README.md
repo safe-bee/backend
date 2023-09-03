@@ -7,7 +7,9 @@
 4. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
 5. Levantar los seeders: `npx prisma db seed`
 
-(Comando útil) Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`
+### Comandos útiles para el desarrollo
+- Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`
+- Formatear el archivo schema.prisma: `npx prisma format`
 
 
 
@@ -196,7 +198,7 @@ mutation {
     datos_origen: ENJAMBRE
     datos_fecha_establecimiento: "2023-08-30T12:00:00Z"
     reina_tipo: ITALIANA
-    reina_color: "Dorada"
+    reina_color: AMARILLO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
     foto1: "URL de la foto 1"
@@ -238,7 +240,7 @@ mutation {
     datos_origen: ENJAMBRE
     datos_fecha_establecimiento: "2023-08-30T12:00:00Z"
     reina_tipo: ITALIANA
-    reina_color: "Dorada"
+    reina_color: ROJO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
     foto1: "URL de la foto 1"

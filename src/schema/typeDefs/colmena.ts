@@ -13,7 +13,7 @@ const colmenaDef = gql`
     datos_origen: OrigenColmena
     datos_fecha_establecimiento: DateTime
     reina_tipo: TipoReina
-    reina_color: String
+    reina_color: ColorReina
     reina_fecha_aceptacion: DateTime
     reina_notas: String
     foto1: String
@@ -48,6 +48,14 @@ const colmenaDef = gql`
     ARPATIANA
   }
 
+  enum ColorReina {
+    BLANCO
+    AMARILLO
+    ROJO
+    VERDE
+    AZUL
+  }
+
   extend type Query {
     colmenas: [Colmena!]!
     colmena(id: Int!): Colmena
@@ -65,7 +73,7 @@ const colmenaDef = gql`
       datos_origen: OrigenColmena
       datos_fecha_establecimiento: DateTime
       reina_tipo: TipoReina
-      reina_color: String
+      reina_color: ColorReina
       reina_fecha_aceptacion: DateTime
       reina_notas: String
       foto1: String
@@ -85,7 +93,7 @@ const colmenaDef = gql`
       datos_origen: OrigenColmena
       datos_fecha_establecimiento: DateTime
       reina_tipo: TipoReina
-      reina_color: String
+      reina_color: ColorReina
       reina_fecha_aceptacion: DateTime
       reina_notas: String
       foto1: String

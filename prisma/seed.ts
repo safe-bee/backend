@@ -51,7 +51,7 @@ async function main() {
       datos_origen: "NUCLEO",
       datos_fecha_establecimiento: new Date(),
       reina_tipo: "ITALIANA",
-      reina_color: "Verde",
+      reina_color: "VERDE",
       reina_fecha_aceptacion: new Date(),
       reina_notas: "God save the Queen",
       foto1:"https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg"

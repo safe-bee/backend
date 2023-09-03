@@ -55,7 +55,7 @@ model Colmena {
   datos_origen                OrigenColmena?
   datos_fecha_establecimiento DateTime?      @default(now())
   reina_tipo                  TipoReina?
-  reina_color                 String?
+  reina_color                 ColorReina?
   reina_fecha_aceptacion      DateTime?
   reina_notas                 String?        @db.VarChar(200)
   foto1                       String?
@@ -88,4 +88,12 @@ enum TipoReina {
   CAUCASICA
   BUCKFAST
   ARPATIANA
+}
+
+enum ColorReina {
+  BLANCO
+  AMARILLO
+  ROJO
+  VERDE
+  AZUL
 }
