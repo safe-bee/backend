@@ -19,7 +19,8 @@ const apiarioResolvers = {
       return await prisma.apiario.update({ where: { id }, data: { nombre, latitud, longitud, direccion, tipo_ambiente, fecha_creacion } });
     },
     deleteApiario: async (parent, args, { prisma }, info) => {
-      const { id } = args
+      const { id } = args;
+      await prisma.colmena.deleteMany({ where: { apiarioId: id } });
       return await prisma.apiario.delete({ where: { id } });
     },
   },
