@@ -97,3 +97,17 @@ enum ColorReina {
   VERDE
   AZUL
 }
+
+model Zona {
+  id          Int          @id @default(autoincrement())
+  nombre      String       @unique
+  coordenadas Coordenada[]
+}
+
+model Coordenada {
+  id     Int   @id @default(autoincrement())
+  coord1 Float
+  coord2 Float
+  zona   Zona  @relation(fields: [zonaId], references: [id])
+  zonaId Int
+}

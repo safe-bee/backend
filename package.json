@@ -8,6 +8,7 @@
     "test": "serverless-bundle test",
     "compile": "tsc",
     "start": "./node_modules/.bin/nodemon --exec ts-node src/index.ts",
+    "startWin": "nodemon --exec ts-node src/index.ts",
     "prettier": "prettier 'src/**/*.ts'",
     "prettier:fix": "prettier --write 'src/**/*.ts'",
     "eslint": "eslint 'src/**/*.ts'",
@@ -21,7 +22,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@apollo/server": "4.7.5",
+    "@apollo/server": "4.9.3",
     "@types/aws-lambda": "^8.10.64",
     "@types/cors": "^2.8.13",
     "@types/jest": "^26.0.14",

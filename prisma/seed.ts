@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
+
 
 const prisma = new PrismaClient();
 
@@ -57,7 +59,7 @@ async function main() {
       foto1:"https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg"
     },
   });
-
+  await mainZonasSugeridas();
   // console.log({ apiario1, apiario2 });
 }
 

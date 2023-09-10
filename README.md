@@ -4,8 +4,10 @@
 1. Duplicar el archivo `.env.example` y renombrarlo `.env`
 2. Crear una base de datos Postgres con address:port = localhost:5432
 3. Modificar la variable `DATABASE_URL` con tu USER, PASSWORD y DBNAME de Postgres
-4. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
-5. Levantar los seeders: `npx prisma db seed`
+4. instala la interfaz CLI de NestJS: `npm install -g @nestjs/cli`
+5. Instala dependencias: `npm install`. Levantar el servidor: `npm run start`
+6. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
+7. Levantar los seeders: `npx prisma db seed`
 
 ### Comandos útiles para el desarrollo
 - Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`

@@ -10,12 +10,14 @@ import { mergeTypeDefs } from '@graphql-tools/merge'
 import authResolvers from "./resolvers/auth";
 import apiariosResolvers from "./resolvers/apiario";
 import colmenaResolvers from "./resolvers/colmena";
+import zonaSugeridaResolvers from "./resolvers/zonaSugerida";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
 import Common from "./typeDefs/common";
 import Apiario from "./typeDefs/apiario";
 import Colmena from "./typeDefs/colmena";
+import ZonaSugerida from "./typeDefs/zonaSugerida";
 
 const Query = gql`
   type Query {
@@ -30,11 +32,11 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common, ...scalarTypeDefs, Apiario, Colmena];
+const types =  [Query, Auth, Common, ...scalarTypeDefs, Apiario, Colmena, ZonaSugerida];
 
 const typeDefs = mergeTypeDefs(types);
 
-const resolvers = lodash.merge(scalarResolvers, authResolvers, apiariosResolvers, colmenaResolvers);
+const resolvers = lodash.merge(scalarResolvers, authResolvers, apiariosResolvers, colmenaResolvers, zonaSugeridaResolvers);
 
 const schema = {
   typeDefs,
