@@ -2,9 +2,14 @@ import { ApolloServer } from "@apollo/server";
 import { PrismaClient } from '@prisma/client'
 import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
 
-import schema from "./schema/index";
+import schema from "./schema/index.js";
 
-const server = new ApolloServer(schema);
+
+interface MyContext {
+  prisma: PrismaClient
+}
+
+const server = new ApolloServer<MyContext>(schema);
 
 const primsaClient = new PrismaClient();
 

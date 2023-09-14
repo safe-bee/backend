@@ -12,10 +12,17 @@ package:
     - 'prisma/**'
 
 plugins:
-  - serverless-bundle # Package our functions with Webpack
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
   - serverless-webpack-prisma
+  - serverless-plugin-typescript
+
+custom:
+  webpack:
+    packagerOptions:
+      scripts:
+        - prisma generate
+        - find . -name "libquery_engine-*" -not -name "libquery_engine-arm64-openssl-*" | xargs rm
 
 disabledDeprecations:
   - "*" # To disable all deprecation messages
@@ -31,11 +38,14 @@ functions:
   graphql:
     handler: src/apollo-server.graphqlHandler
     events:
-      - http:
-          path: graphql
-          method: post
-          cors: true
-      - http:
-          path: graphql
-          method: get
-          cors: true
+      - httpApi:
+          path: /
+          method: POST
+      - httpApi:
+          path: /
+          method: GET
+    package:
+      include:
+        - ./prisma/schema.prisma
+        - './node_modules/.prisma/client/libquery_engine-*'
+        - './node_modules/prisma/libquery_engine-*'
