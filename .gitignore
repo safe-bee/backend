@@ -4,3 +4,4 @@ yarn.lock
 .env
 ./build
 package-lock.json
+./build
