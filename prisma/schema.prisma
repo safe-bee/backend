@@ -114,12 +114,13 @@ model Coordenada {
 }
 
 model Alerta {
-  id          Int     @id @default(autoincrement())
-  descripcion String  @db.VarChar(200)
-  colmena     Colmena @relation(fields: [colmenaId], references: [id])
+  id          Int       @id @default(autoincrement())
+  descripcion String    @db.VarChar(200)
+  fecha       DateTime  @default(now())
+  colmena     Colmena   @relation(fields: [colmenaId], references: [id])
   colmenaId   Int
   tipo_tarea  TipoTarea
-  terminada   Boolean @default(false)
+  terminada   Boolean   @default(false)
 }
 
 enum TipoTarea {
