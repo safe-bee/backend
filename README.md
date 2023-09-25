@@ -337,6 +337,7 @@ query Alertas{
   alertas {
     id
     descripcion
+    fecha
     colmenaId
     terminada
     tipo_tarea
@@ -349,6 +350,7 @@ query Alerta{
   alerta(id: 1) {
     id
     descripcion
+    fecha
     colmenaId
     terminada
     tipo_tarea
@@ -360,12 +362,14 @@ query Alerta{
 mutation CreateAlerta{
   createAlerta(
     descripcion: "Nueva alerta"
+    fecha: "2023-08-21T20:05:58.829Z"
     colmenaId: 1
     tipo_tarea: TRATAMIENTO
     terminada: false
   ) {
     id
     descripcion
+    fecha
     colmenaId
     terminada
     tipo_tarea
@@ -378,12 +382,14 @@ mutation UpdateAlerta{
   updateAlerta(
     id: 1
     descripcion: "Alerta actualizada"
+    fecha: "2024-08-21T20:05:58.829Z"
     colmenaId: 2
     tipo_tarea: COSECHA
     terminada: true
   ) {
     id
     descripcion
+    fecha
     colmenaId
     terminada
     tipo_tarea
@@ -396,6 +402,7 @@ mutation DeleteAlerta{
   deleteAlerta(id: 1) {
     id
     descripcion
+    fecha
     colmenaId
     terminada
     tipo_tarea

@@ -4,6 +4,7 @@ const alertaDef = gql`
   type Alerta {
     id: Int!
     descripcion: String!
+    fecha: DateTime
     colmenaId: Int!
     terminada: Boolean
     tipo_tarea: TipoTarea!
@@ -25,6 +26,7 @@ const alertaDef = gql`
     createAlerta(
       descripcion: String!
       colmenaId: Int!
+      fecha: DateTime
       tipo_tarea: TipoTarea!
       terminada: Boolean
     ): Alerta!
@@ -33,6 +35,7 @@ const alertaDef = gql`
       id: Int!
       descripcion: String!
       colmenaId: Int!
+      fecha: DateTime
       tipo_tarea: TipoTarea!
       terminada: Boolean
     ): Alerta!
