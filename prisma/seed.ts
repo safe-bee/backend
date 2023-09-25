@@ -4,7 +4,13 @@ import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
 
 const prisma = new PrismaClient();
 
+function getRandomItemFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 async function main() {
+
+  // Apiarios
   const apiario1 = await prisma.apiario.create({
     data: {
       nombre: "Apiario 1",
@@ -25,6 +31,7 @@ async function main() {
     },
   });
 
+  // Colmenas
   const colmena1 = await prisma.colmena.create({
     data: {
       nombre: "Colmena 1",
@@ -32,7 +39,7 @@ async function main() {
       tipo: "LANGSTROTH",
     },
   });
-  
+
   const colmena2 = await prisma.colmena.create({
     data: {
       nombre: "Colmena 2",
@@ -56,11 +63,34 @@ async function main() {
       reina_color: "VERDE",
       reina_fecha_aceptacion: new Date(),
       reina_notas: "God save the Queen",
-      foto1:"https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg"
+      foto1: "https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg",
     },
   });
+
+  // Alertas
+  const tiposTarea = ['TRATAMIENTO', 'COSECHA', 'ALIMENTACION', 'CAMBIO_DE_CUADROS'];
+
+  for (let i = 0; i < 3; i++) {
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 1 - ${i + 1}`,
+        colmenaId: 1,
+        tipo_tarea: getRandomItemFromArray(tiposTarea),
+        terminada: false,
+      },
+    });
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 2 - ${i + 1}`,
+        colmenaId: 2,
+        tipo_tarea: getRandomItemFromArray(tiposTarea),
+        terminada: false,
+      },
+    });
+  }
+
+  // Zonas sugeridas
   await mainZonasSugeridas();
-  // console.log({ apiario1, apiario2 });
 }
 
 main()

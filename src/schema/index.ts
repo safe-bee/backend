@@ -11,6 +11,7 @@ import authResolvers from "./resolvers/auth";
 import apiariosResolvers from "./resolvers/apiario";
 import colmenaResolvers from "./resolvers/colmena";
 import zonaSugeridaResolvers from "./resolvers/zonaSugerida";
+import alertaResolvers from "./resolvers/alerta";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
@@ -18,6 +19,7 @@ import Common from "./typeDefs/common";
 import Apiario from "./typeDefs/apiario";
 import Colmena from "./typeDefs/colmena";
 import ZonaSugerida from "./typeDefs/zonaSugerida";
+import Alerta from "./typeDefs/alerta";
 
 const Query = gql`
   type Query {
@@ -32,11 +34,27 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common, ...scalarTypeDefs, Apiario, Colmena, ZonaSugerida];
+const types = [
+  Query,
+  Auth,
+  Common,
+  ...scalarTypeDefs,
+  Apiario,
+  Colmena,
+  ZonaSugerida,
+  Alerta
+];
 
 const typeDefs = mergeTypeDefs(types);
 
-const resolvers = lodash.merge(scalarResolvers, authResolvers, apiariosResolvers, colmenaResolvers, zonaSugeridaResolvers);
+const resolvers = lodash.merge(
+  scalarResolvers,
+  authResolvers,
+  apiariosResolvers,
+  colmenaResolvers,
+  zonaSugeridaResolvers,
+  alertaResolvers
+);
 
 const schema = {
   typeDefs,

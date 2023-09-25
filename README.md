@@ -145,6 +145,10 @@ query Colmenas {
     id
     nombre
     apiarioId
+    apiario {
+      id
+      nombre
+    }
     tipo
     datos_numero_deeps
     datos_numero_supers
@@ -159,6 +163,12 @@ query Colmenas {
     foto1
     foto2
     foto3
+    alertas {
+      id
+      descripcion
+      tipo_tarea
+      terminada
+    }
   }
 }
 ```
@@ -169,6 +179,10 @@ query Colmena{
     id
     nombre
     apiarioId
+    apiario {
+      id
+      nombre
+    }
     tipo
     datos_numero_deeps
     datos_numero_supers
@@ -183,6 +197,12 @@ query Colmena{
     foto1
     foto2
     foto3
+    alertas {
+      id
+      descripcion
+      tipo_tarea
+      terminada
+    }
   }
 }
 ```
@@ -290,6 +310,95 @@ mutation {
     foto1
     foto2
     foto3
+  }
+}
+```
+
+
+### Zonas Sugeridas:
+
+```graphql
+query ZonasSugeridas {
+  zonasSugeridas {
+    nombre
+    coordenadas {
+      coord1
+      coord2
+    }
+  }
+}
+```
+
+
+### Alertas
+
+```graphql
+query Alertas{
+  alertas {
+    id
+    descripcion
+    colmenaId
+    terminada
+    tipo_tarea
+  }
+}
+```
+
+```graphql
+query Alerta{
+  alerta(id: 1) {
+    id
+    descripcion
+    colmenaId
+    terminada
+    tipo_tarea
+  }
+}
+```
+
+```graphql
+mutation CreateAlerta{
+  createAlerta(
+    descripcion: "Nueva alerta"
+    colmenaId: 1
+    tipo_tarea: TRATAMIENTO
+    terminada: false
+  ) {
+    id
+    descripcion
+    colmenaId
+    terminada
+    tipo_tarea
+  }
+}
+```
+
+```graphql
+mutation UpdateAlerta{
+  updateAlerta(
+    id: 1
+    descripcion: "Alerta actualizada"
+    colmenaId: 2
+    tipo_tarea: COSECHA
+    terminada: true
+  ) {
+    id
+    descripcion
+    colmenaId
+    terminada
+    tipo_tarea
+  }
+}
+```
+
+```graphql
+mutation DeleteAlerta{
+  deleteAlerta(id: 1) {
+    id
+    descripcion
+    colmenaId
+    terminada
+    tipo_tarea
   }
 }
 ```
