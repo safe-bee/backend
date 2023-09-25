@@ -32,7 +32,16 @@ const Query = gql`
 `;
 
 
-const types =  [Query, Auth, Common, ...scalarTypeDefs, Apiario, Colmena, ZonaSugerida];
+const types = [
+  Query,
+  Auth,
+  Common,
+  ...scalarTypeDefs,
+  Apiario,
+  Colmena,
+  ZonaSugerida,
+  Alerta
+];
 
 const typeDefs = mergeTypeDefs(types);
 

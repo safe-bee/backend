@@ -5,6 +5,7 @@ const colmenaDef = gql`
     id: Int!
     nombre: String!
     apiarioId: Int!
+    apiario: Apiario!
     tipo: TipoColmena!
     datos_numero_deeps: String
     datos_numero_supers: String
@@ -19,6 +20,7 @@ const colmenaDef = gql`
     foto1: String
     foto2: String
     foto3: String
+    alertas: [Alerta!]
   }
 
   enum TipoColmena {

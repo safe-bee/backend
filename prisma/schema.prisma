@@ -61,6 +61,7 @@ model Colmena {
   foto1                       String?
   foto2                       String?
   foto3                       String?
+  alertas                     Alerta[]
 }
 
 enum TipoColmena {
@@ -110,4 +111,20 @@ model Coordenada {
   coord2 Float
   zona   Zona  @relation(fields: [zonaId], references: [id])
   zonaId Int
+}
+
+model Alerta {
+  id          Int     @id @default(autoincrement())
+  descripcion String  @db.VarChar(200)
+  colmena     Colmena @relation(fields: [colmenaId], references: [id])
+  colmenaId   Int
+  tipo_tarea  TipoTarea
+  terminada   Boolean @default(false)
+}
+
+enum TipoTarea {
+  TRATAMIENTO
+  COSECHA
+  ALIMENTACION
+  CAMBIO_DE_CUADROS
 }

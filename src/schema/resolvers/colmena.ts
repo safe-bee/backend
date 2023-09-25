@@ -1,11 +1,13 @@
 const colmenaResolvers = {
   Query: {
     colmenas: async (parent, args, { prisma }) => {
-      return await prisma.colmena.findMany();
+      return await prisma.colmena.findMany({
+        include: { apiario: true, alertas: true },
+      });
     },
     colmena: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.colmena.findUnique({ where: { id } });
+      return await prisma.colmena.findUnique({ where: { id }, include: { apiario: true, alertas: true } });
     },      
   },
   Mutation: {
