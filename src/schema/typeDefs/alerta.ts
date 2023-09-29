@@ -33,10 +33,10 @@ const alertaDef = gql`
 
     updateAlerta(
       id: Int!
-      descripcion: String!
-      colmenaId: Int!
+      descripcion: String
+      colmenaId: Int
       fecha: DateTime
-      tipo_tarea: TipoTarea!
+      tipo_tarea: TipoTarea
       terminada: Boolean
     ): Alerta!
 
