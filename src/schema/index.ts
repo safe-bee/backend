@@ -12,6 +12,7 @@ import apiariosResolvers from "./resolvers/apiario";
 import colmenaResolvers from "./resolvers/colmena";
 import zonaSugeridaResolvers from "./resolvers/zonaSugerida";
 import alertaResolvers from "./resolvers/alerta";
+import tareaResolvers from "./resolvers/tarea";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
@@ -20,6 +21,7 @@ import Apiario from "./typeDefs/apiario";
 import Colmena from "./typeDefs/colmena";
 import ZonaSugerida from "./typeDefs/zonaSugerida";
 import Alerta from "./typeDefs/alerta";
+import Tarea from "./typeDefs/tarea";
 
 const Query = gql`
   type Query {
@@ -42,7 +44,8 @@ const types = [
   Apiario,
   Colmena,
   ZonaSugerida,
-  Alerta
+  Alerta,
+  Tarea
 ];
 
 const typeDefs = mergeTypeDefs(types);
@@ -53,7 +56,8 @@ const resolvers = lodash.merge(
   apiariosResolvers,
   colmenaResolvers,
   zonaSugeridaResolvers,
-  alertaResolvers
+  alertaResolvers,
+  tareaResolvers
 );
 
 const schema = {
