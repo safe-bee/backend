@@ -89,6 +89,16 @@ async function main() {
     });
   }
 
+  // Alertas
+  await prisma.tarea.create({
+    data: {
+      fecha: new Date(),
+      colmena: { connect: { id: 1 } },
+      alerta: { connect: { id: 1 } },
+    },
+  });
+
+
   // Zonas sugeridas
   await mainZonasSugeridas();
 }

@@ -411,6 +411,91 @@ mutation DeleteAlerta{
 ```
 
 
+### Tareas
+```graphql
+query Tareas {
+  tareas {
+    id
+    fecha
+    colmenaId
+    alertaId
+    colmena {
+      id
+      nombre
+    }
+    alerta {
+      id
+      descripcion
+      terminada
+      tipo_tarea
+    }
+  }
+}
+```
+
+```graphql
+query Tarea {
+  tarea(id: 1) {
+    id
+    fecha
+    colmenaId
+    alertaId
+    colmena {
+      id
+      nombre
+    }
+    alerta {
+      id
+      descripcion
+      terminada
+      tipo_tarea
+    }
+  }
+}
+```
+
+```graphql
+mutation CreateTarea {
+  createTarea(
+    fecha: "2023-08-30T12:00:00Z"
+    alertaId: 2
+    colmenaId: 1
+  ) {
+    id
+    fecha
+    colmenaId
+    alertaId
+  }
+}
+```
+
+```graphql
+mutation UpdateTarea {
+  updateTarea(
+    id: 1
+    colmenaId: 2
+    alertaId: 2
+  ) {
+    id
+    fecha
+    colmenaId
+    alertaId
+  }
+}
+```
+
+```graphql
+mutation DeleteTarea {
+  deleteTarea(id: 1) {
+    id
+    fecha
+    colmenaId
+    alertaId
+  }
+}
+```
+
+
 ---
 
 (esta parte vino con el readme ↓)

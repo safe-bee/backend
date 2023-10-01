@@ -62,6 +62,7 @@ model Colmena {
   foto2                       String?
   foto3                       String?
   alertas                     Alerta[]
+  Tarea                       Tarea[]
 }
 
 enum TipoColmena {
@@ -121,6 +122,7 @@ model Alerta {
   colmenaId   Int
   tipo_tarea  TipoTarea
   terminada   Boolean   @default(false)
+  Tarea       Tarea[]
 }
 
 enum TipoTarea {
@@ -128,4 +130,13 @@ enum TipoTarea {
   COSECHA
   ALIMENTACION
   CAMBIO_DE_CUADROS
+}
+
+model Tarea {
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime @default(now())
+  colmena   Colmena  @relation(fields: [colmenaId], references: [id])
+  colmenaId Int
+  alerta    Alerta   @relation(fields: [alertaId], references: [id])
+  alertaId  Int
 }

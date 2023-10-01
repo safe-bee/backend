@@ -7,17 +7,21 @@ import { resolvers as scalarResolvers } from 'graphql-scalars';
 
 // import userResolvers from "./resolvers/user";
 import { mergeTypeDefs } from '@graphql-tools/merge'
-//import authResolvers from "./resolvers/auth";
-import apiariosResolvers from "./resolvers/apiario.js";
-import colmenaResolvers from "./resolvers/colmena.js";
-import zonaSugeridaResolvers from "./resolvers/zonaSugerida.js";
+import authResolvers from "./resolvers/auth";
+import apiariosResolvers from "./resolvers/apiario";
+import colmenaResolvers from "./resolvers/colmena";
+import zonaSugeridaResolvers from "./resolvers/zonaSugerida";
+import alertaResolvers from "./resolvers/alerta";
+import tareaResolvers from "./resolvers/tarea";
 
 // import User from "./typeDefs/user";
-import Auth from "./typeDefs/auth.js";
-import Common from "./typeDefs/common.js";
-import Apiario from "./typeDefs/apiario.js";
-import Colmena from "./typeDefs/colmena.js";
-import ZonaSugerida from "./typeDefs/zonaSugerida.js";
+import Auth from "./typeDefs/auth";
+import Common from "./typeDefs/common";
+import Apiario from "./typeDefs/apiario";
+import Colmena from "./typeDefs/colmena";
+import ZonaSugerida from "./typeDefs/zonaSugerida";
+import Alerta from "./typeDefs/alerta";
+import Tarea from "./typeDefs/tarea";
 
 const Query = gql`
   type Query {
@@ -40,12 +44,21 @@ const types = [
   Apiario,
   Colmena,
   ZonaSugerida,
-  Alerta
+  Alerta,
+  Tarea
 ];
 
 const typeDefs = mergeTypeDefs(types);
 
-const resolvers = lodash.merge(scalarResolvers, apiariosResolvers, colmenaResolvers, zonaSugeridaResolvers);
+const resolvers = lodash.merge(
+  scalarResolvers,
+  authResolvers,
+  apiariosResolvers,
+  colmenaResolvers,
+  zonaSugeridaResolvers,
+  alertaResolvers,
+  tareaResolvers
+);
 
 const schema = {
   typeDefs,
