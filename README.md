@@ -169,6 +169,12 @@ query Colmenas {
       tipo_tarea
       terminada
     }
+    tareas {
+      id
+      fecha
+      colmenaId
+      alertaId
+    }
   }
 }
 ```
@@ -202,6 +208,12 @@ query Colmena{
       descripcion
       tipo_tarea
       terminada
+    }
+    tareas {
+      id
+      fecha
+      colmenaId
+      alertaId
     }
   }
 }

@@ -2,12 +2,12 @@ const colmenaResolvers = {
   Query: {
     colmenas: async (parent, args, { prisma }) => {
       return await prisma.colmena.findMany({
-        include: { apiario: true, alertas: true },
+        include: { apiario: true, alertas: true, tareas: true },
       });
     },
     colmena: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.colmena.findUnique({ where: { id }, include: { apiario: true, alertas: true } });
+      return await prisma.colmena.findUnique({ where: { id }, include: { apiario: true, alertas: true, tareas: true } });
     },      
   },
   Mutation: {
