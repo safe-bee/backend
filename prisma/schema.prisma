@@ -62,7 +62,7 @@ model Colmena {
   foto2                       String?
   foto3                       String?
   alertas                     Alerta[]
-  Tarea                       Tarea[]
+  tareas                      Tarea[]
 }
 
 enum TipoColmena {

@@ -89,7 +89,7 @@ async function main() {
     });
   }
 
-  // Alertas
+  // Tareas
   await prisma.tarea.create({
     data: {
       fecha: new Date(),
