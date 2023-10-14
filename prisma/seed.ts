@@ -9,7 +9,6 @@ function getRandomItemFromArray(array) {
 }
 
 async function main() {
-
   // Apiarios
   const apiario1 = await prisma.apiario.create({
     data: {
@@ -68,14 +67,11 @@ async function main() {
   });
 
   // Alertas
-  const tiposTarea = ['TRATAMIENTO', 'COSECHA', 'ALIMENTACION', 'CAMBIO_DE_CUADROS'];
-
   for (let i = 0; i < 3; i++) {
     await prisma.alerta.create({
       data: {
         descripcion: `Alerta para colmena 1 - ${i + 1}`,
         colmenaId: 1,
-        tipo_tarea: getRandomItemFromArray(tiposTarea),
         terminada: false,
       },
     });
@@ -83,21 +79,136 @@ async function main() {
       data: {
         descripcion: `Alerta para colmena 2 - ${i + 1}`,
         colmenaId: 2,
-        tipo_tarea: getRandomItemFromArray(tiposTarea),
         terminada: false,
       },
     });
   }
 
   // Tareas
-  await prisma.tarea.create({
-    data: {
-      fecha: new Date(),
-      colmena: { connect: { id: 1 } },
-      alerta: { connect: { id: 1 } },
-    },
+  // Tareas: Alimentación
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "ALIMENTACION",
+      },
+    });
+    await prisma.tareaAlimentacion.create({
+      data: {
+        tareaId: tarea.id,
+        alimento: "comida",
+        cantidad: 50,
+      },
+    });
+  });
+  // Tareas: Tratamiento
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "TRATAMIENTO",
+      },
+    });
+
+    await prisma.tareaTratamiento.create({
+      data: {
+        tareaId: tarea.id,
+        tipoPlaga: "VARROA",
+        producto: "Producto de tratamiento",
+        dosis: "10 ml",
+      },
+    });
+  });
+  // Tareas: Cosecha
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "COSECHA",
+      },
+    });
+
+    await prisma.tareaCosecha.create({
+      data: {
+        tareaId: tarea.id,
+        tipoUnidad: "LIBRAS",
+        cantidad: 20,
+      },
+    });
+  });
+  // Tareas: Varroa
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "VARROA",
+      },
+    });
+
+    await prisma.tareaVarroa.create({
+      data: {
+        tareaId: tarea.id,
+        tipoMetodo: "ALCOHOL",
+        porcentaje: 5,
+      },
+    });
   });
 
+  // Tareas: Cuadros
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "CAMBIO_DE_CUADROS",
+      },
+    });
+
+    await prisma.tareaCuadros.create({
+      data: {
+        tareaId: tarea.id,
+        cantidad: 8,
+      },
+    });
+  });
+
+  // Tareas: Hibernación
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "HIBERNACION",
+      },
+    });
+
+    await prisma.tareaHibernacion.create({
+      data: {
+        tareaId: tarea.id,
+      },
+    });
+  });
+
+  // Tareas: Muerte
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "MUERTE",
+      },
+    });
+
+    await prisma.tareaMuerte.create({
+      data: {
+        tareaId: tarea.id,
+      },
+    });
+  });
 
   // Zonas sugeridas
   await mainZonasSugeridas();
