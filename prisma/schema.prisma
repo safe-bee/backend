@@ -115,14 +115,14 @@ model Coordenada {
 }
 
 model Alerta {
-  id          Int       @id @default(autoincrement())
-  descripcion String    @db.VarChar(200)
-  fecha       DateTime  @default(now())
-  colmena     Colmena   @relation(fields: [colmenaId], references: [id])
+  id          Int      @id @default(autoincrement())
+  descripcion String   @db.VarChar(200)
+  fecha       DateTime @default(now())
+  colmena     Colmena  @relation(fields: [colmenaId], references: [id])
   colmenaId   Int
-  tipo_tarea  TipoTarea
-  terminada   Boolean   @default(false)
-  Tarea       Tarea[]
+  terminada   Boolean  @default(false)
+  tarea       Tarea?   @relation(fields: [tareaId], references: [id])
+  tareaId     Int?     @unique
 }
 
 enum TipoTarea {
@@ -130,13 +130,90 @@ enum TipoTarea {
   COSECHA
   ALIMENTACION
   CAMBIO_DE_CUADROS
+  VARROA
+  HIBERNACION
+  MUERTE
+  INSPECCION
 }
 
 model Tarea {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @default(now())
-  colmena   Colmena  @relation(fields: [colmenaId], references: [id])
+  id        Int       @id @default(autoincrement())
+  fecha     DateTime  @default(now())
+  colmena   Colmena   @relation(fields: [colmenaId], references: [id])
   colmenaId Int
-  alerta    Alerta   @relation(fields: [alertaId], references: [id])
-  alertaId  Int
+  tipoTarea TipoTarea
+  Alerta    Alerta?
+
+  tareaAlimentacion TareaAlimentacion?
+  tareaTratamiento  TareaTratamiento?
+  tareaCosecha      TareaCosecha?
+  tareaVarroa       TareaVarroa?
+  tareaCuadros      TareaCuadros?
+  tareaHibernacion  TareaHibernacion?
+  tareaMuerte       TareaMuerte?
+}
+
+model TareaAlimentacion {
+  tarea    Tarea   @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId  Int     @id
+  alimento String?
+  cantidad Float
+}
+
+model TareaTratamiento {
+  tarea     Tarea     @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId   Int       @id
+  tipoPlaga TipoPlaga
+  producto  String?
+  dosis     String?
+}
+
+enum TipoPlaga {
+  VARROA
+  NOSEMA
+  POLILLAS
+  OTRAS
+}
+
+model TareaCosecha {
+  tarea      Tarea      @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId    Int        @id
+  tipoUnidad TipoUnidad
+  cantidad   Float
+}
+
+enum TipoUnidad {
+  LIBRAS
+  KILOS
+  CUADROS
+}
+
+model TareaVarroa {
+  tarea      Tarea      @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId    Int        @id
+  tipoMetodo TipoMetodo
+  porcentaje Float
+}
+
+enum TipoMetodo {
+  ALCOHOL
+  DETERGENTE
+  AZUCAR
+  OTRO
+}
+
+model TareaCuadros {
+  tarea    Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId  Int   @id
+  cantidad Int
+}
+
+model TareaHibernacion {
+  tarea   Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId Int   @id
+}
+
+model TareaMuerte {
+  tarea   Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId Int   @id
 }
