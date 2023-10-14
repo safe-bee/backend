@@ -7,14 +7,6 @@ const alertaDef = gql`
     fecha: DateTime
     colmenaId: Int!
     terminada: Boolean
-    tipo_tarea: TipoTarea!
-  }
-
-  enum TipoTarea {
-    TRATAMIENTO
-    COSECHA
-    ALIMENTACION
-    CAMBIO_DE_CUADROS
   }
 
   extend type Query {
@@ -27,7 +19,6 @@ const alertaDef = gql`
       descripcion: String!
       colmenaId: Int!
       fecha: DateTime
-      tipo_tarea: TipoTarea!
       terminada: Boolean
     ): Alerta!
 
@@ -36,7 +27,6 @@ const alertaDef = gql`
       descripcion: String
       colmenaId: Int
       fecha: DateTime
-      tipo_tarea: TipoTarea
       terminada: Boolean
     ): Alerta!
 

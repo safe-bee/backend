@@ -1,3 +1,7 @@
+/**
+ * Este archivo define los tipos y enumeraciones relacionados con la autenticación que se utilizan en el esquema GraphQL.
+ */
+
 enum CognitoErrors {
   USER_EXISTS = "UsernameExistsException",
   INVALID_PASSWORD = "InvalidPasswordException",

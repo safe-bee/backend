@@ -8,8 +8,7 @@ export async function main() {
         await prisma.zona.upsert({
           where: { nombre: nombre }, // Condición de búsqueda
           update: {}, // Datos a actualizar si la zona existe (en este caso, no se actualizan)
-          create: {
-            // Datos a crear si la zona no existe
+          create: { // Datos a crear si la zona no existe            
             nombre: nombre,
             coordenadas: {
               create: coordenadas,
