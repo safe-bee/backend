@@ -15,7 +15,7 @@
 
 
 
-## Comandos de nuestra api de GraphQl
+## Comandos de nuestra API de GraphQL
 
 Ejemplo de query y respuesta:
 
@@ -169,12 +169,6 @@ query Colmenas {
       tipo_tarea
       terminada
     }
-    tareas {
-      id
-      fecha
-      colmenaId
-      alertaId
-    }
   }
 }
 ```
@@ -208,12 +202,6 @@ query Colmena{
       descripcion
       tipo_tarea
       terminada
-    }
-    tareas {
-      id
-      fecha
-      colmenaId
-      alertaId
     }
   }
 }
@@ -352,7 +340,6 @@ query Alertas{
     fecha
     colmenaId
     terminada
-    tipo_tarea
   }
 }
 ```
@@ -365,7 +352,6 @@ query Alerta{
     fecha
     colmenaId
     terminada
-    tipo_tarea
   }
 }
 ```
@@ -376,7 +362,6 @@ mutation CreateAlerta{
     descripcion: "Nueva alerta"
     fecha: "2023-08-21T20:05:58.829Z"
     colmenaId: 1
-    tipo_tarea: TRATAMIENTO
     terminada: false
   ) {
     id
@@ -384,7 +369,6 @@ mutation CreateAlerta{
     fecha
     colmenaId
     terminada
-    tipo_tarea
   }
 }
 ```
@@ -396,7 +380,6 @@ mutation UpdateAlerta{
     descripcion: "Alerta actualizada"
     fecha: "2024-08-21T20:05:58.829Z"
     colmenaId: 2
-    tipo_tarea: COSECHA
     terminada: true
   ) {
     id
@@ -404,7 +387,6 @@ mutation UpdateAlerta{
     fecha
     colmenaId
     terminada
-    tipo_tarea
   }
 }
 ```
@@ -417,7 +399,6 @@ mutation DeleteAlerta{
     fecha
     colmenaId
     terminada
-    tipo_tarea
   }
 }
 ```
@@ -429,17 +410,13 @@ query Tareas {
   tareas {
     id
     fecha
-    colmenaId
-    alertaId
+    tipoTarea
     colmena {
-      id
       nombre
     }
     alerta {
-      id
       descripcion
       terminada
-      tipo_tarea
     }
   }
 }
@@ -451,16 +428,14 @@ query Tarea {
     id
     fecha
     colmenaId
-    alertaId
+    tipoTarea
     colmena {
       id
       nombre
     }
     alerta {
-      id
       descripcion
       terminada
-      tipo_tarea
     }
   }
 }
@@ -510,9 +485,7 @@ mutation DeleteTarea {
 
 ---
 
-(esta parte vino con el readme ↓)
-
-### Requirements
+### Serverless & AWS CLI (Próximamente)
 
 - [Configure your AWS CLI](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 
@@ -522,24 +495,6 @@ To create a new Serverless project.
 
 ```bash
 $ npm install -g serverless
-```
-
-Change directories to backend
-
-```bash
-$ cd ez-trainer/backend
-```
-
-Switch to the `develop` branch.
-
-```bash
-git checkout develop
-```
-
-Install the npm packages
-
-```bash
-$ npm install
 ```
 
 ### Usage
@@ -566,23 +521,6 @@ Deploy a single function
 
 ```bash
 $ serverless deploy function --function get
-```
-
-#### Set up the database
-
-The database for this application runs in the PostgreSQL container.
-The database port `4000` is being mapped to your machine's port `4000` so our application is able to communicate with its database via `localhost`.
-
-Run migrations:
-
-```bash
-npm run migrate
-```
-
-Run seeders:
-
-```bash
-npm run seed
 ```
 
 #### Environment Variables

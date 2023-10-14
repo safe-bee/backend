@@ -125,6 +125,23 @@ model Alerta {
   tareaId     Int?     @unique
 }
 
+model Tarea {
+  id        Int       @id @default(autoincrement())
+  fecha     DateTime  @default(now())
+  colmena   Colmena   @relation(fields: [colmenaId], references: [id])
+  colmenaId Int
+  tipoTarea TipoTarea
+  alerta    Alerta?
+  inspeccion Inspeccion?
+  tareaAlimentacion TareaAlimentacion?
+  tareaTratamiento  TareaTratamiento?
+  tareaCosecha      TareaCosecha?
+  tareaVarroa       TareaVarroa?
+  tareaCuadros      TareaCuadros?
+  // tareaHibernacion  TareaHibernacion?
+  // tareaMuerte       TareaMuerte?
+}
+
 enum TipoTarea {
   TRATAMIENTO
   COSECHA
@@ -136,28 +153,11 @@ enum TipoTarea {
   INSPECCION
 }
 
-model Tarea {
-  id        Int       @id @default(autoincrement())
-  fecha     DateTime  @default(now())
-  colmena   Colmena   @relation(fields: [colmenaId], references: [id])
-  colmenaId Int
-  tipoTarea TipoTarea
-  Alerta    Alerta?
-
-  tareaAlimentacion TareaAlimentacion?
-  tareaTratamiento  TareaTratamiento?
-  tareaCosecha      TareaCosecha?
-  tareaVarroa       TareaVarroa?
-  tareaCuadros      TareaCuadros?
-  tareaHibernacion  TareaHibernacion?
-  tareaMuerte       TareaMuerte?
-}
-
 model TareaAlimentacion {
   tarea    Tarea   @relation(fields: [tareaId], references: [id], onDelete: Cascade)
   tareaId  Int     @id
   alimento String?
-  cantidad Float
+  cantidadAlimentacion Float
 }
 
 model TareaTratamiento {
@@ -179,7 +179,7 @@ model TareaCosecha {
   tarea      Tarea      @relation(fields: [tareaId], references: [id], onDelete: Cascade)
   tareaId    Int        @id
   tipoUnidad TipoUnidad
-  cantidad   Float
+  cantidadCosecha   Float
 }
 
 enum TipoUnidad {
@@ -208,12 +208,29 @@ model TareaCuadros {
   cantidad Int
 }
 
-model TareaHibernacion {
-  tarea   Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId Int   @id
+model Inspeccion {
+  tarea             Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  tareaId           Int   @id
+  clima             Clima?
+  temperatura       Int?
+  estado_cajon      Boolean
+  detalle_cajon     String
+  estado_poblacion  Boolean
+  detalle_poblacion String
+  estado_reina_larvas Boolean
+  detalle_reina_larvas String
+  estado_flora      Boolean
+  detalle_flora     String
+  estado_alimento   Boolean
+  detalle_alimento  String
+  estado_plagas     Boolean
+  detalle_plagas    String
+  foto_inspeccion   String?
 }
 
-model TareaMuerte {
-  tarea   Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId Int   @id
+enum Clima {
+  SOLEADO
+  NUBLADO
+  TORMENTA
+  LLUVIA
 }

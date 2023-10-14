@@ -1,3 +1,7 @@
+/**
+ * Este archivo contiene funciones de servicio para la autenticación, incluyendo la interacción con Amazon Cognito.
+ */
+
 import {
   CognitoUserPool,
   CognitoUserAttribute,

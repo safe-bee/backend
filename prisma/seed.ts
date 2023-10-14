@@ -4,11 +4,11 @@ import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
 
 const prisma = new PrismaClient();
 
-function getRandomItemFromArray(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
+// function getRandomItemFromArray(array) {
+//   return array[Math.floor(Math.random() * array.length)];
+// }
 
-async function main() {
+export async function main() {
   // Apiarios
   const apiario1 = await prisma.apiario.create({
     data: {
@@ -31,7 +31,7 @@ async function main() {
   });
 
   // Colmenas
-  const colmena1 = await prisma.colmena.create({
+  await prisma.colmena.create({
     data: {
       nombre: "Colmena 1",
       apiarioId: apiario1.id,
@@ -39,7 +39,7 @@ async function main() {
     },
   });
 
-  const colmena2 = await prisma.colmena.create({
+  await prisma.colmena.create({
     data: {
       nombre: "Colmena 2",
       apiarioId: apiario1.id,
@@ -47,7 +47,7 @@ async function main() {
     },
   });
 
-  const colmena3 = await prisma.colmena.create({
+  await prisma.colmena.create({
     data: {
       nombre: "Colmena 3",
       apiarioId: apiario2.id,
@@ -98,7 +98,7 @@ async function main() {
       data: {
         tareaId: tarea.id,
         alimento: "comida",
-        cantidad: 50,
+        cantidadAlimentacion: 50,
       },
     });
   });
@@ -135,7 +135,7 @@ async function main() {
       data: {
         tareaId: tarea.id,
         tipoUnidad: "LIBRAS",
-        cantidad: 20,
+        cantidadCosecha: 20,
       },
     });
   });
@@ -178,7 +178,7 @@ async function main() {
 
   // Tareas: Hibernación
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    await prisma.tarea.create({
       data: {
         fecha: new Date(),
         colmenaId: 1,
@@ -186,16 +186,11 @@ async function main() {
       },
     });
 
-    await prisma.tareaHibernacion.create({
-      data: {
-        tareaId: tarea.id,
-      },
-    });
   });
 
   // Tareas: Muerte
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    await prisma.tarea.create({
       data: {
         fecha: new Date(),
         colmenaId: 1,
@@ -203,12 +198,40 @@ async function main() {
       },
     });
 
-    await prisma.tareaMuerte.create({
+  });
+
+  // Tareas: Inspección
+  await prisma.$transaction(async (prisma) => {
+    const tarea = await prisma.tarea.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoTarea: "INSPECCION",
+      },
+    });
+
+    await prisma.inspeccion.create({
       data: {
         tareaId: tarea.id,
+        clima: "SOLEADO",
+        temperatura: 25,
+        estado_cajon: true,
+        detalle_cajon: "Todo bien",
+        estado_poblacion: true,
+        detalle_poblacion: "Población sana",
+        estado_reina_larvas: true,
+        detalle_reina_larvas: "Reina y larvas en buen estado",
+        estado_flora: true,
+        detalle_flora: "Flora adecuada",
+        estado_alimento: true,
+        detalle_alimento: "Alimento suficiente",
+        estado_plagas: false,
+        detalle_plagas: "Sin plagas",
+        foto_inspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
       },
     });
   });
+  
 
   // Zonas sugeridas
   await mainZonasSugeridas();
