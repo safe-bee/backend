@@ -15,7 +15,7 @@ function createTareaResolver(tipoTarea, nombrePrisma) {
 
       // Para 'HIBERNACION' y 'MUERTE', no creamos una tarea específica
       if (tipoTarea === "HIBERNACION" || tipoTarea === "MUERTE") {
-        return { tareaId: tarea.id };
+        return tarea;
       }
   
       const tareaEspecifica = await prisma[nombrePrisma].create({
@@ -31,7 +31,7 @@ function createTareaResolver(tipoTarea, nombrePrisma) {
     return async (parent, args, { prisma }) => {
 
         if (tipoTarea === "HIBERNACION" || tipoTarea === "MUERTE") {
-            return await prisma.tarea.findUnique({ where: { id: args.id }})}
+            return await prisma.tarea.findUnique({ where: { id: parseInt(args.id, 10) }})}
 
 
       const tareaEspecifica = await prisma[tipoTarea].findUnique({
