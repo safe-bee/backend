@@ -13,6 +13,7 @@ import colmenaResolvers from "./resolvers/colmena";
 import zonaSugeridaResolvers from "./resolvers/zonaSugerida";
 import alertaResolvers from "./resolvers/alerta";
 import tareaResolvers from "./resolvers/tarea";
+import tareaEspecificaResolvers from "./resolvers/tareaEspecifica";
 
 // import User from "./typeDefs/user";
 import Auth from "./typeDefs/auth";
@@ -57,7 +58,8 @@ const resolvers = lodash.merge(
   colmenaResolvers,
   zonaSugeridaResolvers,
   alertaResolvers,
-  tareaResolvers
+  tareaResolvers,
+  tareaEspecificaResolvers
 );
 
 const schema = {
