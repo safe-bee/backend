@@ -481,7 +481,86 @@ mutation DeleteTarea {
   }
 }
 ```
+### Tareas específicas
+```graphql
+mutation {
+  createInspeccion(
+    colmenaId: 3,
+    clima: SOLEADO,
+    temperatura: 22,
+    estado_cajon: true,
+    detalle_cajon: "Todo en orden",
+    estado_poblacion: true,
+    detalle_poblacion: "Población saludable",
+    estado_reina_larvas: true,
+    detalle_reina_larvas: "Reina activa",
+    estado_flora: true,
+    detalle_flora: "Muchas flores",
+    estado_alimento: true,
+    detalle_alimento: "Suficiente alimento",
+    estado_plagas: false,
+    detalle_plagas: "Sin plagas",
+  ) {
+    tareaId
+    clima
+    temperatura
+  }
+}
+```
+Para el id hay que usar el que devolvio la query anterior
 
+```graphql
+query inspeccion{
+  inspeccion(id: 25) {
+    tareaId
+    clima
+    temperatura
+    estado_cajon
+    detalle_cajon
+    estado_poblacion
+    detalle_poblacion
+    estado_reina_larvas
+    detalle_reina_larvas
+    estado_flora
+    detalle_flora
+    estado_alimento
+    detalle_alimento
+    estado_plagas
+    detalle_plagas
+    foto_inspeccion
+    tarea {
+      fecha
+      colmenaId
+    }
+  }  
+}
+```
+```graphql
+{
+  "data": {
+    "createAlimentacion": {
+      "tareaId": 29,
+      "alimento": "Azúcar",
+      "cantidadAlimentacion": 2.5
+    }
+  }
+}
+```
+Para el id hay que usar el que devolvio la query anterior
+
+```graphql
+query getAlimentacion{
+  alimentacion(id: 29) {
+    tareaId
+    alimento
+    cantidadAlimentacion
+    tarea {
+      fecha
+      colmenaId
+    }
+  }
+}
+```
 
 ---
 

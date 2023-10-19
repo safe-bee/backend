@@ -43,7 +43,6 @@ const tareaResolvers = {
 
       return tareas.map(tarea => {
         // Extrae solo los detalles que no son null
-
          const detalles = {          
            ...(tarea.inspeccion && { inspeccion: tarea.inspeccion }),
            ...(tarea.tareaAlimentacion && { tareaAlimentacion: tarea.tareaAlimentacion }),
@@ -61,7 +60,7 @@ const tareaResolvers = {
     },
     tarea: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.tarea.findUnique({ where: { id },         include: {
+      return await prisma.tarea.findUnique({ where: { id }, include: {
         colmena: true,
         alerta: true,
         inspeccion: true,
