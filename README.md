@@ -340,6 +340,13 @@ query Alertas{
     fecha
     colmenaId
     terminada
+    tipo_alerta
+    tarea {
+      id
+      fecha
+      colmenaId
+      tipoTarea
+    }
   }
 }
 ```
@@ -352,6 +359,13 @@ query Alerta{
     fecha
     colmenaId
     terminada
+    tipo_alerta
+    tarea {
+      id
+      fecha
+      colmenaId
+      tipoTarea
+    }
   }
 }
 ```
@@ -363,6 +377,7 @@ mutation CreateAlerta{
     fecha: "2023-08-21T20:05:58.829Z"
     colmenaId: 1
     terminada: false
+    tareaId: 8
   ) {
     id
     descripcion

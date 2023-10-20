@@ -66,24 +66,6 @@ export async function main() {
     },
   });
 
-  // Alertas
-  for (let i = 0; i < 3; i++) {
-    await prisma.alerta.create({
-      data: {
-        descripcion: `Alerta para colmena 1 - ${i + 1}`,
-        colmenaId: 1,
-        terminada: false,
-      },
-    });
-    await prisma.alerta.create({
-      data: {
-        descripcion: `Alerta para colmena 2 - ${i + 1}`,
-        colmenaId: 2,
-        terminada: false,
-      },
-    });
-  }
-
   // Tareas
   // Tareas: Alimentación
   await prisma.$transaction(async (prisma) => {
@@ -232,6 +214,26 @@ export async function main() {
     });
   });
   
+  // Alertas
+  for (let i = 0; i < 3; i++) {
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 1 - ${i + 1}`,
+        colmenaId: 1,
+        terminada: false,
+        tareaId: 1+i*2,
+      },
+    });
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 2 - ${i + 1}`,
+        colmenaId: 2,
+        terminada: false,
+        tareaId: 2+i*2,
+      },
+    });
+  }
+
 
   // Zonas sugeridas
   await mainZonasSugeridas();
