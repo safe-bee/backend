@@ -52,8 +52,6 @@ export async function main() {
       nombre: "Colmena 3",
       apiarioId: apiario2.id,
       tipo: "TRADICIONAL",
-      datos_numero_deeps: "2",
-      datos_numero_supers: "3",
       datos_total_cuadros: "20",
       datos_color: "Amarillo",
       datos_origen: "NUCLEO",
