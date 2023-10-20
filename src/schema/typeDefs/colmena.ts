@@ -7,8 +7,6 @@ const colmenaDef = gql`
     apiarioId: Int!
     apiario: Apiario!
     tipo: TipoColmena!
-    datos_numero_deeps: String
-    datos_numero_supers: String
     datos_total_cuadros: String
     datos_color: String
     datos_origen: OrigenColmena
@@ -69,8 +67,6 @@ const colmenaDef = gql`
       nombre: String!
       apiarioId: Int!
       tipo: TipoColmena!
-      datos_numero_deeps: String
-      datos_numero_supers: String
       datos_total_cuadros: String
       datos_color: String
       datos_origen: OrigenColmena
@@ -89,8 +85,6 @@ const colmenaDef = gql`
       nombre: String!
       apiarioId: Int!
       tipo: TipoColmena!
-      datos_numero_deeps: String
-      datos_numero_supers: String
       datos_total_cuadros: String
       datos_color: String
       datos_origen: OrigenColmena

@@ -150,8 +150,6 @@ query Colmenas {
       nombre
     }
     tipo
-    datos_numero_deeps
-    datos_numero_supers
     datos_total_cuadros
     datos_color
     datos_origen
@@ -184,8 +182,6 @@ query Colmena{
       nombre
     }
     tipo
-    datos_numero_deeps
-    datos_numero_supers
     datos_total_cuadros
     datos_color
     datos_origen
@@ -213,8 +209,6 @@ mutation {
     nombre: "Nueva Colmena"
     apiarioId: 2
     tipo: TOPBAR
-    datos_numero_deeps: "2"
-    datos_numero_supers: "3"
     datos_total_cuadros: "20"
     datos_color: "Amarillo"
     datos_origen: ENJAMBRE
@@ -231,8 +225,6 @@ mutation {
     nombre
     apiarioId
     tipo
-    datos_numero_deeps
-    datos_numero_supers
     datos_total_cuadros
     datos_color
     datos_origen
@@ -255,8 +247,6 @@ mutation {
     nombre: "Colmena Editada"
     apiarioId: 2
     tipo: TOPBAR
-    datos_numero_deeps: "2"
-    datos_numero_supers: "3"
     datos_total_cuadros: "20"
     datos_color: "Amarillo"
     datos_origen: ENJAMBRE
@@ -273,8 +263,6 @@ mutation {
     nombre
     apiarioId
     tipo
-    datos_numero_deeps
-    datos_numero_supers
     datos_total_cuadros
     datos_color
     datos_origen
@@ -297,8 +285,6 @@ mutation {
     nombre
     apiarioId
     tipo
-    datos_numero_deeps
-    datos_numero_supers
     datos_total_cuadros
     datos_color
     datos_origen
