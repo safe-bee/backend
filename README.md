@@ -503,6 +503,25 @@ mutation DeleteRegistro {
   }
 }
 ```
+
+```graphql
+query HistorialRegistros {
+  registros (colmenaId: 1) {
+    monthYear
+    registros {
+      id
+      fecha
+      colmenaId
+      tipoRegistro
+      detalles {
+        header
+        value
+      }
+    }
+  }
+}
+```
+
 ### Registros específicas
 ```graphql
 mutation {

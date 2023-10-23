@@ -7,7 +7,7 @@ const registroDef = gql`
     colmenaId: Int!
     colmena: Colmena
     tipoRegistro: TipoRegistro!
-    detalles: DetallesRegistro
+    detalles: [Detalle!]!
     tarea: Tarea
   }
 
@@ -22,7 +22,10 @@ const registroDef = gql`
     INSPECCION
   }
 
-  union DetallesRegistro = RegistroAlimentacion | RegistroTratamiento | RegistroCosecha | RegistroVarroa | RegistroCuadros | Inspeccion | DetalleVacio
+  type Detalle {
+    header: String!
+    value: String!
+  }
 
   type RegistroAlimentacion {
     registroId: Int!
