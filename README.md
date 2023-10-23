@@ -326,7 +326,7 @@ query Alertas{
     fecha
     colmenaId
     terminada
-    tipo_alerta
+    tipoTarea
     tarea {
       id
       fecha
@@ -345,7 +345,7 @@ query Alerta{
     fecha
     colmenaId
     terminada
-    tipo_alerta
+    tipoTarea
     tarea {
       id
       fecha
@@ -363,13 +363,14 @@ mutation CreateAlerta{
     fecha: "2023-08-21T20:05:58.829Z"
     colmenaId: 1
     terminada: false
-    tareaId: 8
+    tipoTarea: ALIMENTACION
   ) {
     id
     descripcion
     fecha
     colmenaId
     terminada
+    tipoTarea
   }
 }
 ```
@@ -382,12 +383,14 @@ mutation UpdateAlerta{
     fecha: "2024-08-21T20:05:58.829Z"
     colmenaId: 2
     terminada: true
+    tipoTarea: VARROA
   ) {
     id
     descripcion
     fecha
     colmenaId
     terminada
+    tipoTarea
   }
 }
 ```
@@ -400,6 +403,7 @@ mutation DeleteAlerta{
     fecha
     colmenaId
     terminada
+    tipoTarea
   }
 }
 ```

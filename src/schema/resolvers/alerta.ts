@@ -1,28 +1,11 @@
 const alertaResolvers = {
   Query: {
     alertas: async (parent, args, { prisma }) => {
-      const alertas = await prisma.alerta.findMany({ include: { tarea: true } });
-
-      return alertas.map((alerta) => {
-        return {
-          ...alerta,
-          tipo_alerta: alerta.tarea ? alerta.tarea.tipoTarea : null,
-        };
-      });
-
+      return await prisma.alerta.findMany({ include: { tarea: true } });
     },
     alerta: async (parent, args, { prisma }) => {
       const { id } = args;
-      const alerta = await prisma.alerta.findUnique({ where: { id }, include: { tarea: true } });
-
-      if (alerta) {
-        return {
-          ...alerta,
-          tipo_alerta: alerta.tarea ? alerta.tarea.tipoTarea : null,
-        };
-      }
-
-      return null;
+      return prisma.alerta.findUnique({ where: { id }, include: { tarea: true } });
     },      
   },
   Mutation: {
