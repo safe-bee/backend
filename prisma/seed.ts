@@ -69,7 +69,7 @@ export async function main() {
   await prisma.$transaction(async (prisma) => {
     const tarea = await prisma.tarea.create({
       data: {
-        fecha: new Date(),
+        fecha: new Date(2023, 8, 15),
         colmenaId: 1,
         tipoTarea: "ALIMENTACION",
       },
@@ -86,7 +86,7 @@ export async function main() {
   await prisma.$transaction(async (prisma) => {
     const tarea = await prisma.tarea.create({
       data: {
-        fecha: new Date(),
+        fecha: new Date(2023, 9, 10),
         colmenaId: 1,
         tipoTarea: "TRATAMIENTO",
       },
@@ -123,7 +123,7 @@ export async function main() {
   await prisma.$transaction(async (prisma) => {
     const tarea = await prisma.tarea.create({
       data: {
-        fecha: new Date(),
+        fecha: new Date(2023, 8, 11),
         colmenaId: 1,
         tipoTarea: "VARROA",
       },
@@ -160,7 +160,7 @@ export async function main() {
   await prisma.$transaction(async (prisma) => {
     await prisma.tarea.create({
       data: {
-        fecha: new Date(),
+        fecha: new Date(2023, 9, 22),
         colmenaId: 1,
         tipoTarea: "HIBERNACION",
       },
@@ -172,7 +172,7 @@ export async function main() {
   await prisma.$transaction(async (prisma) => {
     await prisma.tarea.create({
       data: {
-        fecha: new Date(),
+        fecha: new Date(2023, 10, 7),
         colmenaId: 1,
         tipoTarea: "MUERTE",
       },

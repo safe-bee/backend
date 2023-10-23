@@ -3,3 +3,4 @@ backend
 yarn.lock
 .env
 ./build
+package-lock.json
