@@ -18,8 +18,8 @@ const colmenaDef = gql`
     foto1: String
     foto2: String
     foto3: String
-    alertas: [Alerta!]
     tareas: [Tarea!]
+    registros: [Registro!]
   }
 
   enum TipoColmena {

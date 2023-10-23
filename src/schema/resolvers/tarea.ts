@@ -1,31 +1,31 @@
-function groupByDate(tareas) {
-  const groupedTareas = {};
+function groupByDate(registros) {
+  const groupedRegistros = {};
 
-  tareas.forEach((tarea) => {
-    const date = new Date(tarea.fecha);
+  registros.forEach((registro) => {
+    const date = new Date(registro.fecha);
     const monthYear = `${date.toLocaleString("default", {
       month: "long",
     })} ${date.getFullYear()}`;
 
-    if (!groupedTareas[monthYear]) {
-      groupedTareas[monthYear] = { tareas: [] };
+    if (!groupedRegistros[monthYear]) {
+      groupedRegistros[monthYear] = { registros: [] };
     }
 
-    groupedTareas[monthYear].tareas.push(tarea);
+    groupedRegistros[monthYear].registros.push(registro);
   });
 
-  return groupedTareas;
+  return groupedRegistros;
 }
 
-const tareaResolvers = {
-  DetallesTarea: {
+const registroResolvers = {
+  DetallesRegistro: {
     __resolveType(obj, context, info) {
       console.log("Objeto en __resolveType: ", obj);
       // console.log("Objeto recibido en __resolveType:", obj.items);
 
-      if (obj.tipoTarea) {
+      if (obj.tipoRegistro) {
         // Capitaliza el primer carácter y devuelve
-        return obj.tipoTarea.charAt(0).toUpperCase() + obj.tipoTarea.slice(1);
+        return obj.tipoRegistro.charAt(0).toUpperCase() + obj.tipoRegistro.slice(1);
       }
 
       return "DetalleVacio";
@@ -33,57 +33,57 @@ const tareaResolvers = {
   },
 
   Query: {
-    tareas: async (parent, args, { prisma }) => {
+    registros: async (parent, args, { prisma }) => {
       console.log("Args recibidos:", args);
-      const { colmenaId, tipoTarea } = args;
-      const tareas = await prisma.tarea.findMany({
-        where: { colmenaId, tipoTarea },
+      const { colmenaId, tipoRegistro } = args;
+      const registros = await prisma.registro.findMany({
+        where: { colmenaId, tipoRegistro },
         include: {
           colmena: true,
-          alerta: true,
+          tarea: true,
           inspeccion: true,
-          tareaAlimentacion: true,
-          tareaTratamiento: true,
-          tareaCosecha: true,
-          tareaVarroa: true,
-          tareaCuadros: true,
+          registroAlimentacion: true,
+          registroTratamiento: true,
+          registroCosecha: true,
+          registroVarroa: true,
+          registroCuadros: true,
         },
       });
-      // console.log("Tareas desde la DB:", tareas);
+      // console.log("Registros desde la DB:", registros);
 
-      // Ordena las tareas por fecha de forma descendente
-      const tareasOrdenadas = tareas.sort(
+      // Ordena las registros por fecha de forma descendente
+      const registrosOrdenadas = registros.sort(
         (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
       );
 
-      const tareasWithDetails = tareasOrdenadas.map((tarea) => {
+      const registrosWithDetails = registrosOrdenadas.map((registro) => {
         //  const detalles = {
-        //    ...(tarea.inspeccion && { inspeccion: tarea.inspeccion }),
-        //    ...(tarea.tareaAlimentacion && { tareaAlimentacion: tarea.tareaAlimentacion }),
-        //    ...(tarea.tareaTratamiento && { tareaTratamiento: tarea.tareaTratamiento }),
-        //    ...(tarea.tareaCosecha && { tareaCosecha: tarea.tareaCosecha }),
-        //    ...(tarea.tareaVarroa && { tareaVarroa: tarea.tareaVarroa }),
-        //    ...(tarea.tareaCuadros && { tareaCuadros: tarea.tareaCuadros }),
+        //    ...(registro.inspeccion && { inspeccion: registro.inspeccion }),
+        //    ...(registro.registroAlimentacion && { registroAlimentacion: registro.registroAlimentacion }),
+        //    ...(registro.registroTratamiento && { registroTratamiento: registro.registroTratamiento }),
+        //    ...(registro.registroCosecha && { registroCosecha: registro.registroCosecha }),
+        //    ...(registro.registroVarroa && { registroVarroa: registro.registroVarroa }),
+        //    ...(registro.registroCuadros && { registroCuadros: registro.registroCuadros }),
         //  };
 
-        const detalleKeys = Object.keys(tarea).filter(
+        const detalleKeys = Object.keys(registro).filter(
           (key) =>
-            (key.startsWith("tarea") || key === "inspeccion") && tarea[key]
+            (key.startsWith("registro") || key === "inspeccion") && registro[key]
         );
 
-        let detalles: { [key: string]: any; tipoTarea?: string } = {};
+        let detalles: { [key: string]: any; tipoRegistro?: string } = {};
         if (detalleKeys.length > 0) {
-          detalles = { ...tarea[detalleKeys[0]], tipoTarea: detalleKeys[0] };
+          detalles = { ...registro[detalleKeys[0]], tipoRegistro: detalleKeys[0] };
           if (detalleKeys[0] === "inspeccion") {
-            detalles.tipoTarea = "Inspeccion"; // Manejo especial para 'inspeccion'
+            detalles.tipoRegistro = "Inspeccion"; // Manejo especial para 'inspeccion'
           }
         }
 
-        // const detallesKey = Object.keys(tarea).find(key => key.startsWith('tarea') && tarea[key]);
-        // const detalles = detallesKey ? tarea[detallesKey] : {};
+        // const detallesKey = Object.keys(registro).find(key => key.startsWith('registro') && registro[key]);
+        // const detalles = detallesKey ? registro[detallesKey] : {};
 
         const bloque = {
-          ...tarea,
+          ...registro,
           detalles,
         };
 
@@ -92,48 +92,48 @@ const tareaResolvers = {
         return bloque;
       });
 
-      const groupedTareas = groupByDate(tareasWithDetails);
+      const groupedRegistros = groupByDate(registrosWithDetails);
 
-      // console.log(JSON.stringify(groupedTareas, null, 2));
+      // console.log(JSON.stringify(groupedRegistros, null, 2));
 
-      const result = Object.keys(groupedTareas).map((monthYear) => ({
+      const result = Object.keys(groupedRegistros).map((monthYear) => ({
         monthYear,
-        tareas: groupedTareas[monthYear].tareas,
+        registros: groupedRegistros[monthYear].registros,
       }));
       // console.log('Result:', result);
       return result;
     },
 
-    tarea: async (parent, args, { prisma }) => {
+    registro: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.tarea.findUnique({
+      return await prisma.registro.findUnique({
         where: { id },
         include: {
           colmena: true,
-          alerta: true,
+          tarea: true,
           inspeccion: true,
-          tareaAlimentacion: true,
-          tareaTratamiento: true,
-          tareaCosecha: true,
-          tareaVarroa: true,
-          tareaCuadros: true,
+          registroAlimentacion: true,
+          registroTratamiento: true,
+          registroCosecha: true,
+          registroVarroa: true,
+          registroCuadros: true,
         },
       });
     },
   },
   Mutation: {
-    createTarea: async (parent, args, { prisma }) => {
-      return await prisma.tarea.create({ data: { ...args } });
+    createRegistro: async (parent, args, { prisma }) => {
+      return await prisma.registro.create({ data: { ...args } });
     },
-    updateTarea: async (parent, args, { prisma }) => {
+    updateRegistro: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
-      return await prisma.tarea.update({ where: { id }, data });
+      return await prisma.registro.update({ where: { id }, data });
     },
-    deleteTarea: async (parent, args, { prisma }) => {
+    deleteRegistro: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.tarea.delete({ where: { id } });
+      return await prisma.registro.delete({ where: { id } });
     },
   },
 };
 
-export default tareaResolvers;
+export default registroResolvers;

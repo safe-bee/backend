@@ -1,17 +1,17 @@
 import gql from 'graphql-tag';
 
-const tareaDef = gql`
-  type Tarea {    
+const registroDef = gql`
+  type Registro {    
     id: Int!
     fecha: DateTime!
     colmenaId: Int!
     colmena: Colmena
-    tipoTarea: TipoTarea!
-    detalles: DetallesTarea
-    alerta: Alerta
+    tipoRegistro: TipoRegistro!
+    detalles: DetallesRegistro
+    tarea: Tarea
   }
 
-  enum TipoTarea {
+  enum TipoRegistro {
     TRATAMIENTO
     COSECHA
     ALIMENTACION
@@ -22,18 +22,18 @@ const tareaDef = gql`
     INSPECCION
   }
 
-  union DetallesTarea = TareaAlimentacion | TareaTratamiento | TareaCosecha | TareaVarroa | TareaCuadros | Inspeccion | DetalleVacio
+  union DetallesRegistro = RegistroAlimentacion | RegistroTratamiento | RegistroCosecha | RegistroVarroa | RegistroCuadros | Inspeccion | DetalleVacio
 
-  type TareaAlimentacion {
-    tareaId: Int!
-    tarea: Tarea!
+  type RegistroAlimentacion {
+    registroId: Int!
+    registro: Registro!
     alimento: String
     cantidadAlimentacion: Float
   }
 
-  type TareaTratamiento {
-    tareaId: Int!
-    tarea: Tarea!
+  type RegistroTratamiento {
+    registroId: Int!
+    registro: Registro!
     tipoPlaga: TipoPlaga
     producto: String
     dosis: String
@@ -46,9 +46,9 @@ const tareaDef = gql`
     OTRAS
   }
 
-  type TareaCosecha {
-    tareaId: Int!
-    tarea: Tarea!
+  type RegistroCosecha {
+    registroId: Int!
+    registro: Registro!
     tipoUnidad: TipoUnidad
     cantidadCosecha: Int
   }
@@ -59,9 +59,9 @@ const tareaDef = gql`
     CUADROS
   }
 
-  type TareaVarroa {
-    tareaId: Int!
-    tarea: Tarea!
+  type RegistroVarroa {
+    registroId: Int!
+    registro: Registro!
     tipoMetodo: TipoMetodo
     porcentaje: Float
   }
@@ -73,15 +73,15 @@ const tareaDef = gql`
     OTRO
   }
 
-  type TareaCuadros {
-    tareaId: Int!
-    tarea: Tarea!
+  type RegistroCuadros {
+    registroId: Int!
+    registro: Registro!
     cantidad: Int
   }
 
   type Inspeccion {
-    tareaId: Int!
-    tarea: Tarea!
+    registroId: Int!
+    registro: Registro!
     clima: Clima
     temperatura: Int
     estado_cajon: Boolean
@@ -110,59 +110,59 @@ const tareaDef = gql`
     descripcion: String
   }
 
-  type TareaGroup {
+  type RegistroGroup {
     monthYear: String!
-    tareas: [Tarea!]!
+    registros: [Registro!]!
   }
 
   extend type Query {
-    tareas(colmenaId: Int, tipoTarea: TipoTarea): [TareaGroup!]!
-    tarea(id: Int!): Tarea
+    registros(colmenaId: Int, tipoRegistro: TipoRegistro): [RegistroGroup!]!
+    registro(id: Int!): Registro
     inspeccion(id: Int!): Inspeccion
-    tratamiento(id: ID!): TareaTratamiento
-    cosecha(id: ID!): TareaCosecha
-    alimentacion(id: ID!): TareaAlimentacion
-    cambio_de_cuadros(id: ID!): TareaCuadros
-    varroa(id: ID!): TareaVarroa
-    hibernacion(id: ID!): Tarea
-    muerte(id: ID!): Tarea
+    tratamiento(id: ID!): RegistroTratamiento
+    cosecha(id: ID!): RegistroCosecha
+    alimentacion(id: ID!): RegistroAlimentacion
+    cambio_de_cuadros(id: ID!): RegistroCuadros
+    varroa(id: ID!): RegistroVarroa
+    hibernacion(id: ID!): Registro
+    muerte(id: ID!): Registro
   }
 
   extend type Mutation {
   
-    createTarea(
+    createRegistro(
       fecha: DateTime!
       colmenaId: Int!
-      tipoTarea: TipoTarea!
-    ): Tarea!
+      tipoRegistro: TipoRegistro!
+    ): Registro!
 
-    updateTarea(
+    updateRegistro(
       id: Int!, 
       fecha: DateTime
       colmenaId: Int
-    ): Tarea!
+    ): Registro!
 
-    deleteTarea(id: Int!): Tarea!
+    deleteRegistro(id: Int!): Registro!
 
-    createInspeccion(colmenaId: ID!, tareaId: ID, clima: Clima, temperatura: Int, estado_cajon: Boolean, detalle_cajon: String, estado_poblacion: Boolean, detalle_poblacion: String, estado_reina_larvas: Boolean, detalle_reina_larvas: String, estado_flora: Boolean, detalle_flora: String, estado_alimento: Boolean, detalle_alimento: String, estado_plagas: Boolean, detalle_plagas: String, foto_inspeccion: String): Inspeccion
-    createTratamiento(colmenaId: ID!, tipoPlaga: TipoPlaga, producto: String, dosis: String): TareaTratamiento
-    createCosecha(colmenaId: ID!, tipoUnidad: TipoUnidad, cantidadCosecha: Float): TareaCosecha
-    createAlimentacion(colmenaId: ID!, alimento: String, cantidadAlimentacion: Float): TareaAlimentacion
-    createCambioDeCuadros(colmenaId: ID!, cantidad: Int): TareaCuadros
-    createVarroa(colmenaId: ID!, tareaId: ID, tipoMetodo: TipoMetodo, porcentaje: Float): TareaVarroa
-    createHibernacion(colmenaId: ID!): Tarea
-    createMuerte(colmenaId: ID!): Tarea
+    createInspeccion(colmenaId: ID!, registroId: ID, clima: Clima, temperatura: Int, estado_cajon: Boolean, detalle_cajon: String, estado_poblacion: Boolean, detalle_poblacion: String, estado_reina_larvas: Boolean, detalle_reina_larvas: String, estado_flora: Boolean, detalle_flora: String, estado_alimento: Boolean, detalle_alimento: String, estado_plagas: Boolean, detalle_plagas: String, foto_inspeccion: String): Inspeccion
+    createTratamiento(colmenaId: ID!, tipoPlaga: TipoPlaga, producto: String, dosis: String): RegistroTratamiento
+    createCosecha(colmenaId: ID!, tipoUnidad: TipoUnidad, cantidadCosecha: Float): RegistroCosecha
+    createAlimentacion(colmenaId: ID!, alimento: String, cantidadAlimentacion: Float): RegistroAlimentacion
+    createCambioDeCuadros(colmenaId: ID!, cantidad: Int): RegistroCuadros
+    createVarroa(colmenaId: ID!, registroId: ID, tipoMetodo: TipoMetodo, porcentaje: Float): RegistroVarroa
+    createHibernacion(colmenaId: ID!): Registro
+    createMuerte(colmenaId: ID!): Registro
     
     deleteInspeccion(id: ID!): Inspeccion
-    deleteTratamiento(id: ID!): TareaTratamiento
-    deleteCosecha(id: ID!): TareaCosecha
-    deleteAlimentacion(id: ID!): TareaAlimentacion
-    deleteCambioDeCuadros(id: ID!): TareaCuadros
-    deleteVarroa(id: ID!): TareaVarroa
-    deleteHibernacion(id: ID!): Tarea
-    deleteMuerte(id: ID!): Tarea
+    deleteTratamiento(id: ID!): RegistroTratamiento
+    deleteCosecha(id: ID!): RegistroCosecha
+    deleteAlimentacion(id: ID!): RegistroAlimentacion
+    deleteCambioDeCuadros(id: ID!): RegistroCuadros
+    deleteVarroa(id: ID!): RegistroVarroa
+    deleteHibernacion(id: ID!): Registro
+    deleteMuerte(id: ID!): Registro
   }
 `;
 
-export default tareaDef;
+export default registroDef;
 
