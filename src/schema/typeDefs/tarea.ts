@@ -22,7 +22,7 @@ const tareaDef = gql`
     INSPECCION
   }
 
-  union DetallesTarea = TareaAlimentacion | TareaTratamiento | TareaCosecha | TareaVarroa | TareaCuadros | Inspeccion
+  union DetallesTarea = TareaAlimentacion | TareaTratamiento | TareaCosecha | TareaVarroa | TareaCuadros | Inspeccion | DetalleVacio
 
   type TareaAlimentacion {
     tareaId: Int!
@@ -106,8 +106,17 @@ const tareaDef = gql`
     LLUVIA
   }
 
+  type DetalleVacio {
+    descripcion: String
+  }
+
+  type TareaGroup {
+    monthYear: String!
+    tareas: [Tarea!]!
+  }
+
   extend type Query {
-    tareas(colmenaId: Int, tipoTarea: TipoTarea): [Tarea!]!
+    tareas(colmenaId: Int, tipoTarea: TipoTarea): [TareaGroup!]!
     tarea(id: Int!): Tarea
     inspeccion(id: Int!): Inspeccion
     tratamiento(id: ID!): TareaTratamiento
