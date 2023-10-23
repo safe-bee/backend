@@ -80,6 +80,23 @@ query Apiario{
     direccion,
     tipo_ambiente,
     fecha_creacion
+    colmenas {
+      id
+      nombre
+      apiarioId
+      tipo
+      datos_total_cuadros
+      datos_color
+      datos_origen
+      datos_fecha_establecimiento
+      reina_tipo
+      reina_color
+      reina_fecha_aceptacion
+      reina_notas
+      foto1
+      foto2
+      foto3
+    }
   }
 }
 ```
