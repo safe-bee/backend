@@ -7,8 +7,8 @@ const alertaDef = gql`
     fecha: DateTime
     colmenaId: Int!
     terminada: Boolean
-    tipo_alerta: TipoTarea
-    tarea: Tarea!
+    tipoTarea: TipoTarea!
+    tarea: Tarea
   }
 
   extend type Query {
@@ -22,7 +22,7 @@ const alertaDef = gql`
       colmenaId: Int!
       fecha: DateTime
       terminada: Boolean
-      tareaId: Int
+      tipoTarea: TipoTarea!
     ): Alerta!
 
     updateAlerta(
@@ -31,6 +31,7 @@ const alertaDef = gql`
       colmenaId: Int
       fecha: DateTime
       terminada: Boolean
+      tipoTarea: TipoTarea!
     ): Alerta!
 
     deleteAlerta(id: Int!): Alerta!

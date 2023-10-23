@@ -113,14 +113,14 @@ model Coordenada {
 }
 
 model Alerta {
-  id          Int      @id @default(autoincrement())
-  descripcion String   @db.VarChar(200)
-  fecha       DateTime @default(now())
-  colmena     Colmena  @relation(fields: [colmenaId], references: [id])
+  id          Int       @id @default(autoincrement())
+  descripcion String    @db.VarChar(200)
+  fecha       DateTime  @default(now())
+  colmena     Colmena   @relation(fields: [colmenaId], references: [id])
   colmenaId   Int
-  terminada   Boolean  @default(false)
-  tarea       Tarea    @relation(fields: [tareaId], references: [id])
-  tareaId     Int      @unique
+  terminada   Boolean   @default(false)
+  tipoTarea   TipoTarea
+  tarea       Tarea?
 }
 
 model Tarea {
@@ -129,7 +129,8 @@ model Tarea {
   colmena           Colmena            @relation(fields: [colmenaId], references: [id])
   colmenaId         Int
   tipoTarea         TipoTarea
-  alerta            Alerta?
+  alerta            Alerta?            @relation(fields: [alertaId], references: [id])
+  alertaId          Int?               @unique
   inspeccion        Inspeccion?
   tareaAlimentacion TareaAlimentacion?
   tareaTratamiento  TareaTratamiento?

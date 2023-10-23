@@ -63,6 +63,26 @@ export async function main() {
       foto1: "https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg",
     },
   });
+  
+  // Alertas
+  for (let i = 0; i < 3; i++) {
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 1 - ${i + 1}`,
+        colmenaId: 1,
+        terminada: false,
+        tipoTarea: "ALIMENTACION",
+      },
+    });
+    await prisma.alerta.create({
+      data: {
+        descripcion: `Alerta para colmena 2 - ${i + 1}`,
+        colmenaId: 2,
+        terminada: false,
+        tipoTarea: "COSECHA",
+      },
+    });
+  }
 
   // Tareas
   // Tareas: Alimentación
@@ -72,6 +92,7 @@ export async function main() {
         fecha: new Date(2023, 8, 15),
         colmenaId: 1,
         tipoTarea: "ALIMENTACION",
+        alertaId: 1
       },
     });
     await prisma.tareaAlimentacion.create({
@@ -108,6 +129,7 @@ export async function main() {
         fecha: new Date(),
         colmenaId: 1,
         tipoTarea: "COSECHA",
+        alertaId: 2
       },
     });
 
@@ -211,26 +233,6 @@ export async function main() {
       },
     });
   });
-  
-  // Alertas
-  for (let i = 0; i < 3; i++) {
-    await prisma.alerta.create({
-      data: {
-        descripcion: `Alerta para colmena 1 - ${i + 1}`,
-        colmenaId: 1,
-        terminada: false,
-        tareaId: 1+i*2,
-      },
-    });
-    await prisma.alerta.create({
-      data: {
-        descripcion: `Alerta para colmena 2 - ${i + 1}`,
-        colmenaId: 2,
-        terminada: false,
-        tareaId: 2+i*2,
-      },
-    });
-  }
 
 
   // Zonas sugeridas
