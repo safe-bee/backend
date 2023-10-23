@@ -1,26 +1,26 @@
-const alertaResolvers = {
+const tareaResolvers = {
   Query: {
-    alertas: async (parent, args, { prisma }) => {
-      return await prisma.alerta.findMany({ include: { tarea: true } });
+    tareas: async (parent, args, { prisma }) => {
+      return await prisma.tarea.findMany({ include: { registro: true } });
     },
-    alerta: async (parent, args, { prisma }) => {
+    tarea: async (parent, args, { prisma }) => {
       const { id } = args;
-      return prisma.alerta.findUnique({ where: { id }, include: { tarea: true } });
+      return prisma.tarea.findUnique({ where: { id }, include: { registro: true } });
     },      
   },
   Mutation: {
-    createAlerta: async (parent, args, { prisma }) => {
-      return await prisma.alerta.create({ data: { ...args } });
+    createTarea: async (parent, args, { prisma }) => {
+      return await prisma.tarea.create({ data: { ...args } });
     },    
-    updateAlerta: async (parent, args, { prisma }) => {
+    updateTarea: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
-      return await prisma.alerta.update({ where: { id }, data });
+      return await prisma.tarea.update({ where: { id }, data });
     },
-    deleteAlerta: async (parent, args, { prisma }) => {
+    deleteTarea: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.alerta.delete({ where: { id } });
+      return await prisma.tarea.delete({ where: { id } });
     },
   },
 };
 
-export default alertaResolvers;
+export default tareaResolvers;

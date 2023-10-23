@@ -64,157 +64,157 @@ export async function main() {
     },
   });
   
-  // Alertas
+  // Tareas
   for (let i = 0; i < 3; i++) {
-    await prisma.alerta.create({
+    await prisma.tarea.create({
       data: {
-        descripcion: `Alerta para colmena 1 - ${i + 1}`,
+        descripcion: `Tarea para colmena 1 - ${i + 1}`,
         colmenaId: 1,
         terminada: false,
-        tipoTarea: "ALIMENTACION",
+        tipoRegistro: "ALIMENTACION",
       },
     });
-    await prisma.alerta.create({
+    await prisma.tarea.create({
       data: {
-        descripcion: `Alerta para colmena 2 - ${i + 1}`,
+        descripcion: `Tarea para colmena 2 - ${i + 1}`,
         colmenaId: 2,
         terminada: false,
-        tipoTarea: "COSECHA",
+        tipoRegistro: "COSECHA",
       },
     });
   }
 
-  // Tareas
-  // Tareas: Alimentación
+  // Registros
+  // Registros: Alimentación
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(2023, 8, 15),
         colmenaId: 1,
-        tipoTarea: "ALIMENTACION",
-        alertaId: 1
+        tipoRegistro: "ALIMENTACION",
+        tareaId: 1
       },
     });
-    await prisma.tareaAlimentacion.create({
+    await prisma.registroAlimentacion.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         alimento: "comida",
         cantidadAlimentacion: 50,
       },
     });
   });
-  // Tareas: Tratamiento
+  // Registros: Tratamiento
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(2023, 9, 10),
         colmenaId: 1,
-        tipoTarea: "TRATAMIENTO",
+        tipoRegistro: "TRATAMIENTO",
       },
     });
 
-    await prisma.tareaTratamiento.create({
+    await prisma.registroTratamiento.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         tipoPlaga: "VARROA",
         producto: "Producto de tratamiento",
         dosis: "10 ml",
       },
     });
   });
-  // Tareas: Cosecha
+  // Registros: Cosecha
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(),
         colmenaId: 1,
-        tipoTarea: "COSECHA",
-        alertaId: 2
+        tipoRegistro: "COSECHA",
+        tareaId: 2
       },
     });
 
-    await prisma.tareaCosecha.create({
+    await prisma.registroCosecha.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         tipoUnidad: "LIBRAS",
         cantidadCosecha: 20,
       },
     });
   });
-  // Tareas: Varroa
+  // Registros: Varroa
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(2023, 8, 11),
         colmenaId: 1,
-        tipoTarea: "VARROA",
+        tipoRegistro: "VARROA",
       },
     });
 
-    await prisma.tareaVarroa.create({
+    await prisma.registroVarroa.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         tipoMetodo: "ALCOHOL",
         porcentaje: 5,
       },
     });
   });
 
-  // Tareas: Cuadros
+  // Registros: Cuadros
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(),
         colmenaId: 1,
-        tipoTarea: "CAMBIO_DE_CUADROS",
+        tipoRegistro: "CAMBIO_DE_CUADROS",
       },
     });
 
-    await prisma.tareaCuadros.create({
+    await prisma.registroCuadros.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         cantidad: 8,
       },
     });
   });
 
-  // Tareas: Hibernación
+  // Registros: Hibernación
   await prisma.$transaction(async (prisma) => {
-    await prisma.tarea.create({
+    await prisma.registro.create({
       data: {
         fecha: new Date(2023, 9, 22),
         colmenaId: 1,
-        tipoTarea: "HIBERNACION",
+        tipoRegistro: "HIBERNACION",
       },
     });
 
   });
 
-  // Tareas: Muerte
+  // Registros: Muerte
   await prisma.$transaction(async (prisma) => {
-    await prisma.tarea.create({
+    await prisma.registro.create({
       data: {
         fecha: new Date(2023, 10, 7),
         colmenaId: 1,
-        tipoTarea: "MUERTE",
+        tipoRegistro: "MUERTE",
       },
     });
 
   });
 
-  // Tareas: Inspección
+  // Registros: Inspección
   await prisma.$transaction(async (prisma) => {
-    const tarea = await prisma.tarea.create({
+    const registro = await prisma.registro.create({
       data: {
         fecha: new Date(),
         colmenaId: 1,
-        tipoTarea: "INSPECCION",
+        tipoRegistro: "INSPECCION",
       },
     });
 
     await prisma.inspeccion.create({
       data: {
-        tareaId: tarea.id,
+        registroId: registro.id,
         clima: "SOLEADO",
         temperatura: 25,
         estado_cajon: true,

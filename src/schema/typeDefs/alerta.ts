@@ -1,41 +1,41 @@
 import gql from 'graphql-tag';
 
-const alertaDef = gql`
-  type Alerta {
+const tareaDef = gql`
+  type Tarea {
     id: Int!
     descripcion: String!
     fecha: DateTime
     colmenaId: Int!
     terminada: Boolean
-    tipoTarea: TipoTarea!
-    tarea: Tarea
+    tipoRegistro: TipoRegistro!
+    registro: Registro
   }
 
   extend type Query {
-    alertas: [Alerta!]!
-    alerta(id: Int!): Alerta
+    tareas: [Tarea!]!
+    tarea(id: Int!): Tarea
   }
 
   extend type Mutation {
-    createAlerta(
+    createTarea(
       descripcion: String!
       colmenaId: Int!
       fecha: DateTime
       terminada: Boolean
-      tipoTarea: TipoTarea!
-    ): Alerta!
+      tipoRegistro: TipoRegistro!
+    ): Tarea!
 
-    updateAlerta(
+    updateTarea(
       id: Int!
       descripcion: String
       colmenaId: Int
       fecha: DateTime
       terminada: Boolean
-      tipoTarea: TipoTarea!
-    ): Alerta!
+      tipoRegistro: TipoRegistro!
+    ): Tarea!
 
-    deleteAlerta(id: Int!): Alerta!
+    deleteTarea(id: Int!): Tarea!
   }
 `;
 
-export default alertaDef;
+export default tareaDef;

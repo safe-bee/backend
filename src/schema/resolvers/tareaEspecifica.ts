@@ -1,70 +1,70 @@
-function createTareaResolver(tipoTarea, nombrePrisma) {
+function createRegistroResolver(tipoRegistro, nombrePrisma) {
     return async (parent, args, { prisma }) => {
       if (!args.colmenaId) {
-        throw new Error(`${tipoTarea}: colmenaId es necesario para crear una tarea.`);
+        throw new Error(`${tipoRegistro}: colmenaId es necesario para crear una registro.`);
       }
   
       const { colmenaId, ...restArgs } = args;
   
-      const tarea = await prisma.tarea.create({
+      const registro = await prisma.registro.create({
         data: {
           colmenaId: parseInt(colmenaId, 10),
-          tipoTarea
+          tipoRegistro
         }
       });
 
-      // Para 'HIBERNACION' y 'MUERTE', no creamos una tarea específica
-      if (tipoTarea === "HIBERNACION" || tipoTarea === "MUERTE") {
-        return tarea;
+      // Para 'HIBERNACION' y 'MUERTE', no creamos una registro específica
+      if (tipoRegistro === "HIBERNACION" || tipoRegistro === "MUERTE") {
+        return registro;
       }
   
-      const tareaEspecifica = await prisma[nombrePrisma].create({
-        data: { tareaId: tarea.id, ...restArgs }
+      const registroEspecifica = await prisma[nombrePrisma].create({
+        data: { registroId: registro.id, ...restArgs }
       });
   
-      return tareaEspecifica;
+      return registroEspecifica;
     };
   }
   
-  function findTareaResolver(tipoTarea) {   
+  function findRegistroResolver(tipoRegistro) {   
 
     return async (parent, args, { prisma }) => {
 
-        if (tipoTarea === "HIBERNACION" || tipoTarea === "MUERTE") {
-            return await prisma.tarea.findUnique({ where: { id: parseInt(args.id, 10) }})}
+        if (tipoRegistro === "HIBERNACION" || tipoRegistro === "MUERTE") {
+            return await prisma.registro.findUnique({ where: { id: parseInt(args.id, 10) }})}
 
 
-      const tareaEspecifica = await prisma[tipoTarea].findUnique({
-        where: { tareaId: parseInt(args.id, 10) },
-        include: { tarea: true }
+      const registroEspecifica = await prisma[tipoRegistro].findUnique({
+        where: { registroId: parseInt(args.id, 10) },
+        include: { registro: true }
       });
-      return tareaEspecifica;
+      return registroEspecifica;
     };
   }
   
-const tareaEspecificaResolvers = {
+const registroEspecificaResolvers = {
     Query: {
-      inspeccion: findTareaResolver("inspeccion"),
-      tratamiento: findTareaResolver("TareaTratamiento"),
-      cosecha: findTareaResolver("TareaCosecha"),
-      alimentacion: findTareaResolver("TareaAlimentacion"),
-      cambio_de_cuadros: findTareaResolver("TareaCuadros"),
-      varroa: findTareaResolver("TareaVarroa"),
-      hibernacion: findTareaResolver("HIBERNACION"),
-      muerte: findTareaResolver("MUERTE")
+      inspeccion: findRegistroResolver("inspeccion"),
+      tratamiento: findRegistroResolver("RegistroTratamiento"),
+      cosecha: findRegistroResolver("RegistroCosecha"),
+      alimentacion: findRegistroResolver("RegistroAlimentacion"),
+      cambio_de_cuadros: findRegistroResolver("RegistroCuadros"),
+      varroa: findRegistroResolver("RegistroVarroa"),
+      hibernacion: findRegistroResolver("HIBERNACION"),
+      muerte: findRegistroResolver("MUERTE")
     },
     Mutation: {
-      createInspeccion: createTareaResolver("INSPECCION","inspeccion"),
-      createTratamiento: createTareaResolver("TRATAMIENTO","TareaTratamiento"),
-      createCosecha: createTareaResolver("COSECHA","TareaCosecha"),
-      createAlimentacion: createTareaResolver("ALIMENTACION","TareaAlimentacion"),
-      createCambioDeCuadros: createTareaResolver("CAMBIO_DE_CUADROS","TareaCuadros"),
-      createVarroa: createTareaResolver("VARROA","TareaVarroa"),
-      createHibernacion: createTareaResolver("HIBERNACION",""),
-      createMuerte: createTareaResolver("MUERTE","")
+      createInspeccion: createRegistroResolver("INSPECCION","inspeccion"),
+      createTratamiento: createRegistroResolver("TRATAMIENTO","RegistroTratamiento"),
+      createCosecha: createRegistroResolver("COSECHA","RegistroCosecha"),
+      createAlimentacion: createRegistroResolver("ALIMENTACION","RegistroAlimentacion"),
+      createCambioDeCuadros: createRegistroResolver("CAMBIO_DE_CUADROS","RegistroCuadros"),
+      createVarroa: createRegistroResolver("VARROA","RegistroVarroa"),
+      createHibernacion: createRegistroResolver("HIBERNACION",""),
+      createMuerte: createRegistroResolver("MUERTE","")
     }
   };
   
 
   
-  export default tareaEspecificaResolvers;
+  export default registroEspecificaResolvers;

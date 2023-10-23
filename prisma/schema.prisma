@@ -59,8 +59,8 @@ model Colmena {
   foto1                       String?
   foto2                       String?
   foto3                       String?
-  alertas                     Alerta[]
   tareas                      Tarea[]
+  registros                   Registro[]
 }
 
 enum TipoColmena {
@@ -112,36 +112,36 @@ model Coordenada {
   zonaId Int
 }
 
-model Alerta {
-  id          Int       @id @default(autoincrement())
-  descripcion String    @db.VarChar(200)
-  fecha       DateTime  @default(now())
-  colmena     Colmena   @relation(fields: [colmenaId], references: [id])
-  colmenaId   Int
-  terminada   Boolean   @default(false)
-  tipoTarea   TipoTarea
-  tarea       Tarea?
-}
-
 model Tarea {
-  id                Int                @id @default(autoincrement())
-  fecha             DateTime           @default(now())
-  colmena           Colmena            @relation(fields: [colmenaId], references: [id])
-  colmenaId         Int
-  tipoTarea         TipoTarea
-  alerta            Alerta?            @relation(fields: [alertaId], references: [id])
-  alertaId          Int?               @unique
-  inspeccion        Inspeccion?
-  tareaAlimentacion TareaAlimentacion?
-  tareaTratamiento  TareaTratamiento?
-  tareaCosecha      TareaCosecha?
-  tareaVarroa       TareaVarroa?
-  tareaCuadros      TareaCuadros?
-  // tareaHibernacion  TareaHibernacion?
-  // tareaMuerte       TareaMuerte?
+  id           Int          @id @default(autoincrement())
+  descripcion  String       @db.VarChar(200)
+  fecha        DateTime     @default(now())
+  colmena      Colmena      @relation(fields: [colmenaId], references: [id])
+  colmenaId    Int
+  terminada    Boolean      @default(false)
+  tipoRegistro TipoRegistro
+  registro     Registro?
 }
 
-enum TipoTarea {
+model Registro {
+  id                   Int                   @id @default(autoincrement())
+  fecha                DateTime              @default(now())
+  colmena              Colmena               @relation(fields: [colmenaId], references: [id])
+  colmenaId            Int
+  tipoRegistro         TipoRegistro
+  tarea                Tarea?                @relation(fields: [tareaId], references: [id])
+  tareaId              Int?                  @unique
+  inspeccion           Inspeccion?
+  registroAlimentacion RegistroAlimentacion?
+  registroTratamiento  RegistroTratamiento?
+  registroCosecha      RegistroCosecha?
+  registroVarroa       RegistroVarroa?
+  registroCuadros      RegistroCuadros?
+  // registroHibernacion  RegistroHibernacion?
+  // registroMuerte       RegistroMuerte?
+}
+
+enum TipoRegistro {
   TRATAMIENTO
   COSECHA
   ALIMENTACION
@@ -152,19 +152,19 @@ enum TipoTarea {
   INSPECCION
 }
 
-model TareaAlimentacion {
-  tarea                Tarea   @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId              Int     @id
+model RegistroAlimentacion {
+  registro             Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId           Int      @id
   alimento             String?
   cantidadAlimentacion Float
 }
 
-model TareaTratamiento {
-  tarea     Tarea     @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId   Int       @id
-  tipoPlaga TipoPlaga
-  producto  String?
-  dosis     String?
+model RegistroTratamiento {
+  registro   Registro  @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId Int       @id
+  tipoPlaga  TipoPlaga
+  producto   String?
+  dosis      String?
 }
 
 enum TipoPlaga {
@@ -174,9 +174,9 @@ enum TipoPlaga {
   OTRAS
 }
 
-model TareaCosecha {
-  tarea           Tarea      @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId         Int        @id
+model RegistroCosecha {
+  registro        Registro   @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId      Int        @id
   tipoUnidad      TipoUnidad
   cantidadCosecha Float
 }
@@ -187,9 +187,9 @@ enum TipoUnidad {
   CUADROS
 }
 
-model TareaVarroa {
-  tarea      Tarea      @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId    Int        @id
+model RegistroVarroa {
+  registro   Registro   @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId Int        @id
   tipoMetodo TipoMetodo
   porcentaje Float
 }
@@ -201,15 +201,15 @@ enum TipoMetodo {
   OTRO
 }
 
-model TareaCuadros {
-  tarea    Tarea @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId  Int   @id
-  cantidad Int
+model RegistroCuadros {
+  registro   Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId Int      @id
+  cantidad   Int
 }
 
 model Inspeccion {
-  tarea                Tarea   @relation(fields: [tareaId], references: [id], onDelete: Cascade)
-  tareaId              Int     @id
+  registro             Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId           Int      @id
   clima                Clima?
   temperatura          Int?
   estado_cajon         Boolean

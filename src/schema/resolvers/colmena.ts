@@ -2,20 +2,20 @@ const colmenaResolvers = {
   Query: {
     colmenas: async (parent, args, { prisma }) => {
       return await prisma.colmena.findMany({
-        include: { apiario: true, alertas: true, tareas: true },
+        include: { apiario: true, tareas: true, registros: true },
       });
     },
     colmena: async (parent, args, { prisma }) => {
       const { id } = args;
-      return await prisma.colmena.findUnique({ where: { id }, include: { apiario: true, alertas: true, tareas: true } });
+      return await prisma.colmena.findUnique({ where: { id }, include: { apiario: true, tareas: true, registros: true } });
     },      
   },
   Mutation: {
     createColmena: async (parent, args, { prisma }) => {
       const newColmena = await prisma.colmena.create({ data: { ...args } });
       
-      // Crear una alerta de inspección una vez que la colmena se crea
-      await prisma.alerta.create({
+      // Crear una tarea de inspección una vez que la colmena se crea
+      await prisma.tarea.create({
         data: {
           descripcion: "Realizar Inspección",
           colmenaId: newColmena.id,

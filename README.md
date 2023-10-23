@@ -161,10 +161,10 @@ query Colmenas {
     foto1
     foto2
     foto3
-    alertas {
+    tareas {
       id
       descripcion
-      tipo_tarea
+      tipo_registro
       terminada
     }
   }
@@ -193,10 +193,10 @@ query Colmena{
     foto1
     foto2
     foto3
-    alertas {
+    tareas {
       id
       descripcion
-      tipo_tarea
+      tipo_registro
       terminada
     }
   }
@@ -316,110 +316,110 @@ query ZonasSugeridas {
 ```
 
 
-### Alertas
+### Tareas
 
 ```graphql
-query Alertas{
-  alertas {
+query Tareas{
+  tareas {
     id
     descripcion
     fecha
     colmenaId
     terminada
-    tipoTarea
-    tarea {
+    tipoRegistro
+    registro {
       id
       fecha
       colmenaId
-      tipoTarea
+      tipoRegistro
     }
   }
 }
 ```
 
 ```graphql
-query Alerta{
-  alerta(id: 1) {
+query Tarea{
+  tarea(id: 1) {
     id
     descripcion
     fecha
     colmenaId
     terminada
-    tipoTarea
-    tarea {
+    tipoRegistro
+    registro {
       id
       fecha
       colmenaId
-      tipoTarea
+      tipoRegistro
     }
   }
 }
 ```
 
 ```graphql
-mutation CreateAlerta{
-  createAlerta(
-    descripcion: "Nueva alerta"
+mutation CreateTarea{
+  createTarea(
+    descripcion: "Nueva tarea"
     fecha: "2023-08-21T20:05:58.829Z"
     colmenaId: 1
     terminada: false
-    tipoTarea: ALIMENTACION
+    tipoRegistro: ALIMENTACION
   ) {
     id
     descripcion
     fecha
     colmenaId
     terminada
-    tipoTarea
+    tipoRegistro
   }
 }
 ```
 
 ```graphql
-mutation UpdateAlerta{
-  updateAlerta(
+mutation UpdateTarea{
+  updateTarea(
     id: 1
-    descripcion: "Alerta actualizada"
+    descripcion: "Tarea actualizada"
     fecha: "2024-08-21T20:05:58.829Z"
     colmenaId: 2
     terminada: true
-    tipoTarea: VARROA
+    tipoRegistro: VARROA
   ) {
     id
     descripcion
     fecha
     colmenaId
     terminada
-    tipoTarea
+    tipoRegistro
   }
 }
 ```
 
 ```graphql
-mutation DeleteAlerta{
-  deleteAlerta(id: 1) {
+mutation DeleteTarea{
+  deleteTarea(id: 1) {
     id
     descripcion
     fecha
     colmenaId
     terminada
-    tipoTarea
+    tipoRegistro
   }
 }
 ```
 
 
-### Tareas
+### Registros
 ```graphql
-query Tareas {
-  tareas {
+query Registros {
+  registros {
     id
     fecha
-    tipoTarea
+    tipoRegistro
     colmena {
       nombre
     }
-    alerta {
+    tarea {
       descripcion
       terminada
     }
@@ -428,17 +428,17 @@ query Tareas {
 ```
 
 ```graphql
-query Tarea {
-  tarea(id: 1) {
+query Registro {
+  registro(id: 1) {
     id
     fecha
     colmenaId
-    tipoTarea
+    tipoRegistro
     colmena {
       id
       nombre
     }
-    alerta {
+    tarea {
       descripcion
       terminada
     }
@@ -447,46 +447,46 @@ query Tarea {
 ```
 
 ```graphql
-mutation CreateTarea {
-  createTarea(
+mutation CreateRegistro {
+  createRegistro(
     fecha: "2023-08-30T12:00:00Z"
-    alertaId: 2
+    tareaId: 2
     colmenaId: 1
   ) {
     id
     fecha
     colmenaId
-    alertaId
+    tareaId
   }
 }
 ```
 
 ```graphql
-mutation UpdateTarea {
-  updateTarea(
+mutation UpdateRegistro {
+  updateRegistro(
     id: 1
     colmenaId: 2
-    alertaId: 2
+    tareaId: 2
   ) {
     id
     fecha
     colmenaId
-    alertaId
+    tareaId
   }
 }
 ```
 
 ```graphql
-mutation DeleteTarea {
-  deleteTarea(id: 1) {
+mutation DeleteRegistro {
+  deleteRegistro(id: 1) {
     id
     fecha
     colmenaId
-    alertaId
+    tareaId
   }
 }
 ```
-### Tareas específicas
+### Registros específicas
 ```graphql
 mutation {
   createInspeccion(
@@ -506,7 +506,7 @@ mutation {
     estado_plagas: false,
     detalle_plagas: "Sin plagas",
   ) {
-    tareaId
+    registroId
     clima
     temperatura
   }
@@ -517,7 +517,7 @@ Para el id hay que usar el que devolvio la query anterior
 ```graphql
 query inspeccion{
   inspeccion(id: 25) {
-    tareaId
+    registroId
     clima
     temperatura
     estado_cajon
@@ -533,7 +533,7 @@ query inspeccion{
     estado_plagas
     detalle_plagas
     foto_inspeccion
-    tarea {
+    registro {
       fecha
       colmenaId
     }
@@ -544,7 +544,7 @@ query inspeccion{
 {
   "data": {
     "createAlimentacion": {
-      "tareaId": 29,
+      "registroId": 29,
       "alimento": "Azúcar",
       "cantidadAlimentacion": 2.5
     }
@@ -556,10 +556,10 @@ Para el id hay que usar el que devolvio la query anterior
 ```graphql
 query getAlimentacion{
   alimentacion(id: 29) {
-    tareaId
+    registroId
     alimento
     cantidadAlimentacion
-    tarea {
+    registro {
       fecha
       colmenaId
     }
