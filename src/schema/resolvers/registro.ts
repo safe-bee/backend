@@ -18,18 +18,22 @@ function groupByDate(registros) {
 }
 
 const registroResolvers = {
-  DetallesRegistro: {
+  Detalle: {
     __resolveType(obj, context, info) {
       console.log("Objeto en __resolveType: ", obj);
       // console.log("Objeto recibido en __resolveType:", obj.items);
 
-      if (obj.tipoRegistro) {
-        // Capitaliza el primer carácter y devuelve
-        return obj.tipoRegistro.charAt(0).toUpperCase() + obj.tipoRegistro.slice(1);
-      }
+      // Busca el objeto con header "tipoRegistro" y obtiene su valor
+    const tipoRegistroObj = obj.find(detail => detail.header === "tipoRegistro");
+    const tipoRegistro = tipoRegistroObj ? tipoRegistroObj.value : null;
+    console.log("Objeto en tipoRegistro: ", tipoRegistro);  
+    if (tipoRegistro) {
+      // Capitaliza el primer carácter y devuelve
+      return tipoRegistro.charAt(0).toUpperCase() + tipoRegistro.slice(1);
+    }
 
-      return "DetalleVacio";
-    },
+    return "DetalleVacio";
+  },
   },
 
   Query: {
@@ -79,12 +83,10 @@ const registroResolvers = {
           }
         }
 
-        // const detallesKey = Object.keys(registro).find(key => key.startsWith('registro') && registro[key]);
-        // const detalles = detallesKey ? registro[detallesKey] : {};
-
+        const transformedDetails = Object.keys(detalles).map(key => ({ header: key, value: detalles[key] }));
         const bloque = {
           ...registro,
-          detalles,
+          detalles: transformedDetails,
         };
 
         console.log("Bloque", JSON.stringify(bloque, null, 2));
