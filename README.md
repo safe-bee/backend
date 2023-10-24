@@ -336,6 +336,43 @@ query ZonasSugeridas {
 ### Tareas
 
 ```graphql
+query TareasPendientesPorColmenaYTipo {
+  tareasPendientesPorColmenaYTipo(colmenaId: 1, tipoRegistro: ALIMENTACION) {
+    id
+    descripcion
+    fecha
+    colmenaId
+    terminada
+    tipoRegistro
+    registro {
+      id
+      fecha
+      colmenaId
+      tipoRegistro
+    }
+  }
+}
+```
+
+```graphql
+query TareasPendientes{
+  tareasPendientes {
+    id
+    descripcion
+    fecha
+    colmenaId
+    terminada
+    tipoRegistro
+    registro {
+      id
+      fecha
+      colmenaId
+      tipoRegistro
+    }
+  }
+}
+
+```graphql
 query Tareas{
   tareas {
     id

@@ -7,6 +7,26 @@ const tareaResolvers = {
       const { id } = args;
       return prisma.tarea.findUnique({ where: { id }, include: { registro: true } });
     },      
+    tareasPendientes: async (parent, args, { prisma }) => {
+      return await prisma.tarea.findMany({
+        where: {
+          terminada: false
+        },
+        include: { registro: true }
+      });
+    },
+    tareasPendientesPorColmenaYTipo: async (parent, args, { prisma }) => {
+      const { colmenaId } = args;
+      const { tipoRegistro } = args;
+      return await prisma.tarea.findMany({
+        where: {
+          colmenaId: colmenaId,
+          tipoRegistro: tipoRegistro,
+          terminada: false,
+        },
+        include: { registro: true },
+      });
+    },      
   },
   Mutation: {
     createTarea: async (parent, args, { prisma }) => {

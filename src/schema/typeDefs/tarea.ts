@@ -14,6 +14,8 @@ const tareaDef = gql`
   extend type Query {
     tareas: [Tarea!]!
     tarea(id: Int!): Tarea
+    tareasPendientes: [Tarea!]!
+    tareasPendientesPorColmenaYTipo(colmenaId: Int!, tipoRegistro: TipoRegistro!): [Tarea!]!
   }
 
   extend type Mutation {
