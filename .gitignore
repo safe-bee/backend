@@ -3,3 +3,5 @@ backend
 yarn.lock
 .env
 package-lock.json
+./build
+./servlerless
