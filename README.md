@@ -221,7 +221,7 @@ query Colmena{
 ```
 
 ```graphql
-mutation {
+mutation crearColmena{
   createColmena(
     nombre: "Nueva Colmena"
     apiarioId: 2
@@ -250,9 +250,6 @@ mutation {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
   }
 }
 ```
@@ -591,7 +588,7 @@ mutation {
 Para el id hay que usar el que devolvio la query anterior
 
 ```graphql
-query inspeccion{
+query GetInspeccion{
   inspeccion(id: 25) {
     registroId
     fecha
@@ -619,14 +616,16 @@ query inspeccion{
 }
 ```
 ```graphql
-{
-  "data": {
-    "createAlimentacion": {
-      "registroId": 29,
-      "alimento": "Azúcar",
-      "cantidadAlimentacion": 2.5
-    }
-  }
+mutation CrearAlimentacion {
+  createAlimentacion(
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Alimentacion rica en sacarosa",
+    colmenaId: 3,
+    alimento: "Azúcar",
+    cantidadAlimentacion: 2.5
+  ) {
+    registroId
+  } 
 }
 ```
 Para el id hay que usar el que devolvio la query anterior
