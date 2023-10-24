@@ -131,6 +131,7 @@ model Registro {
   tipoRegistro         TipoRegistro
   tarea                Tarea?                @relation(fields: [tareaId], references: [id])
   tareaId              Int?                  @unique
+  notas                String?
   inspeccion           Inspeccion?
   registroAlimentacion RegistroAlimentacion?
   registroTratamiento  RegistroTratamiento?

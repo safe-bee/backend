@@ -4,11 +4,11 @@ function createRegistroResolver(tipoRegistro, nombrePrisma) {
         throw new Error(`${tipoRegistro}: colmenaId es necesario para crear una registro.`);
       }
   
-      const { colmenaId, ...restArgs } = args;
+      const { colmenaId, fecha, notas, ...restArgs } = args;
   
       const registro = await prisma.registro.create({
         data: {
-          colmenaId: parseInt(colmenaId, 10),
+          colmenaId: parseInt(colmenaId, 10), fecha, notas,
           tipoRegistro
         }
       });
@@ -18,11 +18,11 @@ function createRegistroResolver(tipoRegistro, nombrePrisma) {
         return registro;
       }
   
-      const registroEspecifica = await prisma[nombrePrisma].create({
+      const registroEspecifico = await prisma[nombrePrisma].create({
         data: { registroId: registro.id, ...restArgs }
       });
   
-      return registroEspecifica;
+      return registroEspecifico;
     };
   }
   
@@ -34,15 +34,15 @@ function createRegistroResolver(tipoRegistro, nombrePrisma) {
             return await prisma.registro.findUnique({ where: { id: parseInt(args.id, 10) }})}
 
 
-      const registroEspecifica = await prisma[tipoRegistro].findUnique({
+      const registroEspecifico = await prisma[tipoRegistro].findUnique({
         where: { registroId: parseInt(args.id, 10) },
         include: { registro: true }
       });
-      return registroEspecifica;
+      return registroEspecifico;
     };
   }
   
-const registroEspecificaResolvers = {
+const registroEspecificoResolvers = {
     Query: {
       inspeccion: findRegistroResolver("inspeccion"),
       tratamiento: findRegistroResolver("RegistroTratamiento"),
@@ -67,4 +67,4 @@ const registroEspecificaResolvers = {
   
 
   
-  export default registroEspecificaResolvers;
+  export default registroEspecificoResolvers;

@@ -18,13 +18,19 @@ const colmenaResolvers = {
       await prisma.tarea.create({
         data: {
           descripcion: "Realizar Inspección",
-          colmenaId: newColmena.id,
           terminada: false,
+          tipoRegistro: 'INSPECCION',
+          colmena: {
+            connect: {
+              id: newColmena.id
+            }
+          }
         }
       });
-    
+      
       return newColmena;
-    },   
+    },
+ 
     updateColmena: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
       return await prisma.colmena.update({ where: { id }, data });

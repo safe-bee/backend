@@ -3,9 +3,9 @@ function groupByDate(registros) {
 
   registros.forEach((registro) => {
     const date = new Date(registro.fecha);
-    const monthYear = `${date.toLocaleString("default", {
-      month: "long",
-    })} ${date.getFullYear()}`;
+    const month = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(date);
+    const year = new Intl.DateTimeFormat('es-ES', { year: 'numeric' }).format(date);
+    const monthYear = `${month} | ${year}`;
 
     if (!groupedRegistros[monthYear]) {
       groupedRegistros[monthYear] = { registros: [] };

@@ -549,6 +549,7 @@ query HistorialRegistros {
       id
       fecha
       colmenaId
+      notas
       tipoRegistro
       detalles {
         header
@@ -564,6 +565,8 @@ query HistorialRegistros {
 mutation {
   createInspeccion(
     colmenaId: 3,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "alta inspeccion",
     clima: SOLEADO,
     temperatura: 22,
     estado_cajon: true,
@@ -591,6 +594,8 @@ Para el id hay que usar el que devolvio la query anterior
 query inspeccion{
   inspeccion(id: 25) {
     registroId
+    fecha
+    notas
     clima
     temperatura
     estado_cajon

@@ -6,6 +6,7 @@ const registroDef = gql`
     fecha: DateTime!
     colmenaId: Int!
     colmena: Colmena
+    notas: String
     tipoRegistro: TipoRegistro!
     detalles: [Detalle!]!
     tarea: Tarea
@@ -147,14 +148,14 @@ const registroDef = gql`
 
     deleteRegistro(id: Int!): Registro!
 
-    createInspeccion(colmenaId: ID!, registroId: ID, clima: Clima, temperatura: Int, estado_cajon: Boolean, detalle_cajon: String, estado_poblacion: Boolean, detalle_poblacion: String, estado_reina_larvas: Boolean, detalle_reina_larvas: String, estado_flora: Boolean, detalle_flora: String, estado_alimento: Boolean, detalle_alimento: String, estado_plagas: Boolean, detalle_plagas: String, foto_inspeccion: String): Inspeccion
-    createTratamiento(colmenaId: ID!, tipoPlaga: TipoPlaga, producto: String, dosis: String): RegistroTratamiento
-    createCosecha(colmenaId: ID!, tipoUnidad: TipoUnidad, cantidadCosecha: Float): RegistroCosecha
-    createAlimentacion(colmenaId: ID!, alimento: String, cantidadAlimentacion: Float): RegistroAlimentacion
-    createCambioDeCuadros(colmenaId: ID!, cantidad: Int): RegistroCuadros
-    createVarroa(colmenaId: ID!, registroId: ID, tipoMetodo: TipoMetodo, porcentaje: Float): RegistroVarroa
-    createHibernacion(colmenaId: ID!): Registro
-    createMuerte(colmenaId: ID!): Registro
+    createInspeccion(colmenaId: ID!, fecha: DateTime, notas: String, registroId: ID, clima: Clima, temperatura: Int, estado_cajon: Boolean, detalle_cajon: String, estado_poblacion: Boolean, detalle_poblacion: String, estado_reina_larvas: Boolean, detalle_reina_larvas: String, estado_flora: Boolean, detalle_flora: String, estado_alimento: Boolean, detalle_alimento: String, estado_plagas: Boolean, detalle_plagas: String, foto_inspeccion: String): Inspeccion
+    createTratamiento(colmenaId: ID!, fecha: DateTime, notas: String, tipoPlaga: TipoPlaga, producto: String, dosis: String): RegistroTratamiento
+    createCosecha(colmenaId: ID!, fecha: DateTime, notas: String, tipoUnidad: TipoUnidad, cantidadCosecha: Float): RegistroCosecha
+    createAlimentacion(colmenaId: ID!, fecha: DateTime, notas: String, alimento: String, cantidadAlimentacion: Float): RegistroAlimentacion
+    createCambioDeCuadros(colmenaId: ID!, fecha: DateTime, notas: String, cantidad: Int): RegistroCuadros
+    createVarroa(colmenaId: ID!, fecha: DateTime, notas: String, registroId: ID, tipoMetodo: TipoMetodo, porcentaje: Float): RegistroVarroa
+    createHibernacion(colmenaId: ID!, fecha: DateTime, notas: String): Registro
+    createMuerte(colmenaId: ID!, fecha: DateTime, notas: String): Registro
     
     deleteInspeccion(id: ID!): Inspeccion
     deleteTratamiento(id: ID!): RegistroTratamiento
