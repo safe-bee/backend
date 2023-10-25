@@ -84,7 +84,7 @@ const registroResolvers = {
         }
 
         const transformedDetails = Object.keys(detalles)
-          .filter(key => !key.startsWith("detalle") && key !== "tipoRegistro" && !key.startsWith("foto"))
+          .filter(key => !key.startsWith("detalle") && key !== "clima" && key !== "temperatura" && key !== "foto_inspeccion" && key !== "tipoRegistro")
           .map(key => ({ header: key, value: detalles[key] }));
 
         const bloque = {
@@ -92,7 +92,7 @@ const registroResolvers = {
           detalles: transformedDetails,
         };
 
-        console.log("Bloque", JSON.stringify(bloque, null, 2));
+        // console.log("Bloque", JSON.stringify(bloque, null, 2));
 
         return bloque;
       });
