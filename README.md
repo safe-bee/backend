@@ -645,6 +645,103 @@ query getAlimentacion{
 }
 ```
 
+Ejemplo de cada registro específico:
+
+```graphql
+mutation CrearTratamiento {
+  createTratamiento(
+    colmenaId: 3,
+    tareaId: 1,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Tratamiento contra Varroa",
+    tipoPlaga: VARROA,
+    producto: "Producto X",
+    dosis: "5 ml"
+  ) {
+    registroId
+  } 
+}
+```
+```graphql
+mutation CrearCosecha {
+  createCosecha(
+    colmenaId: 3,
+    tareaId: 2,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Cosecha de miel",
+    tipoUnidad: LIBRAS,
+    cantidadCosecha: 20.5
+  ) {
+    registroId
+  } 
+}
+```
+```graphql
+mutation CrearAlimentacion {
+  createAlimentacion(
+    colmenaId: 3,
+    tareaId: 3,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Alimentación rica en sacarosa",
+    alimento: "Azúcar",
+    cantidadAlimentacion: 2.5
+  ) {
+    registroId
+  } 
+}
+```
+```graphql
+mutation CrearCambioDeCuadros {
+  createCambioDeCuadros(
+    colmenaId: 3,
+    tareaId: 4,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Cambio de cuadros en la colmena",
+    cantidad: 6
+  ) {
+    registroId
+  } 
+}
+```
+```graphql
+mutation CrearVarroa {
+  createVarroa(
+    colmenaId: 3,
+    tareaId: 5,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Control de Varroa en la colmena",
+    tipoMetodo: ALCOHOL,
+    porcentaje: 2.5
+  ) {
+    registroId
+  } 
+}
+```
+```graphql
+mutation CrearHibernacion {
+  createHibernacion(
+    colmenaId: 3,
+    tareaId: 6,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Colmena en estado de hibernación"
+  ) {
+    id
+  } 
+}
+```
+```graphql
+mutation CrearMuerte {
+  createMuerte(
+    colmenaId: 3,
+    tareaId: 6,
+    fecha: "2023-08-21T20:05:58.829Z",
+    notas: "Registro de muerte en la colmena"
+  ) {
+    id
+  } 
+}
+```
+
 ---
 
 ### Serverless & AWS CLI (Próximamente)

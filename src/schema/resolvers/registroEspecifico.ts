@@ -4,16 +4,25 @@ function createRegistroResolver(tipoRegistro, nombrePrisma) {
         throw new Error(`${tipoRegistro}: colmenaId es necesario para crear una registro.`);
       }
   
-      const { colmenaId, fecha, notas, ...restArgs } = args;
+      const { colmenaId, tareaId, fecha, notas, ...restArgs } = args;
+
   
       const registro = await prisma.registro.create({
         data: {
-          colmenaId: parseInt(colmenaId, 10), fecha, notas,
+          colmenaId: parseInt(colmenaId, 10), fecha, notas, tareaId,
           tipoRegistro
         }
       });
 
-      // Para 'HIBERNACION' y 'MUERTE', no creamos una registro específica
+      // Si recibo tareaId, voy a la tarea y la marco como terminada
+      if (tareaId) {
+        await prisma.tarea.update({
+          where: { id: tareaId },
+          data: { terminada: true },
+        });
+      }
+
+      // Para 'HIBERNACION' y 'MUERTE', no creamos un registro específico
       if (tipoRegistro === "HIBERNACION" || tipoRegistro === "MUERTE") {
         return registro;
       }
