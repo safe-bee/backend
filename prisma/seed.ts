@@ -63,7 +63,7 @@ export async function main() {
       foto1: "https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg",
     },
   });
-  
+
   // Tareas
   for (let i = 0; i < 3; i++) {
     await prisma.tarea.create({
@@ -92,7 +92,7 @@ export async function main() {
         fecha: new Date(2023, 8, 15),
         colmenaId: 1,
         tipoRegistro: "ALIMENTACION",
-        tareaId: 1
+        tareaId: 1,
       },
     });
     await prisma.registroAlimentacion.create({
@@ -129,7 +129,7 @@ export async function main() {
         fecha: new Date(),
         colmenaId: 1,
         tipoRegistro: "COSECHA",
-        tareaId: 2
+        tareaId: 2,
       },
     });
 
@@ -187,7 +187,6 @@ export async function main() {
         tipoRegistro: "HIBERNACION",
       },
     });
-
   });
 
   // Registros: Muerte
@@ -199,7 +198,6 @@ export async function main() {
         tipoRegistro: "MUERTE",
       },
     });
-
   });
 
   // Registros: Inspección
@@ -229,11 +227,21 @@ export async function main() {
         detalle_alimento: "Alimento suficiente",
         estado_plagas: false,
         detalle_plagas: "Sin plagas",
-        foto_inspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
+        foto_inspeccion:
+          "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
       },
     });
   });
 
+  // Marca las tareas que estan relacionadas a un registro como completadas.
+  await prisma.tarea.updateMany({
+    where: {
+      registro: { isNot: null },
+    },
+    data: {
+      terminada: true,
+    },
+  });
 
   // Zonas sugeridas
   await mainZonasSugeridas();

@@ -128,11 +128,35 @@ const registroResolvers = {
   },
   Mutation: {
     createRegistro: async (parent, args, { prisma }) => {
-      return await prisma.registro.create({ data: { ...args } });
+
+      const registro = await prisma.registro.create({ data: { ...args } });
+
+      // Si recibo tareaId, voy a la tarea y la marco como terminada
+      const { tareaId } = args;
+      if (tareaId) {
+        await prisma.tarea.update({
+          where: { id: tareaId },
+          data: { terminada: true },
+        });
+      }
+
+      return registro
     },
     updateRegistro: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
-      return await prisma.registro.update({ where: { id }, data });
+      const { tareaId } = args;
+
+      const registro = await prisma.registro.update({ where: { id }, data });
+
+      // Si recibo tareaId, voy a la tarea y la marco como terminada
+      if (tareaId) {
+        await prisma.tarea.update({
+          where: { id: tareaId },
+          data: { terminada: true },
+        });
+      }
+      
+      return registro
     },
     deleteRegistro: async (parent, args, { prisma }) => {
       const { id } = args;

@@ -9,6 +9,7 @@ const registroDef = gql`
     notas: String
     tipoRegistro: TipoRegistro!
     detalles: [Detalle!]!
+    tareaId: Int
     tarea: Tarea
   }
 
@@ -138,12 +139,14 @@ const registroDef = gql`
       fecha: DateTime!
       colmenaId: Int!
       tipoRegistro: TipoRegistro!
+      tareaId: Int
     ): Registro!
 
     updateRegistro(
       id: Int!, 
       fecha: DateTime
       colmenaId: Int
+      tareaId: Int
     ): Registro!
 
     deleteRegistro(id: Int!): Registro!

@@ -501,8 +501,9 @@ query Registro {
 mutation CreateRegistro {
   createRegistro(
     fecha: "2023-08-30T12:00:00Z"
-    tareaId: 2
+    tipoRegistro: ALIMENTACION
     colmenaId: 1
+    tareaId: 1 # Opcional
   ) {
     id
     fecha
@@ -517,7 +518,7 @@ mutation UpdateRegistro {
   updateRegistro(
     id: 1
     colmenaId: 2
-    tareaId: 2
+    tareaId: 2 # Opcional
   ) {
     id
     fecha
