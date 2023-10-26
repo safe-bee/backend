@@ -181,7 +181,7 @@ query Colmenas {
     tareas {
       id
       descripcion
-      tipo_registro
+      tipoRegistro
       terminada
     }
   }
@@ -213,7 +213,7 @@ query Colmena{
     tareas {
       id
       descripcion
-      tipo_registro
+      tipoRegistro
       terminada
     }
   }
