@@ -27,7 +27,7 @@ const colmenaResolvers = {
       // Crear una tarea de inspección una vez que la colmena se crea
       await prisma.tarea.create({
         data: {
-          descripcion: "Realizar Inspección",
+          descripcion: "Realizar tu primera Inspección",
           terminada: false,
           tipoRegistro: 'INSPECCION',
           colmena: {
