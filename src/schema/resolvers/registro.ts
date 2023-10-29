@@ -17,6 +17,32 @@ function groupByDate(registros) {
   return groupedRegistros;
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function transformHeader(key: string): string {
+  const headersMap = {
+    'alimento':'Alimento',
+    'cantidadAlimentacion': 'Cantidad',
+    'tipoPlaga': 'Tipo de Plaga',
+    'dosis': 'Dosis',
+    'tipoUnidad': 'Tipo de Unidad',
+    'cantidadCosecha': 'Cantidad',
+    'tipoMetodo': 'Método',
+    'porcentaje': 'Porcentaje',
+    'cantidad': 'Cantidad',
+    'estadoCajon': 'Cajón',
+    'estadoPoblacion': 'Población',
+    'estadoReinaLarvas': 'Reina y Larvas',
+    'estadoFlora': 'Flora',
+    'estadoAlimento': 'Alimento',
+    'estadoPlagas': 'Plagas'
+  };
+
+  return headersMap[key] || key;
+}
+
 const registroResolvers = {
   Detalle: {
     __resolveType(obj, context, info) {
@@ -85,7 +111,7 @@ const registroResolvers = {
 
         const transformedDetails = Object.keys(detalles)
           .filter(key => !key.startsWith("detalle") && key !== "registroId" && key !== "clima" && key !== "temperatura" && key !== "fotoInspeccion" && key !== "tipoRegistro")
-          .map(key => ({ header: key, value: detalles[key] }));
+          .map(key => ({ header: transformHeader(key), value: capitalizeFirstLetter(detalles[key].toString()) }));
 
         const bloque = {
           ...registro,
