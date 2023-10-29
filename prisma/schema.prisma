@@ -48,7 +48,7 @@ enum TipoAmbiente {
 model Colmena {
   id                          Int            @id @default(autoincrement())
   nombre                      String
-  apiario                     Apiario        @relation(fields: [apiarioId], references: [id])
+  apiario                     Apiario        @relation(fields: [apiarioId], references: [id], onDelete: Cascade)
   apiarioId                   Int
   tipo                        TipoColmena
   datos_total_cuadros         String?
@@ -119,7 +119,7 @@ model Tarea {
   id           Int          @id @default(autoincrement())
   descripcion  String       @db.VarChar(200)
   fecha        DateTime     @default(now())
-  colmena      Colmena      @relation(fields: [colmenaId], references: [id])
+  colmena      Colmena      @relation(fields: [colmenaId], references: [id], onDelete: Cascade)
   colmenaId    Int
   terminada    Boolean      @default(false)
   tipoRegistro TipoRegistro
@@ -129,7 +129,7 @@ model Tarea {
 model Registro {
   id                   Int                   @id @default(autoincrement())
   fecha                DateTime              @default(now())
-  colmena              Colmena               @relation(fields: [colmenaId], references: [id])
+  colmena              Colmena               @relation(fields: [colmenaId], references: [id], onDelete: Cascade)
   colmenaId            Int
   tipoRegistro         TipoRegistro
   tarea                Tarea?                @relation(fields: [tareaId], references: [id])
@@ -141,8 +141,6 @@ model Registro {
   registroCosecha      RegistroCosecha?
   registroVarroa       RegistroVarroa?
   registroCuadros      RegistroCuadros?
-  // registroHibernacion  RegistroHibernacion?
-  // registroMuerte       RegistroMuerte?
 }
 
 enum TipoRegistro {

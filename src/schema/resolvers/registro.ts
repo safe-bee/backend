@@ -17,27 +17,27 @@ function groupByDate(registros) {
   return groupedRegistros;
 }
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string): string  {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function transformHeader(key: string): string {
   const headersMap = {
-    'alimento':'Alimento',
-    'cantidadAlimentacion': 'Cantidad',
-    'tipoPlaga': 'Tipo de Plaga',
-    'dosis': 'Dosis',
-    'tipoUnidad': 'Tipo de Unidad',
-    'cantidadCosecha': 'Cantidad',
-    'tipoMetodo': 'Método',
-    'porcentaje': 'Porcentaje',
-    'cantidad': 'Cantidad',
-    'estadoCajon': 'Cajón',
-    'estadoPoblacion': 'Población',
-    'estadoReinaLarvas': 'Reina y Larvas',
-    'estadoFlora': 'Flora',
-    'estadoAlimento': 'Alimento',
-    'estadoPlagas': 'Plagas'
+    alimento: "Alimento",
+    cantidadAlimentacion: "Cantidad",
+    tipoPlaga: "Tipo de Plaga",
+    dosis: "Dosis",
+    tipoUnidad: "Tipo de Unidad",
+    cantidadCosecha: "Cantidad",
+    tipoMetodo: "Método",
+    porcentaje: "Porcentaje",
+    cantidad: "Cantidad",
+    estadoCajon: "Cajón",
+    estadoPoblacion: "Población",
+    estadoReinaLarvas: "Reina y Larvas",
+    estadoFlora: "Flora",
+    estadoAlimento: "Alimento",
+    estadoPlagas: "Plagas",
   };
 
   return headersMap[key] || key;
@@ -50,16 +50,18 @@ const registroResolvers = {
       // console.log("Objeto recibido en __resolveType:", obj.items);
 
       // Busca el objeto con header "tipoRegistro" y obtiene su valor
-    const tipoRegistroObj = obj.find(detail => detail.header === "tipoRegistro");
-    const tipoRegistro = tipoRegistroObj ? tipoRegistroObj.value : null;
-    console.log("Objeto en tipoRegistro: ", tipoRegistro);  
-    if (tipoRegistro) {
-      // Capitaliza el primer carácter y devuelve
-      return tipoRegistro.charAt(0).toUpperCase() + tipoRegistro.slice(1);
-    }
+      const tipoRegistroObj = obj.find(
+        (detail) => detail.header === "tipoRegistro"
+      );
+      const tipoRegistro = tipoRegistroObj ? tipoRegistroObj.value : null;
+      console.log("Objeto en tipoRegistro: ", tipoRegistro);
+      if (tipoRegistro) {
+        // Capitaliza el primer carácter y devuelve
+        return tipoRegistro.charAt(0).toUpperCase() + tipoRegistro.slice(1);
+      }
 
-    return "DetalleVacio";
-  },
+      return "DetalleVacio";
+    },
   },
 
   Query: {
@@ -87,31 +89,37 @@ const registroResolvers = {
       );
 
       const registrosWithDetails = registrosOrdenadas.map((registro) => {
-        //  const detalles = {
-        //    ...(registro.inspeccion && { inspeccion: registro.inspeccion }),
-        //    ...(registro.registroAlimentacion && { registroAlimentacion: registro.registroAlimentacion }),
-        //    ...(registro.registroTratamiento && { registroTratamiento: registro.registroTratamiento }),
-        //    ...(registro.registroCosecha && { registroCosecha: registro.registroCosecha }),
-        //    ...(registro.registroVarroa && { registroVarroa: registro.registroVarroa }),
-        //    ...(registro.registroCuadros && { registroCuadros: registro.registroCuadros }),
-        //  };
-
         const detalleKeys = Object.keys(registro).filter(
           (key) =>
-            (key.startsWith("registro") || key === "inspeccion") && registro[key]
+            (key.startsWith("registro") || key === "inspeccion") &&
+            registro[key]
         );
 
         let detalles: { [key: string]: any; tipoRegistro?: string } = {};
         if (detalleKeys.length > 0) {
-          detalles = { ...registro[detalleKeys[0]], tipoRegistro: detalleKeys[0] };
+          detalles = {
+            ...registro[detalleKeys[0]],
+            tipoRegistro: detalleKeys[0],
+          };
           if (detalleKeys[0] === "inspeccion") {
             detalles.tipoRegistro = "Inspeccion"; // Manejo especial para 'inspeccion'
           }
         }
 
         const transformedDetails = Object.keys(detalles)
-          .filter(key => !key.startsWith("detalle") && key !== "registroId" && key !== "clima" && key !== "temperatura" && key !== "fotoInspeccion" && key !== "tipoRegistro")
-          .map(key => ({ header: transformHeader(key), value: capitalizeFirstLetter(detalles[key].toString()) }));
+          .filter(
+            (key) =>
+              !key.startsWith("detalle") &&
+              key !== "registroId" &&
+              key !== "clima" &&
+              key !== "temperatura" &&
+              key !== "fotoInspeccion" &&
+              key !== "tipoRegistro"
+          )
+          .map((key) => ({
+            header: transformHeader(key),
+            value: capitalizeFirstLetter(detalles[key].toString()),
+          }));
 
         const bloque = {
           ...registro,
@@ -154,7 +162,6 @@ const registroResolvers = {
   },
   Mutation: {
     createRegistro: async (parent, args, { prisma }) => {
-
       const registro = await prisma.registro.create({ data: { ...args } });
 
       // Si recibo tareaId, voy a la tarea y la marco como terminada
@@ -166,7 +173,7 @@ const registroResolvers = {
         });
       }
 
-      return registro
+      return registro;
     },
     updateRegistro: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
@@ -181,8 +188,8 @@ const registroResolvers = {
           data: { terminada: true },
         });
       }
-      
-      return registro
+
+      return registro;
     },
     deleteRegistro: async (parent, args, { prisma }) => {
       const { id } = args;

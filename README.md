@@ -368,6 +368,7 @@ query TareasPendientes{
     }
   }
 }
+```
 
 ```graphql
 query Tareas{
