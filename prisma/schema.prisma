@@ -1,6 +1,9 @@
 // Comando para formatear este documento:
 // npx prisma format
 
+// Los nombres de modelos deberian estar en singular y en PascalCase
+// Los nombres de campos deberían estar en camelCase pero pasaron cosas
+
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
@@ -209,23 +212,30 @@ model RegistroCuadros {
 }
 
 model Inspeccion {
-  registro             Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)
-  registroId           Int      @id
-  clima                Clima?
-  temperatura          Int?
-  estado_cajon         Boolean
-  detalle_cajon        String
-  estado_poblacion     Boolean
-  detalle_poblacion    String
-  estado_reina_larvas  Boolean
-  detalle_reina_larvas String
-  estado_flora         Boolean
-  detalle_flora        String
-  estado_alimento      Boolean
-  detalle_alimento     String
-  estado_plagas        Boolean
-  detalle_plagas       String
-  foto_inspeccion      String?
+  registro                        Registro                @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  registroId                      Int                     @id
+  clima                           Clima?
+  temperatura                     Int?
+  estadoCajon                     Boolean
+  detalleCajonSellado             Sellado?
+  detalleCajonInvasores           Invasores?
+  estadoPoblacion                 Boolean
+  detallePoblacionEstado          Estado?
+  detallePoblacionNumCuadros      Int?
+  detallePoblacionFaltaEspacio    Boolean?
+  estadoReinaLarvas               Boolean
+  detalleReinaLarvasQueSeVe       QueSeVe?
+  detalleReinaLarvasPatronDeCria  PatronDeCria?
+  estadoFlora                     Boolean
+  detalleFloraEstado              Estado?
+  detalleFloraDispRecursos        DisponibilidadRecursos?
+  estadoAlimento                  Boolean
+  detalleAlimentoEstado           Estado?
+  detalleAlimentoDispRecursos     DisponibilidadRecursos?
+  estadoPlagas                    Boolean
+  detallePlagasPlagas             Plagas?
+  detallePlagasTemperamentoAbejas TemperamentoAbejas?
+  fotoInspeccion                  String?
 }
 
 enum Clima {
@@ -233,4 +243,66 @@ enum Clima {
   NUBLADO
   TORMENTA
   LLUVIA
+}
+
+enum Sellado {
+  MUY_BUENO
+  BUENO
+  NORMAL
+  MALO
+  MUY_MALO
+}
+
+enum Invasores {
+  POLILLAS
+  AVISPAS
+  HORMIGAS
+}
+
+enum Estado {
+  MUY_BUENO
+  BUENO
+  NORMAL
+  BAJO
+  MUY_BAJO
+}
+
+enum QueSeVe {
+  REINA
+  CRIA_POSTURA_ESPIRAL_CORRECTA
+  CRIA_POSTURA_ESPIRAL_INCORRECTA
+  NADA
+}
+
+enum PatronDeCria {
+  NINGUNA
+  MUY_VISIBLE
+  VISIBLE
+  MAYORMENTE_SOLIDA
+  SOLIDA
+  ENFERMAS
+}
+
+enum DisponibilidadRecursos {
+  ALTO
+  MEDIO
+  BAJO
+  NINGUNO
+}
+
+enum Plagas {
+  VARROA
+  NOSEMA
+  ESCARABAJOS
+  RATAS
+  HORMIGAS
+  POLILLAS
+  AVISPAS
+  NINGUNA
+}
+
+enum TemperamentoAbejas {
+  CALMAS
+  NERVIOSAS
+  AGRESIVAS
 }

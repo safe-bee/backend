@@ -560,25 +560,32 @@ query HistorialRegistros {
 
 ### Registros específicas
 ```graphql
-mutation {
+mutation CrearInspeccion{
   createInspeccion(
     colmenaId: 3,
     fecha: "2023-08-21T20:05:58.829Z",
     notas: "alta inspeccion",
     clima: SOLEADO,
     temperatura: 22,
-    estado_cajon: true,
-    detalle_cajon: "Todo en orden",
-    estado_poblacion: true,
-    detalle_poblacion: "Población saludable",
-    estado_reina_larvas: true,
-    detalle_reina_larvas: "Reina activa",
-    estado_flora: true,
-    detalle_flora: "Muchas flores",
-    estado_alimento: true,
-    detalle_alimento: "Suficiente alimento",
-    estado_plagas: false,
-    detalle_plagas: "Sin plagas",
+    estadoCajon: true,
+    detalleCajonSellado: BUENO,
+    detalleCajonInvasores: POLILLAS,
+    estadoPoblacion: true,
+    detallePoblacionEstado: BUENO,
+    detallePoblacionNumCuadros: 80,
+    detallePoblacionFaltaEspacio: false,
+    estadoReinaLarvas: true,
+    detalleReinaLarvasQueSeVe: REINA,
+    detalleReinaLarvasPatronDeCria: VISIBLE,
+    estadoFlora: true,
+    detalleFloraEstado: BUENO,
+    detalleFloraDispRecursos: ALTO,
+    estadoAlimento: true,
+    detalleAlimentoEstado: BUENO,
+    detalleAlimentoDispRecursos: ALTO,
+    estadoPlagas: false,
+    detallePlagasPlagas: NINGUNA,
+    detallePlagasTemperamentoAbejas: CALMAS
   ) {
     registroId
     clima
@@ -586,34 +593,40 @@ mutation {
   }
 }
 ```
-Para el id hay que usar el que devolvio la query anterior
-
+Para el id hay que usar el que devolvió la query anterior
 ```graphql
 query GetInspeccion{
-  inspeccion(id: 25) {
+  inspeccion(id: 9) {
     registroId
-    fecha
-    notas
+    registro {
+      colmenaId
+      fecha
+      notas
+      tareaId
+    }
     clima
     temperatura
-    estado_cajon
-    detalle_cajon
-    estado_poblacion
-    detalle_poblacion
-    estado_reina_larvas
-    detalle_reina_larvas
-    estado_flora
-    detalle_flora
-    estado_alimento
-    detalle_alimento
-    estado_plagas
-    detalle_plagas
-    foto_inspeccion
-    registro {
-      fecha
-      colmenaId
-    }
-  }  
+    estadoCajon
+    detalleCajonSellado
+    detalleCajonInvasores
+    estadoPoblacion
+    detallePoblacionEstado
+    detallePoblacionNumCuadros
+    detallePoblacionFaltaEspacio
+    estadoReinaLarvas
+    detalleReinaLarvasQueSeVe
+    detalleReinaLarvasPatronDeCria
+    estadoFlora
+    detalleFloraEstado
+    detalleFloraDispRecursos
+    estadoAlimento
+    detalleAlimentoEstado
+    detalleAlimentoDispRecursos
+    estadoPlagas
+    detallePlagasPlagas
+    detallePlagasTemperamentoAbejas
+    fotoInspeccion
+  }
 }
 ```
 ```graphql

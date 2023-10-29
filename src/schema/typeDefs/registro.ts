@@ -89,19 +89,26 @@ const registroDef = gql`
     registro: Registro!
     clima: Clima
     temperatura: Int
-    estado_cajon: Boolean
-    detalle_cajon: String
-    estado_poblacion: Boolean
-    detalle_poblacion: String
-    estado_reina_larvas: Boolean
-    detalle_reina_larvas: String
-    estado_flora: Boolean
-    detalle_flora: String
-    estado_alimento: Boolean
-    detalle_alimento: String
-    estado_plagas: Boolean
-    detalle_plagas: String
-    foto_inspeccion: String
+    estadoCajon: Boolean!
+    detalleCajonSellado: Sellado
+    detalleCajonInvasores: Invasores
+    estadoPoblacion: Boolean!
+    detallePoblacionEstado: Estado
+    detallePoblacionNumCuadros: Int
+    detallePoblacionFaltaEspacio: Boolean
+    estadoReinaLarvas: Boolean!
+    detalleReinaLarvasQueSeVe: QueSeVe
+    detalleReinaLarvasPatronDeCria: PatronDeCria
+    estadoFlora: Boolean!
+    detalleFloraEstado: Estado
+    detalleFloraDispRecursos: DisponibilidadRecursos
+    estadoAlimento: Boolean!
+    detalleAlimentoEstado: Estado
+    detalleAlimentoDispRecursos: DisponibilidadRecursos
+    estadoPlagas: Boolean!
+    detallePlagasPlagas: Plagas
+    detallePlagasTemperamentoAbejas: TemperamentoAbejas
+    fotoInspeccion: String
   }
 
   enum Clima {
@@ -109,6 +116,68 @@ const registroDef = gql`
     NUBLADO
     TORMENTA
     LLUVIA
+  }
+
+  enum Sellado {
+    MUY_BUENO
+    BUENO
+    NORMAL
+    MALO
+    MUY_MALO
+  }
+  
+  enum Invasores {
+    POLILLAS
+    AVISPAS
+    HORMIGAS
+  }
+  
+  enum Estado {
+    MUY_BUENO
+    BUENO
+    NORMAL
+    BAJO
+    MUY_BAJO
+  }
+  
+  enum QueSeVe {
+    REINA
+    CRIA_POSTURA_ESPIRAL_CORRECTA
+    CRIA_POSTURA_ESPIRAL_INCORRECTA
+    NADA
+  }
+  
+  enum PatronDeCria {
+    NINGUNA
+    MUY_VISIBLE
+    VISIBLE
+    MAYORMENTE_SOLIDA
+    SOLIDA
+    ENFERMAS
+  }
+  
+  enum DisponibilidadRecursos {
+    ALTO
+    MEDIO
+    BAJO
+    NINGUNO
+  }
+  
+  enum Plagas {
+    VARROA
+    NOSEMA
+    ESCARABAJOS
+    RATAS
+    HORMIGAS
+    POLILLAS
+    AVISPAS
+    NINGUNA
+  }
+  
+  enum TemperamentoAbejas {
+    CALMAS
+    NERVIOSAS
+    AGRESIVAS
   }
 
   type DetalleVacio {
@@ -151,7 +220,7 @@ const registroDef = gql`
 
     deleteRegistro(id: Int!): Registro!
 
-    createInspeccion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, registroId: ID, clima: Clima, temperatura: Int, estado_cajon: Boolean, detalle_cajon: String, estado_poblacion: Boolean, detalle_poblacion: String, estado_reina_larvas: Boolean, detalle_reina_larvas: String, estado_flora: Boolean, detalle_flora: String, estado_alimento: Boolean, detalle_alimento: String, estado_plagas: Boolean, detalle_plagas: String, foto_inspeccion: String): Inspeccion
+    createInspeccion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, registroId: ID, clima: Clima, temperatura: Int, estadoCajon: Boolean, detalleCajonSellado: Sellado, detalleCajonInvasores: Invasores, estadoPoblacion: Boolean, detallePoblacionEstado: Estado, detallePoblacionNumCuadros: Int, detallePoblacionFaltaEspacio: Boolean, estadoReinaLarvas: Boolean, detalleReinaLarvasQueSeVe: QueSeVe, detalleReinaLarvasPatronDeCria: PatronDeCria, estadoFlora: Boolean, detalleFloraEstado: Estado, detalleFloraDispRecursos: DisponibilidadRecursos, estadoAlimento: Boolean, detalleAlimentoEstado: Estado, detalleAlimentoDispRecursos: DisponibilidadRecursos, estadoPlagas: Boolean, detallePlagasPlagas: Plagas, detallePlagasTemperamentoAbejas: TemperamentoAbejas, fotoInspeccion: String ): Inspeccion
     createTratamiento(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, tipoPlaga: TipoPlaga, producto: String, dosis: String): RegistroTratamiento
     createCosecha(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, tipoUnidad: TipoUnidad, cantidadCosecha: Float): RegistroCosecha
     createAlimentacion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, alimento: String, cantidadAlimentacion: Float): RegistroAlimentacion
@@ -159,15 +228,6 @@ const registroDef = gql`
     createVarroa(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, registroId: ID, tipoMetodo: TipoMetodo, porcentaje: Float): RegistroVarroa
     createHibernacion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String): Registro
     createMuerte(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String): Registro
-    
-    deleteInspeccion(id: ID!): Inspeccion
-    deleteTratamiento(id: ID!): RegistroTratamiento
-    deleteCosecha(id: ID!): RegistroCosecha
-    deleteAlimentacion(id: ID!): RegistroAlimentacion
-    deleteCambioDeCuadros(id: ID!): RegistroCuadros
-    deleteVarroa(id: ID!): RegistroVarroa
-    deleteHibernacion(id: ID!): Registro
-    deleteMuerte(id: ID!): Registro
   }
 `;
 
