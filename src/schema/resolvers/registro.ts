@@ -106,6 +106,9 @@ const registroResolvers = {
           }
         }
 
+        // Agrego el campo notas dentro del array de (header: value)
+        detalles.notas = registro.notas ?? ''
+
         const transformedDetails = Object.keys(detalles)
           .filter(
             (key) =>
