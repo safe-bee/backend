@@ -1,12 +1,29 @@
 import { PrismaClient } from '@prisma/client';
 import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
+import {
+  Clima,
+  Sellado,
+  Invasores,
+  Estado,
+  QueSeVe,
+  PatronDeCria,
+  DisponibilidadRecursos,
+  Plagas,
+  TemperamentoAbejas
+} from "@prisma/client";
 
 
 const prisma = new PrismaClient();
 
-// function getRandomItemFromArray(array) {
-//   return array[Math.floor(Math.random() * array.length)];
-// }
+// Helpers
+function getRandomItemFromEnum<T>(myEnum: T): keyof T {
+  const array = Object.values(myEnum)
+  return array[Math.floor(Math.random() * array.length)] as keyof T;
+}
+
+function getRandomBoolean() {
+  return Math.random() < 0.5;
+}
 
 export async function main() {
   // Apiarios
@@ -202,41 +219,43 @@ export async function main() {
 
   // Registros: Inspección
   await prisma.$transaction(async (prisma) => {
-    const registro = await prisma.registro.create({
-      data: {
-        fecha: new Date(),
-        colmenaId: 1,
-        tipoRegistro: "INSPECCION",
-      },
-    });
 
-    await prisma.inspeccion.create({
-      data: {
-        registroId: registro.id,
-        clima: "NUBLADO",
-        temperatura: 25,
-        estadoCajon: true,
-        detalleCajonSellado: "BUENO",
-        detalleCajonInvasores: "POLILLAS",
-        estadoPoblacion: true,
-        detallePoblacionEstado: "BUENO",
-        detallePoblacionNumCuadros: 80,
-        detallePoblacionFaltaEspacio: false,
-        estadoReinaLarvas: true,
-        detalleReinaLarvasQueSeVe: "REINA",
-        detalleReinaLarvasPatronDeCria: "SOLIDA",
-        estadoFlora: true,
-        detalleFloraEstado: "BUENO",
-        detalleFloraDispRecursos: "ALTO",
-        estadoAlimento: true,
-        detalleAlimentoEstado: "BUENO",
-        detalleAlimentoDispRecursos: "ALTO",
-        estadoPlagas: false,
-        detallePlagasPlagas: "NINGUNA",
-        detallePlagasTemperamentoAbejas: "CALMAS",
-        fotoInspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
-    },
-    });
+    for (let i = 0; i < 10; i++) {
+      const registro = await prisma.registro.create({
+        data: {
+          fecha: new Date(),
+          colmenaId: 1,
+          tipoRegistro: "INSPECCION",
+        },
+      });
+      await prisma.inspeccion.create({
+        data: {
+          registroId: registro.id,
+          clima: getRandomItemFromEnum(Clima),
+          temperatura: 25,
+          estadoCajon: getRandomBoolean(),
+          detalleCajonSellado: getRandomItemFromEnum(Sellado),
+          detalleCajonInvasores: getRandomItemFromEnum(Invasores),
+          estadoPoblacion: getRandomBoolean(),
+          detallePoblacionEstado: getRandomItemFromEnum(Estado),
+          detallePoblacionNumCuadros: 80,
+          detallePoblacionFaltaEspacio: getRandomBoolean(),
+          estadoReinaLarvas: getRandomBoolean(),
+          detalleReinaLarvasQueSeVe: getRandomItemFromEnum(QueSeVe),
+          detalleReinaLarvasPatronDeCria: getRandomItemFromEnum(PatronDeCria),
+          estadoFlora: getRandomBoolean(),
+          detalleFloraEstado: getRandomItemFromEnum(Estado),
+          detalleFloraDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
+          estadoAlimento: getRandomBoolean(),
+          detalleAlimentoEstado: getRandomItemFromEnum(Estado),
+          detalleAlimentoDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
+          estadoPlagas: getRandomBoolean(),
+          detallePlagasPlagas: getRandomItemFromEnum(Plagas),
+          detallePlagasTemperamentoAbejas: getRandomItemFromEnum(TemperamentoAbejas),
+          fotoInspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
+        },
+      });
+    }
   });
 
   // Marca las tareas que estan relacionadas a un registro como completadas.
