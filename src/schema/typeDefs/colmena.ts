@@ -60,6 +60,7 @@ const colmenaDef = gql`
   extend type Query {
     colmenas: [Colmena!]!
     colmena(id: Int!): Colmena
+    procesarInformacionParaTratamientoDeVarroa(colmenaId: Int!): Int
   }
 
   extend type Mutation {

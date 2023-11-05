@@ -1,3 +1,5 @@
+import { procesarInformacionParaTratamientoDeVarroa } from '../../xd';
+
 const colmenaResolvers = {
   Query: {
     colmenas: async (parent, args, { prisma }) => {
@@ -18,6 +20,13 @@ const colmenaResolvers = {
           tareas: { where: { terminada: false } }
         }
       });
+    },
+    procesarInformacionParaTratamientoDeVarroa: async (parent, args, { prisma }) => {
+      const { colmenaId } = args;
+
+      procesarInformacionParaTratamientoDeVarroa(prisma, colmenaId)
+
+      return 1;
     },      
   },
   Mutation: {

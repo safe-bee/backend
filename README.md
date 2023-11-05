@@ -756,6 +756,14 @@ mutation CrearMuerte {
 }
 ```
 
+### Información para tratamiento de Varroa
+Esta query devuelve siempre 1. Por atrás hace los cálculos para settear la alerta automática de varroa
+```graphql
+query procesarInformacionParaTratamientoDeVarroa{
+  procesarInformacionParaTratamientoDeVarroa(colmenaId: 1)
+}
+```
+
 ---
 
 ### Serverless & AWS CLI (Próximamente)

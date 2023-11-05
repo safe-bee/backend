@@ -25,6 +25,11 @@ function getRandomBoolean() {
   return Math.random() < 0.5;
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 export async function main() {
   // Apiarios
   const apiario1 = await prisma.apiario.create({
@@ -219,11 +224,12 @@ export async function main() {
 
   // Registros: Inspección
   await prisma.$transaction(async (prisma) => {
-
+    const fechaDeInspeccion = new Date("2023-01-01");
     for (let i = 0; i < 10; i++) {
+      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + (getRandomInt(7, 35)));
       const registro = await prisma.registro.create({
         data: {
-          fecha: new Date(),
+          fecha: fechaDeInspeccion,
           colmenaId: 1,
           tipoRegistro: "INSPECCION",
         },
@@ -232,13 +238,13 @@ export async function main() {
         data: {
           registroId: registro.id,
           clima: getRandomItemFromEnum(Clima),
-          temperatura: 25,
+          temperatura: getRandomInt(10, 30),
           estadoCajon: getRandomBoolean(),
           detalleCajonSellado: getRandomItemFromEnum(Sellado),
           detalleCajonInvasores: getRandomItemFromEnum(Invasores),
           estadoPoblacion: getRandomBoolean(),
           detallePoblacionEstado: getRandomItemFromEnum(Estado),
-          detallePoblacionNumCuadros: 80,
+          detallePoblacionNumCuadros: getRandomInt(10, 100),
           detallePoblacionFaltaEspacio: getRandomBoolean(),
           estadoReinaLarvas: getRandomBoolean(),
           detalleReinaLarvasQueSeVe: getRandomItemFromEnum(QueSeVe),
