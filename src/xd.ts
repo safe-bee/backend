@@ -1,7 +1,14 @@
 export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmenaId) {
-  // Obtengo todas las inspecciones para una colmena específica ordenardas por fecha
+  // Obtengo todas las inspecciones de hace un año para una colmena específica ordenardas por fecha
+  const fechaDelAnioPasado = new Date();
+  fechaDelAnioPasado.setFullYear(fechaDelAnioPasado.getFullYear() - 1);
   const inspecciones = await prisma.inspeccion.findMany({
-    where: { registro: { colmenaId: colmenaId } },
+    where: {
+      AND: [
+        {registro: { colmenaId: colmenaId }},
+        {registro: { fecha: { gte: fechaDelAnioPasado} }},
+      ],
+    },
     orderBy: { registro: { fecha: "asc" } },
     include: { registro: true },
   });
@@ -34,11 +41,34 @@ export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmena
     fechaPromedio.setFullYear(fechaPromedio.getFullYear() + 1)
   );
 
+  // Fechas anteriores
+  const fechasAnteriores = await prisma.tarea.findMany({
+    where: {
+      colmenaId: colmenaId,
+      tipoRegistro: "VARROA",
+      descripcion: "Alerta automática de control de Varroa",
+    },
+    select: { fecha: true },
+  });
+
+  // Creo un array con las fechas anteriores + la nueva fecha calculada
+  const fechasParaSiguienteAnio = fechasAnteriores.map(({fecha}) => {
+    const fechaConSiguienteAnio = new Date(fecha);
+    fechaConSiguienteAnio.setFullYear((new Date()).getFullYear() + 1);
+    return fechaConSiguienteAnio;
+  } );
+  fechasParaSiguienteAnio.push(fechaPromedioDelAnioQueViene);
+
+  // Saco el promedio del array de fechas
+  const totalMillis = fechasParaSiguienteAnio.reduce((total, fecha) => total + (new Date(fecha)).getTime(), 0);
+  const promedioMillis = totalMillis / fechasParaSiguienteAnio.length;
+  const fechaPromedioTotalDelAnioQueViene = new Date(promedioMillis)
+
   // Programo una nueva tarea de control de Varroa para esa fecha dentro de un año
   // Primero, intenta buscar un registro existente.
   const existingTarea = await prisma.tarea.findFirst({
     where: {
-      fecha: fechaPromedioDelAnioQueViene,
+      fecha: fechaPromedioTotalDelAnioQueViene,
       colmenaId: colmenaId,
       terminada: false,
       tipoRegistro: "VARROA",
@@ -48,8 +78,8 @@ export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmena
     // El registro no existe, lo creo.
     await prisma.tarea.create({
       data: {
-        descripcion: "Control de Varroa",
-        fecha: fechaPromedioDelAnioQueViene,
+        descripcion: "Alerta automática de control de Varroa",
+        fecha: fechaPromedioTotalDelAnioQueViene,
         colmenaId: colmenaId,
         terminada: false,
         tipoRegistro: "VARROA",
@@ -57,5 +87,4 @@ export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmena
     });
   }
 
-  console.log(max);
 }
