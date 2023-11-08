@@ -50,6 +50,8 @@
   "dependencies": {
     "@as-integrations/aws-lambda": "^2.0.1",
     "@prisma/client": "^4.16.1",
+    "@turf/boolean-point-in-polygon": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
     "amazon-cognito-identity-js": "^6.3.1",
     "aws-sdk": "^2.1406.0",
     "graphql": "^16.6.0",

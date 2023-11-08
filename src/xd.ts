@@ -1,3 +1,6 @@
+import { point, polygon } from "@turf/helpers";
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
+
 export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmenaId) {
   // Obtengo todas las inspecciones de hace un año para una colmena específica ordenardas por fecha
   const fechaDelAnioPasado = new Date();
@@ -87,4 +90,24 @@ export async function procesarInformacionParaTratamientoDeVarroa(prisma, colmena
     });
   }
 
+}
+
+
+export function estaEnSudoesteBuenosAires(cordX, cordY) {
+
+  const pt = point([cordX, cordY]);
+  const poly = polygon([
+    [
+      [-36.23873, -59.97445],
+      [-36.6574, -63.32769],
+      [-39.32779, -63.36597],
+      [-40.56578, -63.37687],
+      [-38.91, -60.37751],
+      [-37.23948, -59.18996],
+      [-36.63943, -59.24163],
+      [-36.23873, -59.97445],
+    ],
+  ]);
+
+  return booleanPointInPolygon(pt, poly)
 }
