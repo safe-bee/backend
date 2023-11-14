@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import { startStandaloneServer } from '@apollo/server/standalone';
 import schema from "./schema/index.js";
 import cron from 'node-cron';
-import { procesarInformacionParaTratamientoDeVarroa } from './xd';
+import { procesarInformacionParaTratamientoDeVarroa } from './xd.js';
 
 
 interface MyContext {

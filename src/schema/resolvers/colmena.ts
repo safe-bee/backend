@@ -1,4 +1,4 @@
-import { procesarInformacionParaTratamientoDeVarroa, estaEnSudoesteBuenosAires } from '../../xd';
+import { procesarInformacionParaTratamientoDeVarroa, estaEnSudoesteBuenosAires } from '../../xd.js';
 
 const colmenaResolvers = {
   Query: {
