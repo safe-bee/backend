@@ -106,7 +106,166 @@ export async function main() {
     });
   }
 
+/*
+  // Registros
+  // Registros: Alimentación
+  await prisma.$transaction(async (prisma) => {
+    const registro = await prisma.registro.create({
+      data: {
+        fecha: new Date(2023, 8, 15),
+        colmenaId: 1,
+        tipoRegistro: "ALIMENTACION",
+        tareaId: 1,
+      },
+    });
+    await prisma.registroAlimentacion.create({
+      data: {
+        registroId: registro.id,
+        alimento: "comida",
+        cantidadAlimentacion: 50,
+      },
+    });
+  });
+  // Registros: Tratamiento
+  await prisma.$transaction(async (prisma) => {
+    const registro = await prisma.registro.create({
+      data: {
+        fecha: new Date(2023, 9, 10),
+        colmenaId: 1,
+        tipoRegistro: "TRATAMIENTO",
+      },
+    });
 
+    await prisma.registroTratamiento.create({
+      data: {
+        registroId: registro.id,
+        tipoPlaga: "VARROA",
+        producto: "Producto de tratamiento",
+        dosis: "10 ml",
+      },
+    });
+  });
+  // Registros: Cosecha
+  await prisma.$transaction(async (prisma) => {
+    const registro = await prisma.registro.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoRegistro: "COSECHA",
+        tareaId: 2,
+      },
+    });
+
+    await prisma.registroCosecha.create({
+      data: {
+        registroId: registro.id,
+        tipoUnidad: "LIBRAS",
+        cantidadCosecha: 20,
+      },
+    });
+  });
+  // Registros: Varroa
+  await prisma.$transaction(async (prisma) => {
+    const registro = await prisma.registro.create({
+      data: {
+        fecha: new Date(2023, 8, 11),
+        colmenaId: 1,
+        tipoRegistro: "VARROA",
+      },
+    });
+
+    await prisma.registroVarroa.create({
+      data: {
+        registroId: registro.id,
+        tipoMetodo: "ALCOHOL",
+        porcentaje: 5,
+      },
+    });
+  });
+
+  // Registros: Cuadros
+  await prisma.$transaction(async (prisma) => {
+    const registro = await prisma.registro.create({
+      data: {
+        fecha: new Date(),
+        colmenaId: 1,
+        tipoRegistro: "CAMBIO_DE_CUADROS",
+      },
+    });
+
+    await prisma.registroCuadros.create({
+      data: {
+        registroId: registro.id,
+        cantidad: 8,
+      },
+    });
+  });
+
+  // Registros: Hibernación
+  await prisma.$transaction(async (prisma) => {
+    await prisma.registro.create({
+      data: {
+        fecha: new Date(2023, 9, 22),
+        colmenaId: 1,
+        tipoRegistro: "HIBERNACION",
+      },
+    });
+  });
+
+  // Registros: Muerte
+  await prisma.$transaction(async (prisma) => {
+    await prisma.registro.create({
+      data: {
+        fecha: new Date(2023, 10, 7),
+        colmenaId: 1,
+        tipoRegistro: "MUERTE",
+      },
+    });
+  });
+
+  // Registros: Inspección
+  await prisma.$transaction(async (prisma) => {
+    const fechaDeInspeccion = new Date("2023-01-01");
+    for (let i = 0; i < 10; i++) {
+      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + (getRandomInt(7, 35)));
+      const registro = await prisma.registro.create({
+        data: {
+          fecha: fechaDeInspeccion,
+          colmenaId: 1,
+          tipoRegistro: "INSPECCION",
+        },
+      });
+      await prisma.inspeccion.create({
+        data: {
+          registroId: registro.id,
+          clima: getRandomItemFromEnum(Clima),
+          temperatura: getRandomInt(10, 30),
+          estadoCajon: getRandomBoolean(),
+          detalleCajonSellado: getRandomItemFromEnum(Sellado),
+          detalleCajonInvasores: getRandomItemFromEnum(Invasores),
+          estadoPoblacion: getRandomBoolean(),
+          detallePoblacionEstado: getRandomItemFromEnum(Estado),
+          detallePoblacionNumCuadros: getRandomInt(10, 100),
+          detallePoblacionFaltaEspacio: getRandomBoolean(),
+          estadoReinaLarvas: getRandomBoolean(),
+          detalleReinaLarvasQueSeVe: getRandomItemFromEnum(QueSeVe),
+          detalleReinaLarvasPatronDeCria: getRandomItemFromEnum(PatronDeCria),
+          estadoFlora: getRandomBoolean(),
+          detalleFloraEstado: getRandomItemFromEnum(Estado),
+          detalleFloraDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
+          estadoAlimento: getRandomBoolean(),
+          detalleAlimentoEstado: getRandomItemFromEnum(Estado),
+          detalleAlimentoDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
+          estadoPlagas: getRandomBoolean(),
+          detallePlagasPlagas: getRandomItemFromEnum(Plagas),
+          detallePlagasTemperamentoAbejas: getRandomItemFromEnum(TemperamentoAbejas),
+          fotoInspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
+        },
+      });
+    }
+  });
+
+*/
   // Marca las tareas que estan relacionadas a un registro como completadas.
   await prisma.tarea.updateMany({
     where: {
