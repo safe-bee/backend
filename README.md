@@ -5,9 +5,10 @@
 2. Crear una base de datos Postgres con address:port = localhost:5432
 3. Modificar la variable `DATABASE_URL` con tu USER, PASSWORD y DBNAME de Postgres
 4. instala la interfaz CLI de NestJS: `npm install -g @nestjs/cli`
-5. Instala dependencias: `npm install`. Levantar el servidor: `npm run start`
-6. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
-7. Levantar los seeders: `npx prisma db seed`
+5. Instala dependencias: `npm install`
+7. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
+8. Levantar los seeders: `npx prisma db seed`
+9. Levantar el servidor: `npm run start` o `npm run startWin`
 
 ### Comandos útiles para el desarrollo
 - Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`
@@ -43,6 +44,32 @@ query Apiario{
       "direccion": "123 Calle Principal",
       "tipo_ambiente": "RURAL",
       "fecha_creacion": "2023-08-21T20:05:58.829Z"
+    }
+  }
+}
+```
+### Usuario:
+
+```graphql
+mutation SignUp{
+  signUp(
+    nombreUsuario: "Esteban",
+    correoElectronico: "Esteban@sarasa.com"
+    contrasena: "esteban123",
+  ) {
+    usuario {
+      usuarioId
+    }
+  }
+}
+
+mutation SignIn{
+  signIn(
+    nombreUsuario: "Esteban",
+    contrasena: "esteban123",
+  ) {
+    usuario {
+      usuarioId
     }
   }
 }

@@ -14,18 +14,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  profile Profile?
-}
-
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+model Usuario {
+  usuarioId         Int       @id @default(autoincrement())
+  nombreUsuario     String    @unique
+  correoElectronico String    @unique
+  contrasenaHash    String
+  fechaCreacion     DateTime  @default(now())
+  apiarios          Apiario[]
 }
 
 model Apiario {
@@ -37,6 +32,8 @@ model Apiario {
   direccion      String
   tipo_ambiente  TipoAmbiente
   colmenas       Colmena[]
+  usuarioId      Int
+  usuario        Usuario      @relation(fields: [usuarioId], references: [usuarioId])
 }
 
 enum TipoAmbiente {
