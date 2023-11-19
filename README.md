@@ -136,27 +136,8 @@ mutation {
     longitud: -71.0589,
     direccion: "456 Calle Principal",
     tipo_ambiente: RURAL,
-    fecha_creacion: "2023-04-20T03:14:24.405Z"
-  ) {
-    id
-    nombre
-    latitud
-    longitud
-    direccion
-    tipo_ambiente
-  }
-}
-```
-
-```graphql
-mutation {
-  updateApiario(
-    id: 3, 
-    nombre: "Apiario Editadoo",
-    latitud: 69,
-    longitud: -4.20,
-    direccion: "Calle falsa 123",
-    tipo_ambiente: URBANO
+    fecha_creacion: "2023-04-20T03:14:24.405Z",
+    usuarioId: 1
   ) {
     id
     nombre
@@ -202,9 +183,6 @@ query Colmenas {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
     tareas {
       id
       descripcion
@@ -234,9 +212,6 @@ query Colmena{
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
     tareas {
       id
       descripcion
@@ -261,9 +236,6 @@ mutation crearColmena{
     reina_color: AMARILLO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
-    foto1: "URL de la foto 1"
-    foto2: "URL de la foto 2"
-    foto3: "URL de la foto 3"
   ) {
     id
     nombre
@@ -296,9 +268,6 @@ mutation {
     reina_color: ROJO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
-    foto1: "URL de la foto 1"
-    foto2: "URL de la foto 2"
-    foto3: "URL de la foto 3"
   ) {
     id
     nombre
@@ -312,9 +281,6 @@ mutation {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
   }
 }
 ```
@@ -334,9 +300,6 @@ mutation {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
   }
 }
 ```

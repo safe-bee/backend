@@ -83,9 +83,9 @@ const colmenaDef = gql`
 
     updateColmena(
       id: Int!
-      nombre: String!
-      apiarioId: Int!
-      tipo: TipoColmena!
+      nombre: String
+      apiarioId: Int
+      tipo: TipoColmena
       datos_total_cuadros: String
       datos_color: String
       datos_origen: OrigenColmena

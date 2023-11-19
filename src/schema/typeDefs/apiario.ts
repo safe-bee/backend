@@ -31,15 +31,16 @@ const apiarioDef = gql`
       direccion: String!
       tipo_ambiente: TipoAmbiente!
       fecha_creacion: DateTime
+      usuarioId: Int!
     ): Apiario!
 
     updateApiario(
       id: Int!
-      nombre: String!
-      latitud: Float!
-      longitud: Float!
-      direccion: String!
-      tipo_ambiente: TipoAmbiente!
+      nombre: String
+      latitud: Float
+      longitud: Float
+      direccion: String
+      tipo_ambiente: TipoAmbiente
       fecha_creacion: DateTime
     ): Apiario!
 
