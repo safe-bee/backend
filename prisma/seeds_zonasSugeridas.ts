@@ -3,22 +3,45 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function main() {
-    async function createZona(nombre: string, coordenadas: { coord1: number; coord2: number }[]) {
-      try {
-        await prisma.zona.upsert({
-          where: { nombre: nombre }, // Condición de búsqueda
-          update: {}, // Datos a actualizar si la zona existe (en este caso, no se actualizan)
-          create: { // Datos a crear si la zona no existe            
-            nombre: nombre,
-            coordenadas: {
-              create: coordenadas,
-            },
-          },
-        });
-      } catch (error) {
-        console.error("Error al crear/actualizar la zona:", error);
-      }
+  async function createZona(nombre: string, coordenadas: { coord1: number; coord2: number }[]) {
+
+    try {
+      process.stdout.write(`\rTrato de crear la zona: ${nombre}`);
+      await prisma.$transaction(
+        async (trx) => {
+
+          const existingZona = await trx.zona.findUnique({ where: { nombre } });
+          if (existingZona) {
+            console.log(`\tYa existe la zona: ${nombre}`);
+            return
+          }
+
+          const createdZona = await trx.zona.create({
+            data: { nombre: nombre },
+          });
+
+          await Promise.all(
+            coordenadas.map((coordenada) =>
+              trx.coordenada.create({
+                data: {
+                  coord1: coordenada.coord1,
+                  coord2: coordenada.coord2,
+                  zonaId: createdZona.id,
+                }
+              })))
+
+
+          console.log(`\rTrato de crear la zona: ${nombre} ✅`);
+        },
+        {
+          maxWait: 10000, // default: 2000
+          timeout: 20000, // default: 5000
+        }
+      );
+    } catch (error) {
+      console.error(`\rError al crear/actualizar la zona: ${nombre}\n`, error);
     }
+  }
 
   await createZona("Victoria, Entre Ríos", [
     { coord1: -32.60742, coord2: -60.11144 },
@@ -337,10 +360,3 @@ export async function main() {
     { coord1: -26.75594, coord2: -65.3649 },
   ]);
 }
-
-main()
-  .catch((e) => {
-    console.error(e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

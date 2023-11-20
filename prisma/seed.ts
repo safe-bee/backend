@@ -106,7 +106,7 @@ export async function main() {
     });
   }
 
-/*
+
   // Registros
   // Registros: Alimentación
   await prisma.$transaction(async (prisma) => {
@@ -224,10 +224,10 @@ export async function main() {
   });
 
   // Registros: Inspección
-  await prisma.$transaction(async (prisma) => {
-    const fechaDeInspeccion = new Date("2023-01-01");
-    for (let i = 0; i < 10; i++) {
-      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + (getRandomInt(7, 35)));
+  const fechaDeInspeccion = new Date("2023-01-01");
+  for (let i = 0; i < 10; i++) {
+    await prisma.$transaction(async (prisma) => {
+      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + getRandomInt(7, 35));
       const registro = await prisma.registro.create({
         data: {
           fecha: fechaDeInspeccion,
@@ -262,10 +262,9 @@ export async function main() {
           fotoInspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
         },
       });
-    }
-  });
+    });
+  }
 
-*/
   // Marca las tareas que estan relacionadas a un registro como completadas.
   await prisma.tarea.updateMany({
     where: {
