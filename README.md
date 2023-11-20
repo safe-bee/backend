@@ -5,9 +5,10 @@
 2. Crear una base de datos Postgres con address:port = localhost:5432
 3. Modificar la variable `DATABASE_URL` con tu USER, PASSWORD y DBNAME de Postgres
 4. instala la interfaz CLI de NestJS: `npm install -g @nestjs/cli`
-5. Instala dependencias: `npm install`. Levantar el servidor: `npm run start`
-6. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
-7. Levantar los seeders: `npx prisma db seed`
+5. Instala dependencias: `npm install`
+7. Tirar el comando `npx prisma db push` para crear o actualizar las tablas en base a schema.prisma
+8. Levantar los seeders: `npx prisma db seed`
+9. Levantar el servidor: `npm run start` o `npm run startWin`
 
 ### Comandos útiles para el desarrollo
 - Reiniciar la base de datos, correr migrations y seeders todo en uno para el desarrollo: `npx prisma db push --force-reset && npx prisma db seed`
@@ -43,6 +44,32 @@ query Apiario{
       "direccion": "123 Calle Principal",
       "tipo_ambiente": "RURAL",
       "fecha_creacion": "2023-08-21T20:05:58.829Z"
+    }
+  }
+}
+```
+### Usuario:
+
+```graphql
+mutation SignUp{
+  signUp(
+    nombreUsuario: "Esteban",
+    correoElectronico: "Esteban@sarasa.com"
+    contrasena: "esteban123",
+  ) {
+    usuario {
+      usuarioId
+    }
+  }
+}
+
+mutation SignIn{
+  signIn(
+    nombreUsuario: "Esteban",
+    contrasena: "esteban123",
+  ) {
+    usuario {
+      usuarioId
     }
   }
 }
@@ -109,27 +136,8 @@ mutation {
     longitud: -71.0589,
     direccion: "456 Calle Principal",
     tipo_ambiente: RURAL,
-    fecha_creacion: "2023-04-20T03:14:24.405Z"
-  ) {
-    id
-    nombre
-    latitud
-    longitud
-    direccion
-    tipo_ambiente
-  }
-}
-```
-
-```graphql
-mutation {
-  updateApiario(
-    id: 3, 
-    nombre: "Apiario Editadoo",
-    latitud: 69,
-    longitud: -4.20,
-    direccion: "Calle falsa 123",
-    tipo_ambiente: URBANO
+    fecha_creacion: "2023-04-20T03:14:24.405Z",
+    usuarioId: 1
   ) {
     id
     nombre
@@ -175,9 +183,6 @@ query Colmenas {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
     tareas {
       id
       descripcion
@@ -207,9 +212,6 @@ query Colmena{
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
     tareas {
       id
       descripcion
@@ -234,9 +236,6 @@ mutation crearColmena{
     reina_color: AMARILLO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
-    foto1: "URL de la foto 1"
-    foto2: "URL de la foto 2"
-    foto3: "URL de la foto 3"
   ) {
     id
     nombre
@@ -269,9 +268,6 @@ mutation {
     reina_color: ROJO
     reina_fecha_aceptacion: "2023-08-25T10:30:00Z"
     reina_notas: "Reina saludable y activa"
-    foto1: "URL de la foto 1"
-    foto2: "URL de la foto 2"
-    foto3: "URL de la foto 3"
   ) {
     id
     nombre
@@ -285,9 +281,6 @@ mutation {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
   }
 }
 ```
@@ -307,9 +300,6 @@ mutation {
     reina_color
     reina_fecha_aceptacion
     reina_notas
-    foto1
-    foto2
-    foto3
   }
 }
 ```

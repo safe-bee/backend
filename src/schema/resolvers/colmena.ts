@@ -31,6 +31,20 @@ const colmenaResolvers = {
   },
   Mutation: {
     createColmena: async (parent, args, { prisma }) => {
+      const { nombre, apiarioId } = args;
+      // Verificar si ya existe una colmena con el mismo nombre en el apiario
+      const colmenaExistente = await prisma.colmena.findFirst({
+        where: {
+          nombre,
+          apiarioId
+        }
+      });
+
+      if (colmenaExistente) {
+        throw new Error('Ya existe una colmena con este nombre en el apiario.');
+      }
+
+
       const newColmena = await prisma.colmena.create({
         data: { ...args },
         include: { apiario: true },
@@ -70,9 +84,21 @@ const colmenaResolvers = {
     },
  
     updateColmena: async (parent, args, { prisma }) => {
-      const { id, ...data } = args;
-      return await prisma.colmena.update({ where: { id }, data });
-    },
+      const { id, nombre, apiarioId, ...otrosDatos } = args;
+
+      // Verificar si ya existe otra colmena con el mismo nombre en el apiario
+      const colmenaExistente = await prisma.colmena.findFirst({
+        where: { nombre, apiarioId, id: { not: id } } });          
+
+      if (colmenaExistente) {
+        throw new Error('Ya existe otra colmena con este nombre en el apiario.');
+      }
+
+      return await prisma.colmena.update({
+        where: { id },
+        data: { nombre, apiarioId, ...otrosDatos }
+      });
+  },
     deleteColmena: async (parent, args, { prisma }) => {
       const { id } = args;
       return await prisma.colmena.delete({ where: { id } });

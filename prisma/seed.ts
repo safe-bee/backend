@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
+import bcrypt from 'bcrypt';
 import {
   Clima,
   Sellado,
@@ -31,6 +32,34 @@ function getRandomInt(min, max) {
 
 
 export async function main() {
+  const passwordJuan = await bcrypt.hash('juan123', 10);
+  const passwordJose = await bcrypt.hash('jose123', 10);
+  const passwordAntonio = await bcrypt.hash('antonio123', 10);
+
+  const juan = await prisma.usuario.create({
+    data: {
+      nombreUsuario: 'Juan',
+      correoElectronico: 'juan@example.com',
+      contrasenaHash: passwordJuan,
+    },
+  });
+
+  const jose = await prisma.usuario.create({
+    data: {
+      nombreUsuario: 'Jose',
+      correoElectronico: 'jose@example.com',
+      contrasenaHash: passwordJose,
+    },
+  });
+
+  const antonio = await prisma.usuario.create({
+    data: {
+      nombreUsuario: 'Antonio',
+      correoElectronico: 'antonio@example.com',
+      contrasenaHash: passwordAntonio,
+    },
+  });
+
   // Apiarios
   const apiario1 = await prisma.apiario.create({
     data: {
@@ -39,6 +68,7 @@ export async function main() {
       longitud: -74.006,
       direccion: "123 Calle Principal",
       tipo_ambiente: "RURAL",
+      usuarioId: juan.usuarioId,
     },
   });
 
@@ -49,6 +79,7 @@ export async function main() {
       longitud: -0.1278,
       direccion: "789 Calle Terciaria",
       tipo_ambiente: "URBANO",
+      usuarioId: juan.usuarioId,
     },
   });
 
