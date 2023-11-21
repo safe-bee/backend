@@ -22,6 +22,27 @@ import {
 
 const prisma = new PrismaClient();
 
+// Helpers
+
+/**
+ * Función con distribución normal para obtener una cantidad de 
+ * cuadros que tenga sentido según el día del año
+ */ 
+function diaACantidadDeCuadros(x) {
+  if (x > 185) {
+    x = x - 365;
+  }
+  const pi = Math.PI;
+  const e = Math.E;
+  const cantidadDeCuadros = 2.5 + 25 * (1 / Math.sqrt(2 * pi)) * Math.pow(e, x ** 2 / -5000);
+  return cantidadDeCuadros;
+}
+
+function diaDelAnio(date){
+    return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+}
+
+
 export async function main() {
   const passwordJuan = await bcrypt.hash("juan123", 10);
   const passwordJose = await bcrypt.hash("jose123", 10);
@@ -56,9 +77,9 @@ export async function main() {
   // Apiarios
   const apiarios = [];
   usuarios.forEach((usuario) => {
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 4; i++) {
       const nuevoApiario = {
-        nombre: `Apiario ${i + 1} - Usuario ${usuario.usuarioId}`,
+        nombre: "Apiario " + faker.animal.bird(),
         latitud: faker.location.latitude(),
         longitud: faker.location.longitude(),
         direccion: faker.location.streetAddress(),
@@ -85,7 +106,7 @@ export async function main() {
   const apiariosIds = await prisma.apiario.findMany({ select: { id: true } });
 
   apiariosIds.forEach((apiario) => {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       const nuevaColmena = {
         nombre: "Colmena " + faker.person.middleName(),
         apiarioId: apiario.id,
@@ -258,10 +279,13 @@ export async function main() {
   });
 
   // Registros: Inspección
-  const fechaDeInspeccion = new Date("2023-01-01");
-  for (let i = 0; i < 10; i++) {
+  const fechaInicial = new Date();
+  fechaInicial.setFullYear(fechaInicial.getFullYear() - 5);
+
+  const fechaDeInspeccion = new Date(fechaInicial);
+
+  while (fechaDeInspeccion <= new Date()) {
     await prisma.$transaction(async (prisma) => {
-      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + faker.number.int({ min: 7, max: 35 }));
       const registro = await prisma.registro.create({
         data: {
           fecha: fechaDeInspeccion,
@@ -279,7 +303,7 @@ export async function main() {
           detalleCajonInvasores: faker.helpers.enumValue(Invasores),
           estadoPoblacion: faker.datatype.boolean(),
           detallePoblacionEstado: faker.helpers.enumValue(Estado),
-          detallePoblacionNumCuadros: faker.number.int({ min: 10, max: 100 }),
+          detallePoblacionNumCuadros: Math.round(diaACantidadDeCuadros(diaDelAnio(fechaDeInspeccion))),
           detallePoblacionFaltaEspacio: faker.datatype.boolean(),
           estadoReinaLarvas: faker.datatype.boolean(),
           detalleReinaLarvasQueSeVe: faker.helpers.enumValue(QueSeVe),
@@ -299,6 +323,8 @@ export async function main() {
         },
       });
     });
+
+    fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + 15);
   }
   console.log(`\rCreo Registros ✅`);
 
