@@ -1,6 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-import { main as mainZonasSugeridas } from './seeds_zonasSugeridas';
-import bcrypt from 'bcrypt';
+import { PrismaClient } from "@prisma/client";
+import { main as mainZonasSugeridas } from "./seeds_zonasSugeridas";
+import bcrypt from "bcrypt";
+import { fakerES as faker } from "@faker-js/faker";
 import {
   Clima,
   Sellado,
@@ -10,136 +11,138 @@ import {
   PatronDeCria,
   DisponibilidadRecursos,
   Plagas,
-  TemperamentoAbejas
+  TemperamentoAbejas,
+  TipoAmbiente,
+  TipoColmena,
+  OrigenColmena,
+  TipoReina,
+  ColorReina,
+  TipoRegistro
 } from "@prisma/client";
-
 
 const prisma = new PrismaClient();
 
-// Helpers
-function getRandomItemFromEnum<T>(myEnum: T): keyof T {
-  const array = Object.values(myEnum)
-  return array[Math.floor(Math.random() * array.length)] as keyof T;
-}
-
-function getRandomBoolean() {
-  return Math.random() < 0.5;
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
 export async function main() {
-  const passwordJuan = await bcrypt.hash('juan123', 10);
-  const passwordJose = await bcrypt.hash('jose123', 10);
-  const passwordAntonio = await bcrypt.hash('antonio123', 10);
+  const passwordJuan = await bcrypt.hash("juan123", 10);
+  const passwordJose = await bcrypt.hash("jose123", 10);
+  const passwordAntonio = await bcrypt.hash("antonio123", 10);
 
   const juan = await prisma.usuario.create({
     data: {
-      nombreUsuario: 'Juan',
-      correoElectronico: 'juan@example.com',
+      nombreUsuario: "Juan",
+      correoElectronico: "juan@example.com",
       contrasenaHash: passwordJuan,
     },
   });
 
   const jose = await prisma.usuario.create({
     data: {
-      nombreUsuario: 'Jose',
-      correoElectronico: 'jose@example.com',
+      nombreUsuario: "Jose",
+      correoElectronico: "jose@example.com",
       contrasenaHash: passwordJose,
     },
   });
 
   const antonio = await prisma.usuario.create({
     data: {
-      nombreUsuario: 'Antonio',
-      correoElectronico: 'antonio@example.com',
+      nombreUsuario: "Antonio",
+      correoElectronico: "antonio@example.com",
       contrasenaHash: passwordAntonio,
     },
   });
 
+  const usuarios = [juan, jose, antonio];
+
   // Apiarios
-  const apiario1 = await prisma.apiario.create({
-    data: {
-      nombre: "Apiario 1",
-      latitud: 40.7128,
-      longitud: -74.006,
-      direccion: "123 Calle Principal",
-      tipo_ambiente: "RURAL",
-      usuarioId: juan.usuarioId,
-    },
+  const apiarios = [];
+  usuarios.forEach((usuario) => {
+    for (let i = 0; i < 2; i++) {
+      const nuevoApiario = {
+        nombre: `Apiario ${i + 1} - Usuario ${usuario.usuarioId}`,
+        latitud: faker.location.latitude(),
+        longitud: faker.location.longitude(),
+        direccion: faker.location.streetAddress(),
+        tipo_ambiente: faker.helpers.enumValue(TipoAmbiente),
+        usuarioId: usuario.usuarioId,
+      };
+
+      apiarios.push(nuevoApiario);
+    }
   });
 
-  const apiario2 = await prisma.apiario.create({
-    data: {
-      nombre: "Apiario 2",
-      latitud: 51.5074,
-      longitud: -0.1278,
-      direccion: "789 Calle Terciaria",
-      tipo_ambiente: "URBANO",
-      usuarioId: juan.usuarioId,
-    },
-  });
+  process.stdout.write(`\rCreo Apiarios`);
+  await Promise.all(
+    apiarios.map(async (apiario) =>
+      prisma.apiario.create({
+        data: apiario,
+      })
+    )
+  );
+  console.log(`\rCreo Apiarios ✅`);
 
   // Colmenas
-  await prisma.colmena.create({
-    data: {
-      nombre: "Colmena 1",
-      apiarioId: apiario1.id,
-      tipo: "LANGSTROTH",
-    },
+  const colmenas = [];
+  const apiariosIds = await prisma.apiario.findMany({ select: { id: true } });
+
+  apiariosIds.forEach((apiario) => {
+    for (let i = 0; i < 5; i++) {
+      const nuevaColmena = {
+        nombre: "Colmena " + faker.person.middleName(),
+        apiarioId: apiario.id,
+        tipo: faker.helpers.enumValue(TipoColmena),
+        datos_total_cuadros: "20",
+        datos_color: faker.helpers.enumValue(ColorReina),
+        datos_origen: faker.helpers.enumValue(OrigenColmena),
+        datos_fecha_establecimiento: new Date(),
+        reina_tipo: faker.helpers.enumValue(TipoReina),
+        reina_color: faker.helpers.enumValue(ColorReina),
+        reina_fecha_aceptacion: new Date(),
+        reina_notas: "God save the Queen",
+        foto1: "https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg",
+      };
+
+      colmenas.push(nuevaColmena);
+    }
   });
 
-  await prisma.colmena.create({
-    data: {
-      nombre: "Colmena 2",
-      apiarioId: apiario1.id,
-      tipo: "HORIZONTAL",
-    },
-  });
-
-  await prisma.colmena.create({
-    data: {
-      nombre: "Colmena 3",
-      apiarioId: apiario2.id,
-      tipo: "TRADICIONAL",
-      datos_total_cuadros: "20",
-      datos_color: "Amarillo",
-      datos_origen: "NUCLEO",
-      datos_fecha_establecimiento: new Date(),
-      reina_tipo: "ITALIANA",
-      reina_color: "VERDE",
-      reina_fecha_aceptacion: new Date(),
-      reina_notas: "God save the Queen",
-      foto1: "https://assets.dev-filo.dift.io/img/2020/02/28/queen_sq.jpg",
-    },
-  });
+  process.stdout.write(`\rCreo Colmenas`);
+  await Promise.all(
+    colmenas.map(async (colmena) =>
+      prisma.colmena.create({
+        data: colmena,
+      })
+    )
+  );
+  console.log(`\rCreo Colmenas ✅`);
 
   // Tareas
-  for (let i = 0; i < 3; i++) {
-    await prisma.tarea.create({
-      data: {
-        descripcion: `Tarea para colmena 1 - ${i + 1}`,
-        colmenaId: 1,
+  const tareas = [];
+  const colemnasIds = await prisma.colmena.findMany({ select: { id: true } });
+  colemnasIds.forEach((colmena) => {
+    for (let i = 0; i < 3; i++) {
+      const nuevaTarea = {
+        descripcion: faker.animal.cow(),
+        colmenaId: colmena.id,
         terminada: false,
-        tipoRegistro: "ALIMENTACION",
-      },
-    });
-    await prisma.tarea.create({
-      data: {
-        descripcion: `Tarea para colmena 2 - ${i + 1}`,
-        colmenaId: 2,
-        terminada: false,
-        tipoRegistro: "COSECHA",
-      },
-    });
-  }
+        tipoRegistro: faker.helpers.enumValue(TipoRegistro),
+      };
+      tareas.push(nuevaTarea);
+    }
+  });
 
+  process.stdout.write(`\rCreo Tareas`);
+  await Promise.all(
+    tareas.map(async (tarea) =>
+      prisma.tarea.create({
+        data: tarea,
+      })
+    )
+  );
+  console.log(`\rCreo Tareas ✅`);
 
   // Registros
   // Registros: Alimentación
+  process.stdout.write(`\rCreo Registros`);
   await prisma.$transaction(async (prisma) => {
     const registro = await prisma.registro.create({
       data: {
@@ -258,7 +261,7 @@ export async function main() {
   const fechaDeInspeccion = new Date("2023-01-01");
   for (let i = 0; i < 10; i++) {
     await prisma.$transaction(async (prisma) => {
-      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + getRandomInt(7, 35));
+      fechaDeInspeccion.setDate(fechaDeInspeccion.getDate() + faker.number.int({ min: 7, max: 35 }));
       const registro = await prisma.registro.create({
         data: {
           fecha: fechaDeInspeccion,
@@ -269,32 +272,35 @@ export async function main() {
       await prisma.inspeccion.create({
         data: {
           registroId: registro.id,
-          clima: getRandomItemFromEnum(Clima),
-          temperatura: getRandomInt(10, 30),
-          estadoCajon: getRandomBoolean(),
-          detalleCajonSellado: getRandomItemFromEnum(Sellado),
-          detalleCajonInvasores: getRandomItemFromEnum(Invasores),
-          estadoPoblacion: getRandomBoolean(),
-          detallePoblacionEstado: getRandomItemFromEnum(Estado),
-          detallePoblacionNumCuadros: getRandomInt(10, 100),
-          detallePoblacionFaltaEspacio: getRandomBoolean(),
-          estadoReinaLarvas: getRandomBoolean(),
-          detalleReinaLarvasQueSeVe: getRandomItemFromEnum(QueSeVe),
-          detalleReinaLarvasPatronDeCria: getRandomItemFromEnum(PatronDeCria),
-          estadoFlora: getRandomBoolean(),
-          detalleFloraEstado: getRandomItemFromEnum(Estado),
-          detalleFloraDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
-          estadoAlimento: getRandomBoolean(),
-          detalleAlimentoEstado: getRandomItemFromEnum(Estado),
-          detalleAlimentoDispRecursos: getRandomItemFromEnum(DisponibilidadRecursos),
-          estadoPlagas: getRandomBoolean(),
-          detallePlagasPlagas: getRandomItemFromEnum(Plagas),
-          detallePlagasTemperamentoAbejas: getRandomItemFromEnum(TemperamentoAbejas),
-          fotoInspeccion: "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
+          clima: faker.helpers.enumValue(Clima),
+          temperatura: faker.number.int({ min: 10, max: 30 }),
+          estadoCajon: faker.datatype.boolean(),
+          detalleCajonSellado: faker.helpers.enumValue(Sellado),
+          detalleCajonInvasores: faker.helpers.enumValue(Invasores),
+          estadoPoblacion: faker.datatype.boolean(),
+          detallePoblacionEstado: faker.helpers.enumValue(Estado),
+          detallePoblacionNumCuadros: faker.number.int({ min: 10, max: 100 }),
+          detallePoblacionFaltaEspacio: faker.datatype.boolean(),
+          estadoReinaLarvas: faker.datatype.boolean(),
+          detalleReinaLarvasQueSeVe: faker.helpers.enumValue(QueSeVe),
+          detalleReinaLarvasPatronDeCria: faker.helpers.enumValue(PatronDeCria),
+          estadoFlora: faker.datatype.boolean(),
+          detalleFloraEstado: faker.helpers.enumValue(Estado),
+          detalleFloraDispRecursos: faker.helpers.enumValue(DisponibilidadRecursos),
+          estadoAlimento: faker.datatype.boolean(),
+          detalleAlimentoEstado: faker.helpers.enumValue(Estado),
+          detalleAlimentoDispRecursos: faker.helpers.enumValue(DisponibilidadRecursos),
+          estadoPlagas: faker.datatype.boolean(),
+          detallePlagasPlagas: faker.helpers.enumValue(Plagas),
+          detallePlagasTemperamentoAbejas:
+            faker.helpers.enumValue(TemperamentoAbejas),
+          fotoInspeccion:
+            "https://previews.123rf.com/images/oticki/oticki1602/oticki160200005/51836460-la-inspecci%C3%B3n-de-colmena-de-abejas.jpg",
         },
       });
     });
   }
+  console.log(`\rCreo Registros ✅`);
 
   // Marca las tareas que estan relacionadas a un registro como completadas.
   await prisma.tarea.updateMany({
