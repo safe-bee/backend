@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { main as mainZonasSugeridas } from "./seeds_zonasSugeridas";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { fakerES as faker } from "@faker-js/faker";
 import {
   Clima,

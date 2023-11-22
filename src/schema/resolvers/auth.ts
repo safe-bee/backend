@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 const authResolvers = {
   Query: {
@@ -20,7 +20,7 @@ const authResolvers = {
       const { nombreUsuario, correoElectronico, contrasena } = args;
 
       // '10' es el número de rondas de salting, lo que afecta la seguridad del hash
-      const contrasenaHash = await bcrypt.hash(contrasena, 10); 
+      const contrasenaHash = await bcryptjs.hash(contrasena, 10); 
 
       const usuario = await context.prisma.usuario.create({
         data: {
@@ -43,7 +43,7 @@ const authResolvers = {
         throw new Error('Usuario Inexistente');
       }
 
-      if (!await bcrypt.compare(contrasena, usuario.contrasenaHash)) {
+      if (!await bcryptjs.compare(contrasena, usuario.contrasenaHash)) {
         throw new Error('Credenciales incorrectas');
       }
       
