@@ -50,6 +50,19 @@ const authResolvers = {
       // Si todo es correcto, retornamos el usuario
       return { usuario };
     },
+    suscribeToPushNotification: async (_, { usuarioId, token }, { prisma }) => {
+      try {
+        const usuarioActualizado = await prisma.usuario.update({
+          where: { usuarioId },
+          data: { token },
+        });
+
+        return { usuario: usuarioActualizado };
+      } catch (error) {
+        // Manejar errores (usuario no encontrado, error de base de datos, etc.)
+        throw new Error("Error al actualizar el token del usuario.");
+      }
+    },
   },
 };
 

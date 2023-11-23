@@ -19,6 +19,7 @@ model Usuario {
   nombreUsuario     String    @unique
   correoElectronico String    @unique
   contrasenaHash    String
+  token             String?
   fechaCreacion     DateTime  @default(now())
   apiarios          Apiario[]
 }

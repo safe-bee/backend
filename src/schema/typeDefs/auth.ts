@@ -5,6 +5,7 @@ const authDef = gql`
     usuarioId: Int!
     nombreUsuario: String!
     correoElectronico: String!
+    token: String
   }
 
   type UsuarioPayload {
@@ -18,6 +19,7 @@ const authDef = gql`
   type Mutation {
     signUp(nombreUsuario: String!, correoElectronico: String!, contrasena: String!): UsuarioPayload
     signIn(nombreUsuario: String!, contrasena: String!): UsuarioPayload
+    suscribeToPushNotification(usuarioId: Int!, token: String!): UsuarioPayload
   }
 
 `;

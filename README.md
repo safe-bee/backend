@@ -73,6 +73,19 @@ mutation SignIn{
     }
   }
 }
+
+mutation suscribeToPushNotification{
+  suscribeToPushNotification(
+    usuarioId: 4, 
+    token: "ExponentPushToken[v96Ftosfd_9ixajFufXn7u]"
+  ){
+    usuario {
+      nombreUsuario
+      token
+    }
+  }
+}
+
 ```
 
 
@@ -80,7 +93,7 @@ mutation SignIn{
 
 ```graphql
 query Apiarios {
-  apiarios {
+  apiarios(usuarioId: 1) {
     id,
     nombre,
     latitud,
@@ -90,8 +103,7 @@ query Apiarios {
     fecha_creacion,
     colmenas {
       id,
-      nombre, 
-      foto1
+      nombre
     }
   }
 }
@@ -120,9 +132,6 @@ query Apiario{
       reina_color
       reina_fecha_aceptacion
       reina_notas
-      foto1
-      foto2
-      foto3
     }
   }
 }

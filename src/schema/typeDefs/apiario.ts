@@ -19,7 +19,7 @@ const apiarioDef = gql`
   }
 
   extend type Query {
-    apiarios: [Apiario!]!
+    apiarios(usuarioId: Int!): [Apiario!]!
     apiario(id: Int!): Apiario
   }
 

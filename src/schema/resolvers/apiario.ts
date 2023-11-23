@@ -1,7 +1,10 @@
 const apiarioResolvers = {
   Query: {
-    apiarios: async (parent, args, { prisma }) => {
-      return await prisma.apiario.findMany({ include: { colmenas:{} } });
+    apiarios: async (_, { usuarioId }, { prisma }) => {
+      return await prisma.apiario.findMany({
+        where: { usuarioId }, // Filtra apiarios por usuarioId
+        include: { colmenas: {} }
+      });
     },
     apiario: async (parent, args, { prisma }) => {
       const { id } = args

@@ -37,6 +37,9 @@ const tareaDef = gql`
     ): Tarea!
 
     deleteTarea(id: Int!): Tarea!
+
+    sendPushNotification(token: String!, mensaje:String!): String
+
   }
 `;
 
