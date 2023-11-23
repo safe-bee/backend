@@ -1,4 +1,4 @@
-import { sendNotification } from '../../notifications';
+import { sendNotification } from '../../notifications.js';
 
 const tareaResolvers = {
   Query: {
