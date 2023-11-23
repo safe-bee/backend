@@ -572,7 +572,7 @@ mutation CrearInspeccion{
     detalleCajonInvasores: POLILLAS,
     estadoPoblacion: true,
     detallePoblacionEstado: BUENO,
-    detallePoblacionNumCuadros: 80,
+    detallePoblacionNumCuadros: 8.45,
     detallePoblacionFaltaEspacio: false,
     estadoReinaLarvas: true,
     detalleReinaLarvasQueSeVe: REINA,

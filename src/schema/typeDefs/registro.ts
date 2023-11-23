@@ -94,7 +94,7 @@ const registroDef = gql`
     detalleCajonInvasores: Invasores
     estadoPoblacion: Boolean!
     detallePoblacionEstado: Estado
-    detallePoblacionNumCuadros: Int
+    detallePoblacionNumCuadros: Float
     detallePoblacionFaltaEspacio: Boolean
     estadoReinaLarvas: Boolean!
     detalleReinaLarvasQueSeVe: QueSeVe
@@ -220,7 +220,7 @@ const registroDef = gql`
 
     deleteRegistro(id: Int!): Registro!
 
-    createInspeccion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, registroId: ID, clima: Clima, temperatura: Int, estadoCajon: Boolean, detalleCajonSellado: Sellado, detalleCajonInvasores: Invasores, estadoPoblacion: Boolean, detallePoblacionEstado: Estado, detallePoblacionNumCuadros: Int, detallePoblacionFaltaEspacio: Boolean, estadoReinaLarvas: Boolean, detalleReinaLarvasQueSeVe: QueSeVe, detalleReinaLarvasPatronDeCria: PatronDeCria, estadoFlora: Boolean, detalleFloraEstado: Estado, detalleFloraDispRecursos: DisponibilidadRecursos, estadoAlimento: Boolean, detalleAlimentoEstado: Estado, detalleAlimentoDispRecursos: DisponibilidadRecursos, estadoPlagas: Boolean, detallePlagasPlagas: Plagas, detallePlagasTemperamentoAbejas: TemperamentoAbejas, fotoInspeccion: String ): Inspeccion
+    createInspeccion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, registroId: ID, clima: Clima, temperatura: Int, estadoCajon: Boolean, detalleCajonSellado: Sellado, detalleCajonInvasores: Invasores, estadoPoblacion: Boolean, detallePoblacionEstado: Estado, detallePoblacionNumCuadros: Float, detallePoblacionFaltaEspacio: Boolean, estadoReinaLarvas: Boolean, detalleReinaLarvasQueSeVe: QueSeVe, detalleReinaLarvasPatronDeCria: PatronDeCria, estadoFlora: Boolean, detalleFloraEstado: Estado, detalleFloraDispRecursos: DisponibilidadRecursos, estadoAlimento: Boolean, detalleAlimentoEstado: Estado, detalleAlimentoDispRecursos: DisponibilidadRecursos, estadoPlagas: Boolean, detallePlagasPlagas: Plagas, detallePlagasTemperamentoAbejas: TemperamentoAbejas, fotoInspeccion: String ): Inspeccion
     createTratamiento(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, tipoPlaga: TipoPlaga, producto: String, dosis: String): RegistroTratamiento
     createCosecha(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, tipoUnidad: TipoUnidad, cantidadCosecha: Float): RegistroCosecha
     createAlimentacion(colmenaId: ID!, tareaId: Int, fecha: DateTime, notas: String, alimento: String, cantidadAlimentacion: Float): RegistroAlimentacion

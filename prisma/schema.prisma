@@ -217,7 +217,7 @@ model Inspeccion {
   detalleCajonInvasores           Invasores?
   estadoPoblacion                 Boolean
   detallePoblacionEstado          Estado?
-  detallePoblacionNumCuadros      Int?
+  detallePoblacionNumCuadros      Float?
   detallePoblacionFaltaEspacio    Boolean?
   estadoReinaLarvas               Boolean
   detalleReinaLarvasQueSeVe       QueSeVe?

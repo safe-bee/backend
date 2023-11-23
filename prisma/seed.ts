@@ -80,8 +80,8 @@ export async function main() {
     for (let i = 0; i < 4; i++) {
       const nuevoApiario = {
         nombre: "Apiario " + faker.animal.bird(),
-        latitud: faker.location.latitude(),
-        longitud: faker.location.longitude(),
+        latitud: -38 + faker.number.float({ max: 10.5, precision: 0.0001 }),
+        longitud: -68 + faker.number.float({ max: 9, precision: 0.0001 }),
         direccion: faker.location.streetAddress(),
         tipo_ambiente: faker.helpers.enumValue(TipoAmbiente),
         usuarioId: usuario.usuarioId,
@@ -303,7 +303,7 @@ export async function main() {
           detalleCajonInvasores: faker.helpers.enumValue(Invasores),
           estadoPoblacion: faker.datatype.boolean(),
           detallePoblacionEstado: faker.helpers.enumValue(Estado),
-          detallePoblacionNumCuadros: Math.round(diaACantidadDeCuadros(diaDelAnio(fechaDeInspeccion))),
+          detallePoblacionNumCuadros: diaACantidadDeCuadros(diaDelAnio(fechaDeInspeccion)) + faker.number.float({ min: -0.5, max: 1 }),
           detallePoblacionFaltaEspacio: faker.datatype.boolean(),
           estadoReinaLarvas: faker.datatype.boolean(),
           detalleReinaLarvasQueSeVe: faker.helpers.enumValue(QueSeVe),
