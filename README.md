@@ -48,7 +48,7 @@ query Apiario{
   }
 }
 ```
-### Usuario:
+### Usuario / Auth:
 
 ```graphql
 mutation SignUp{
@@ -76,7 +76,7 @@ mutation SignIn{
 
 mutation suscribeToPushNotification{
   suscribeToPushNotification(
-    usuarioId: 4, 
+    usuarioId: 4,
     token: "ExponentPushToken[v96Ftosfd_9ixajFufXn7u]"
   ){
     usuario {
@@ -85,6 +85,14 @@ mutation suscribeToPushNotification{
     }
   }
 }
+
+query ObtenerDatosUsuario{
+    obtenerDatosUsuario(usuarioId: 1) {
+      nombreUsuario
+      correoElectronico
+      conteoApiarios
+    }
+  }
 
 ```
 
@@ -639,7 +647,7 @@ mutation CrearAlimentacion {
     cantidadAlimentacion: 2.5
   ) {
     registroId
-  } 
+  }
 }
 ```
 Para el id hay que usar el que devolvio la query anterior
@@ -672,7 +680,7 @@ mutation CrearTratamiento {
     dosis: "5 ml"
   ) {
     registroId
-  } 
+  }
 }
 ```
 ```graphql
@@ -686,7 +694,7 @@ mutation CrearCosecha {
     cantidadCosecha: 20.5
   ) {
     registroId
-  } 
+  }
 }
 ```
 ```graphql
@@ -700,7 +708,7 @@ mutation CrearAlimentacion {
     cantidadAlimentacion: 2.5
   ) {
     registroId
-  } 
+  }
 }
 ```
 ```graphql
@@ -713,7 +721,7 @@ mutation CrearCambioDeCuadros {
     cantidad: 6
   ) {
     registroId
-  } 
+  }
 }
 ```
 ```graphql
@@ -727,7 +735,7 @@ mutation CrearVarroa {
     porcentaje: 2.5
   ) {
     registroId
-  } 
+  }
 }
 ```
 ```graphql
@@ -739,7 +747,7 @@ mutation CrearHibernacion {
     notas: "Colmena en estado de hibernación"
   ) {
     id
-  } 
+  }
 }
 ```
 ```graphql
@@ -751,7 +759,7 @@ mutation CrearMuerte {
     notas: "Registro de muerte en la colmena"
   ) {
     id
-  } 
+  }
 }
 ```
 

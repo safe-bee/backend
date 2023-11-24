@@ -6,6 +6,7 @@ const authDef = gql`
     nombreUsuario: String!
     correoElectronico: String!
     token: String
+    conteoApiarios: Int
   }
 
   type UsuarioPayload {
@@ -13,7 +14,7 @@ const authDef = gql`
   }
 
   type Query {
-    obtenerDatosUsuario(nombreUsuario: String!): Usuario
+    obtenerDatosUsuario(usuarioId: Int!): Usuario
   }
 
   type Mutation {

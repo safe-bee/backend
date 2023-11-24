@@ -31,9 +31,47 @@ const tareaResolvers = {
     },      
   },
   Mutation: {
-    createTarea: async (parent, args, { prisma }) => {
-      return await prisma.tarea.create({ data: { ...args } });
-    },    
+      createTarea:  async (parent, args, { prisma }) => {
+      // Crear la tarea
+      const tarea = await prisma.tarea.create({ data: { ...args } });
+    
+      // Verificar si la fecha de la tarea es hoy
+      const hoy = new Date();
+      // console.log(`Date: ${tarea.fecha}, Hoy: ${hoy}`);
+
+      if (tarea.fecha && tarea.fecha.toDateString() === hoy.toDateString()) {
+        // Obtener información de la colmena
+        const colmena = await prisma.colmena.findUnique({
+          where: { id: tarea.colmenaId },
+          include: { apiario: true }
+        });
+    
+        if (colmena && colmena.apiario) {
+          // Obtener el usuario y su token
+          const usuario = await prisma.usuario.findUnique({
+            where: { usuarioId: colmena.apiario.usuarioId }
+          });
+    
+          if (usuario && usuario.token) {
+            // Mensaje de la notificación
+            const tipoRegistroFormato = tarea.tipoRegistro.toLowerCase().replace(/_/g, ' ');
+
+            const mensaje = `Hoy tienes una tarea de ${tipoRegistroFormato} en colmena ${colmena.nombre}`;
+    
+            // Enviar notificación
+            await sendNotification(usuario.token, mensaje);
+    
+            // Opcional: Mostrar mensaje y ID de usuario en la terminal
+            console.log(`Mensaje enviado: ${mensaje} a Usuario: ${usuario.nombreUsuario}`);
+          }
+          else {
+            console.log(`Token not found for user ID: ${usuario.usuarioId}`);
+          }
+        }
+      }
+    
+      return tarea;
+    },       
     updateTarea: async (parent, args, { prisma }) => {
       const { id, ...data } = args;
       return await prisma.tarea.update({ where: { id }, data });

@@ -3,15 +3,26 @@ import bcryptjs from 'bcryptjs';
 const authResolvers = {
   Query: {
     obtenerDatosUsuario: async (_parent, args, context) => {
-      return await context.prisma.usuario.findUnique({
-        where: { nombreUsuario: args.nombreUsuario },
+      const usuario = await context.prisma.usuario.findUnique({
+        where: { usuarioId: args.usuarioId },
         select: {
           nombreUsuario: true,
-          correoElectronico: true,
-          fechaCreacion: true,
-          // Incluye aquí otros campos que desees devolver
+          correoElectronico: true
         }
       });
+    
+      if (!usuario) {
+        return null;
+      }
+    
+      const conteoApiarios = await context.prisma.apiario.count({
+        where: { usuarioId: args.usuarioId }
+      });
+    
+      return {
+        ...usuario,
+        conteoApiarios
+      };
     },
   },
 

@@ -10,12 +10,17 @@ const apiarioDef = gql`
     direccion: String!
     tipo_ambiente: TipoAmbiente!
     colmenas: [Colmena!]!
+    _count: ApiarioCount
   }
 
   enum TipoAmbiente {
     RURAL
     SUBURBANO
     URBANO
+  }
+
+  type ApiarioCount {
+    id: Int!
   }
 
   extend type Query {
