@@ -22,6 +22,8 @@ import {
 
 const prisma = new PrismaClient();
 
+faker.seed(1234);
+
 // Helpers
 
 /**
@@ -44,15 +46,15 @@ function diaDelAnio(date){
 
 
 export async function main() {
-  const passwordJuan = await bcrypt.hash("juan123", 10);
+  const passwordFederico = await bcrypt.hash("federico123", 10);
   const passwordJose = await bcrypt.hash("jose123", 10);
   const passwordAntonio = await bcrypt.hash("antonio123", 10);
 
-  const juan = await prisma.usuario.create({
+  const federico = await prisma.usuario.create({
     data: {
-      nombreUsuario: "Juan",
-      correoElectronico: "juan@example.com",
-      contrasenaHash: passwordJuan,
+      nombreUsuario: "Federico",
+      correoElectronico: "federico@example.com",
+      contrasenaHash: passwordFederico,
     },
   });
 
@@ -72,7 +74,7 @@ export async function main() {
     },
   });
 
-  const usuarios = [juan, jose, antonio];
+  const usuarios = [federico, jose, antonio];
 
   // Apiarios
   const apiarios = [];
@@ -279,8 +281,8 @@ export async function main() {
   });
 
   // Registros: Inspección
-  const fechaInicial = new Date();
-  fechaInicial.setFullYear(fechaInicial.getFullYear() - 5);
+  const fechaInicial = Date.parse("2018-11-23T03:38:51.000Z");
+  // fechaInicial.setFullYear(fechaInicial.getFullYear() - 5);
 
   const fechaDeInspeccion = new Date(fechaInicial);
 
